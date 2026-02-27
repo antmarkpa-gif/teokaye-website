@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Menú - Teokaye</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        :root {
+            --bg: #E6E0D6;
+            --text: #1E1B18;
+            --accent: #B8826B;
+            --dark: #461D14;
+            --muted: rgba(30, 27, 24, 0.6);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--bg);
+            border-bottom: 1px solid rgba(184, 130, 107, 0.2);
+        }
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            transition: background 0.2s;
+        }
+        .back-btn:hover {
+            background: rgba(184, 130, 107, 0.1);
+        }
+        .back-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+        .top-bar-logo {
+            height: 28px;
+            width: auto;
+        }
+        .top-bar-spacer {
+            width: 80px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 24px 20px 20px;
+        }
+        header h1 {
+            font-family: 'Cormorant Infant', serif;
+            font-size: 36px;
+            letter-spacing: 4px;
+            color: var(--text);
+        }
+        header p {
+            font-family: 'Cormorant Infant', serif;
+            font-size: 16px;
+            color: var(--accent);
+            font-style: italic;
+            margin-top: 4px;
+        }
+        .table-badge {
+            display: inline-block;
+            background: var(--dark);
+            color: var(--bg);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 16px;
+        }
+
+        /* Nav */
+        .nav-wrapper {
+            position: sticky;
+            top: 0;
+            background: rgba(230, 224, 214, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(184, 130, 107, 0.2);
+        }
+        .nav-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        nav {
+            padding: 16px;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        nav::-webkit-scrollbar { display: none; }
+
+        /* Scroll indicators for mobile */
+        .scroll-indicator {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            color: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(70, 29, 20, 0.3);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .scroll-indicator:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+        .scroll-indicator--left {
+            left: 4px;
+        }
+        .scroll-indicator--right {
+            right: 4px;
+        }
+        .scroll-indicator svg {
+            width: 16px;
+            height: 16px;
+        }
+        .scroll-indicator.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Center nav on desktop */
+        @media (min-width: 800px) {
+            nav {
+                justify-content: center;
+            }
+            .scroll-indicator {
+                display: none;
+            }
+        }
+        .nav-btn {
+            flex-shrink: 0;
+            padding: 10px 18px;
+            background: transparent;
+            border: 1.5px solid rgba(184, 130, 107, 0.3);
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+        }
+
+        /* Main */
+        main {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px 20px 140px;
+        }
+        .category {
+            margin-bottom: 50px;
+            scroll-margin-top: 80px;
+        }
+        .category-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+        }
+        .category-sub {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        /* Product */
+        .product {
+            margin-bottom: 28px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid rgba(184, 130, 107, 0.15);
+        }
+        .product:last-child {
+            border-bottom: none;
+        }
+        .product-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+        .product-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin-left: 16px;
+        }
+        .product-desc {
+            font-size: 15px;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+        .add-btn {
+            display: none; /* Temporalmente oculto hasta tener funcionalidad operando */
+            background: transparent;
+            border: 1.5px solid var(--accent);
+            color: var(--accent);
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .add-btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+        .add-btn.added {
+            background: #2D5016;
+            border-color: #2D5016;
+            color: white;
+        }
+
+        /* Cart Float */
+        .cart-btn {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            padding: 16px 32px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(70, 29, 20, 0.3);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 200;
+            transition: transform 0.2s;
+        }
+        .cart-btn:hover {
+            transform: translateX(-50%) scale(1.05);
+        }
+        .cart-btn.show {
+            display: flex;
+        }
+        .cart-count {
+            background: var(--dark);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* Modal */
+        .modal-bg {
+            position: fixed;
+            inset: 0;
+            background: rgba(30, 27, 24, 0.8);
+            z-index: 300;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-bg.open {
+            display: flex;
+        }
+        .modal {
+            background: var(--bg);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 440px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(70, 29, 20, 0.3);
+        }
+        .modal-head {
+            padding: 20px;
+            border-bottom: 1px solid rgba(184, 130, 107, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+        }
+        .modal-head h3 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--accent);
+        }
+        .modal-body {
+            padding: 20px;
+        }
+
+        /* Cart Item */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(184, 130, 107, 0.15);
+        }
+        .cart-item-name {
+            font-weight: 600;
+        }
+        .cart-item-price {
+            font-size: 14px;
+            color: var(--accent);
+        }
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .qty-btn {
+            width: 34px;
+            height: 34px;
+            border: 1.5px solid var(--accent);
+            background: transparent;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--accent);
+            transition: all 0.2s;
+        }
+        .qty-btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+        .qty-num {
+            font-weight: 700;
+            font-size: 16px;
+            min-width: 24px;
+            text-align: center;
+        }
+        .cart-empty {
+            text-align: center;
+            padding: 40px;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        /* Cart Footer */
+        .cart-foot {
+            padding: 20px;
+            border-top: 2px solid rgba(184, 130, 107, 0.2);
+            background: var(--bg);
+        }
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1.5px solid rgba(184, 130, 107, 0.3);
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            background: white;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .submit-btn:hover {
+            background: var(--dark);
+        }
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .error-box {
+            background: #fef2f2;
+            color: #8B1E1E;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        /* Confirmation */
+        .confirm-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 400;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            text-align: center;
+        }
+        .confirm-screen.show {
+            display: flex;
+        }
+        .confirm-icon {
+            width: 90px;
+            height: 90px;
+            background: #2D5016;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            color: white;
+            margin-bottom: 24px;
+            animation: popIn 0.5s ease;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .confirm-screen h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .confirm-screen p {
+            font-size: 16px;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+        .confirm-screen .order-num {
+            font-size: 18px;
+            color: var(--accent);
+            font-weight: 700;
+            margin-top: 16px;
+        }
+        .new-order-btn {
+            margin-top: 30px;
+            padding: 14px 36px;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--dark);
+            color: var(--bg);
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 250;
+            pointer-events: none;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar with Back Button -->
+    <div class="top-bar">
+        <a href="https://teokaye.mx" class="back-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Inicio
+        </a>
+        <img src="logo-teokaye.png" alt="Teokaye" class="top-bar-logo">
+        <div class="top-bar-spacer"></div>
+    </div>
+
+    <header>
+        <h1>TEOKAYE</h1>
+        <p>El sagrado arte de compartir</p>
+        <div class="table-badge" id="tableBadge">Pide desde tu mesa</div>
+    </header>
+
+    <div class="nav-wrapper">
+        <div class="nav-container">
+            <button class="scroll-indicator scroll-indicator--left hidden" id="scrollLeft" onclick="scrollNav(-1)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <nav id="nav">
+                <button class="nav-btn active" onclick="goTo('compartida')">Mesa Compartida</button>
+                <button class="nav-btn" onclick="goTo('bebidas')">Bebidas de Autor</button>
+                <button class="nav-btn" onclick="goTo('cocteles')">Cócteles</button>
+                <button class="nav-btn" onclick="goTo('vinos')">Vinos</button>
+                <button class="nav-btn" onclick="goTo('mezcal')">Mezcal</button>
+                <button class="nav-btn" onclick="goTo('cafe')">Café</button>
+                <button class="nav-btn" onclick="goTo('sinalcohol')">Sin Alcohol</button>
+                <button class="nav-btn" onclick="goTo('postres')">Postres</button>
+            </nav>
+            <button class="scroll-indicator scroll-indicator--right" id="scrollRight" onclick="scrollNav(1)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <main>
+        <!-- MESA COMPARTIDA -->
+        <section class="category" id="compartida">
+            <h2 class="category-title">Mesa Compartida</h2>
+            <p class="category-sub">Para abrir el apetito</p>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Papas Bravas</span>
+                    <span class="product-price">$80</span>
+                </div>
+                <p class="product-desc">Papa salteada con alioli casero y salsa verde de epazote con serrano o roja de chile morita.</p>
+                <button class="add-btn" onclick="add('Papas Bravas', 80, 'kitchen')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Esquites</span>
+                    <span class="product-price">$60</span>
+                </div>
+                <p class="product-desc">Con mayonesa de chipotle casera y salsa macha.</p>
+                <button class="add-btn" onclick="add('Esquites', 60, 'kitchen')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Hummus</span>
+                    <span class="product-price">$70</span>
+                </div>
+                <p class="product-desc">Hummus de garbanzo.</p>
+                <button class="add-btn" onclick="add('Hummus', 70, 'kitchen')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Babaganush</span>
+                    <span class="product-price">$70</span>
+                </div>
+                <p class="product-desc">Babaganush de berenjena.</p>
+                <button class="add-btn" onclick="add('Babaganush', 70, 'kitchen')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Guacamole</span>
+                    <span class="product-price">$70</span>
+                </div>
+                <p class="product-desc">Guacamole tradicional.</p>
+                <button class="add-btn" onclick="add('Guacamole', 70, 'kitchen')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Chapata de Jamón Serrano</span>
+                    <span class="product-price">$140</span>
+                </div>
+                <p class="product-desc">Con tomate, arúgula, rebanadas de jamón serrano y queso manchego.</p>
+                <button class="add-btn" onclick="add('Chapata de Jamón Serrano', 140, 'kitchen')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Choripán</span>
+                    <span class="product-price">$130</span>
+                </div>
+                <p class="product-desc">Chorizo argentino artesanal, ensalada y chimichurri de la casa.</p>
+                <button class="add-btn" onclick="add('Choripán', 130, 'kitchen')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Chapata de Pollo</span>
+                    <span class="product-price">$120</span>
+                </div>
+                <p class="product-desc">Mayonesa de chipotle, jitomate, arúgula, cebolla encurtida y pechuga de pollo.</p>
+                <button class="add-btn" onclick="add('Chapata de Pollo', 120, 'kitchen')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Chapata de Cochito</span>
+                    <span class="product-price">$120</span>
+                </div>
+                <p class="product-desc">Cochito chiapaneco, cebolla morada encurtida y pepinillo casero.</p>
+                <button class="add-btn" onclick="add('Chapata de Cochito', 120, 'kitchen')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Tortilla Española</span>
+                    <span class="product-price">$100</span>
+                </div>
+                <p class="product-desc">Acompañada con alioli y rebanadas de pan tostado.</p>
+                <button class="add-btn" onclick="add('Tortilla Española', 100, 'kitchen')">Agregar</button>
+            </div>
+        </section>
+
+        <!-- BEBIDAS DE AUTOR -->
+        <section class="category" id="bebidas">
+            <h2 class="category-title">Bebidas de Autor</h2>
+            <p class="category-sub">Creaciones únicas de la casa</p>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Teokayita</span>
+                    <span class="product-price">$80</span>
+                </div>
+                <p class="product-desc">Soda de fruta natural de temporada con destilado chiapaneco de maíz.</p>
+                <button class="add-btn" onclick="add('Teokayita', 80, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Tyruara</span>
+                    <span class="product-price">$75</span>
+                </div>
+                <p class="product-desc">Macerado de hierbas dulces, tónica, hielo y un shot de espresso.</p>
+                <button class="add-btn" onclick="add('Tyruara', 75, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Mezcalita</span>
+                    <span class="product-price">$85</span>
+                </div>
+                <p class="product-desc">2 oz de mezcal artesanal poblano y soda de frutas de temporada.</p>
+                <button class="add-btn" onclick="add('Mezcalita', 85, 'bar')">Agregar</button>
+            </div>
+        </section>
+
+        <!-- CÓCTELES -->
+        <section class="category" id="cocteles">
+            <h2 class="category-title">Cócteles Clásicos</h2>
+            <p class="category-sub">Reinterpretaciones de lo tradicional</p>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Rush</span>
+                    <span class="product-price">$75</span>
+                </div>
+                <p class="product-desc">Una rusa con piquete. Jugo de limón, hielo y destilado chiapaneco de maíz.</p>
+                <button class="add-btn" onclick="add('Rush', 75, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Tinto de Verano</span>
+                    <span class="product-price">$75</span>
+                </div>
+                <p class="product-desc">Refrescante cóctel español a base de vino tinto y refresco de limón.</p>
+                <button class="add-btn" onclick="add('Tinto de Verano', 75, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Soda Tinta</span>
+                    <span class="product-price">$75</span>
+                </div>
+                <p class="product-desc">Soda natural de fruta de temporada y vino tinto de mesa.</p>
+                <button class="add-btn" onclick="add('Soda Tinta', 75, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Cuba Libre</span>
+                    <span class="product-price">$90</span>
+                </div>
+                <p class="product-desc">Clásica cuba a base de hielo, Coca-Cola y ron Bacardí.</p>
+                <button class="add-btn" onclick="add('Cuba Libre', 90, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Gin Tonic Gibson</span>
+                    <span class="product-price">$90</span>
+                </div>
+                <p class="product-desc">Simple y refrescante. Hielo, ginebra Gibson y agua tónica.</p>
+                <button class="add-btn" onclick="add('Gin Tonic Gibson', 90, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Gin Tonic Bombay</span>
+                    <span class="product-price">$120</span>
+                </div>
+                <p class="product-desc">Simple y refrescante. Hielo, agua tónica y ginebra Bombay.</p>
+                <button class="add-btn" onclick="add('Gin Tonic Bombay', 120, 'bar')">Agregar</button>
+            </div>
+        </section>
+
+        <!-- VINOS -->
+        <section class="category" id="vinos">
+            <h2 class="category-title">Vinos y Cervezas</h2>
+            <p class="category-sub">Selección curada</p>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Copa de Vino</span>
+                    <span class="product-price">$100</span>
+                </div>
+                <p class="product-desc">150 ml de vino de la casa.</p>
+                <button class="add-btn" onclick="add('Copa de Vino', 100, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Botella de Vino</span>
+                    <span class="product-price">$350</span>
+                </div>
+                <p class="product-desc">Botella de vino reservado. Pregunta por las uvas disponibles.</p>
+                <button class="add-btn" onclick="add('Botella de Vino', 350, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Cerveza Artesanal</span>
+                    <span class="product-price">$110</span>
+                </div>
+                <p class="product-desc">Cerveza artesanal oaxaqueña. Pregunta por las variedades.</p>
+                <button class="add-btn" onclick="add('Cerveza Artesanal', 110, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Cerveza Bohemia</span>
+                    <span class="product-price">$55</span>
+                </div>
+                <p class="product-desc">Obscura, clara y cristal.</p>
+                <button class="add-btn" onclick="add('Cerveza Bohemia', 55, 'bar')">Agregar</button>
+            </div>
+        </section>
+
+        <!-- MEZCAL -->
+        <section class="category" id="mezcal">
+            <h2 class="category-title">Mezcal Artesanal</h2>
+            <p class="category-sub">Destilados de tradición poblana</p>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Mezcal</span>
+                    <span class="product-price">$50</span>
+                </div>
+                <p class="product-desc">2 oz de mezcal artesanal poblano.</p>
+                <button class="add-btn" onclick="add('Mezcal', 50, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Mezcal Hierbas</span>
+                    <span class="product-price">$80</span>
+                </div>
+                <p class="product-desc">2 oz de mezcal artesanal con maceración de hierbas.</p>
+                <button class="add-btn" onclick="add('Mezcal Hierbas', 80, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Mezcal 7 Años</span>
+                    <span class="product-price">$110</span>
+                </div>
+                <p class="product-desc">2 oz de mezcal artesanal poblano con 7 años de reposo.</p>
+                <button class="add-btn" onclick="add('Mezcal 7 Años', 110, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Mezcal de Cempasúchitl</span>
+                    <span class="product-price">$130</span>
+                </div>
+                <p class="product-desc">2 oz de mezcal de temporada.</p>
+                <button class="add-btn" onclick="add('Mezcal de Cempasúchitl', 130, 'bar')">Agregar</button>
+            </div>
+        </section>
+
+        <!-- CAFÉ -->
+        <section class="category" id="cafe">
+            <h2 class="category-title">Barra de Café</h2>
+            <p class="category-sub">Granos selectos, tostado artesanal</p>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Toro Negro</span>
+                    <span class="product-price">$60</span>
+                </div>
+                <p class="product-desc">Café americano y un shot de licor de vainilla.</p>
+                <button class="add-btn" onclick="add('Toro Negro', 60, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Latte con Piquete</span>
+                    <span class="product-price">$75</span>
+                </div>
+                <p class="product-desc">Espresso, mucha leche vaporizada, ligera espuma y shot de licor de vainilla.</p>
+                <button class="add-btn" onclick="add('Latte con Piquete', 75, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Americano</span>
+                    <span class="product-price">$35</span>
+                </div>
+                <p class="product-desc">Café suave y ligero, preparado con espresso y agua caliente.</p>
+                <button class="add-btn" onclick="add('Americano', 35, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Capuchino</span>
+                    <span class="product-price">$50</span>
+                </div>
+                <p class="product-desc">Espresso con leche vaporizada y abundante espuma.</p>
+                <button class="add-btn" onclick="add('Capuchino', 50, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Latte</span>
+                    <span class="product-price">$55</span>
+                </div>
+                <p class="product-desc">Espresso con generosa leche vaporizada y ligera espuma.</p>
+                <button class="add-btn" onclick="add('Latte', 55, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Nuttelatte</span>
+                    <span class="product-price">$70</span>
+                </div>
+                <p class="product-desc">Latte con crema de avellanas.</p>
+                <button class="add-btn" onclick="add('Nuttelatte', 70, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Cold Brew</span>
+                    <span class="product-price">$60</span>
+                </div>
+                <p class="product-desc">Infusión en frío de café. Sabor más suave y menos ácido.</p>
+                <button class="add-btn" onclick="add('Cold Brew', 60, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Café Tonic</span>
+                    <span class="product-price">$70</span>
+                </div>
+                <p class="product-desc">Espresso sobre tónica con hielo. Amargo, burbujeante y refrescante.</p>
+                <button class="add-btn" onclick="add('Café Tonic', 70, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Espresso</span>
+                    <span class="product-price">$35</span>
+                </div>
+                <p class="product-desc">Tiro corto de café intenso, puro y concentrado.</p>
+                <button class="add-btn" onclick="add('Espresso', 35, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Espresso Doble</span>
+                    <span class="product-price">$45</span>
+                </div>
+                <p class="product-desc">Doble carga de intensidad y carácter.</p>
+                <button class="add-btn" onclick="add('Espresso Doble', 45, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Infusiones</span>
+                    <span class="product-price">$35</span>
+                </div>
+                <p class="product-desc">Pregunta por las infusiones de temporada.</p>
+                <button class="add-btn" onclick="add('Infusiones', 35, 'bar')">Agregar</button>
+            </div>
+        </section>
+
+        <!-- BEBIDAS SIN ALCOHOL -->
+        <section class="category" id="sinalcohol">
+            <h2 class="category-title">Bebidas Sin Alcohol</h2>
+            <p class="category-sub">Refrescantes y deliciosas</p>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Agua Mineral</span>
+                    <span class="product-price">$35</span>
+                </div>
+                <p class="product-desc">Agua mineral natural.</p>
+                <button class="add-btn" onclick="add('Agua Mineral', 35, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Refresco</span>
+                    <span class="product-price">$35</span>
+                </div>
+                <p class="product-desc">Coca-Cola, Sprite o Sidral. Pregunta por disponibilidad.</p>
+                <button class="add-btn" onclick="add('Refresco', 35, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Limonada Natural</span>
+                    <span class="product-price">$45</span>
+                </div>
+                <p class="product-desc">Limonada fresca preparada al momento.</p>
+                <button class="add-btn" onclick="add('Limonada Natural', 45, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Soda de Fruta</span>
+                    <span class="product-price">$50</span>
+                </div>
+                <p class="product-desc">Soda natural de fruta de temporada. Sin alcohol.</p>
+                <button class="add-btn" onclick="add('Soda de Fruta', 50, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Agua Tónica</span>
+                    <span class="product-price">$40</span>
+                </div>
+                <p class="product-desc">Agua tónica premium.</p>
+                <button class="add-btn" onclick="add('Agua Tónica', 40, 'bar')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Infusiones</span>
+                    <span class="product-price">$35</span>
+                </div>
+                <p class="product-desc">Pregunta por las infusiones de temporada.</p>
+                <button class="add-btn" onclick="add('Infusiones', 35, 'bar')">Agregar</button>
+            </div>
+        </section>
+
+        <!-- POSTRES -->
+        <section class="category" id="postres">
+            <h2 class="category-title">Dulce Cierre</h2>
+            <p class="category-sub">Para terminar con dulzura</p>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Cheesecake de Guayaba</span>
+                    <span class="product-price">$100</span>
+                </div>
+                <p class="product-desc">Pastel de queso crema y requesón acompañado de mermelada de guayaba.</p>
+                <button class="add-btn" onclick="add('Cheesecake de Guayaba', 100, 'kitchen')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Mousse de Chocolate</span>
+                    <span class="product-price">$60</span>
+                </div>
+                <p class="product-desc">Postre francés de textura suave y delicioso sabor a chocolate.</p>
+                <button class="add-btn" onclick="add('Mousse de Chocolate', 60, 'kitchen')">Agregar</button>
+            </div>
+
+            <div class="product">
+                <div class="product-row">
+                    <span class="product-name">Pan Francés</span>
+                    <span class="product-price">$80</span>
+                </div>
+                <p class="product-desc">Acompañado con compota de frutos rojos y miel de maple.</p>
+                <button class="add-btn" onclick="add('Pan Francés', 80, 'kitchen')">Agregar</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Button -->
+    <button class="cart-btn" id="cartBtn" onclick="openCart()">
+        <span class="cart-count" id="cartCount">0</span>
+        <span>Ver pedido</span>
+        <span id="cartTotal">$0</span>
+    </button>
+
+    <!-- Cart Modal -->
+    <div class="modal-bg" id="cartModal" onclick="if(event.target===this)closeCart()">
+        <div class="modal">
+            <div class="modal-head">
+                <h3>Tu Pedido</h3>
+                <button class="close-btn" onclick="closeCart()">×</button>
+            </div>
+            <div class="modal-body" id="cartItems"></div>
+            <div class="cart-foot">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cartTotalModal">$0</span>
+                </div>
+                <div id="errorBox"></div>
+                <div class="form-group">
+                    <label>Tu nombre *</label>
+                    <input type="text" id="nameInput" placeholder="Ej: Juan">
+                </div>
+                <div class="form-group">
+                    <label>Número de mesa *</label>
+                    <input type="text" id="tableInput" placeholder="Ej: 5, Barra, Terraza">
+                </div>
+                <div class="form-group">
+                    <label>WhatsApp (10 dígitos) *</label>
+                    <input type="tel" id="phoneInput" placeholder="Ej: 2221234567">
+                </div>
+                <div class="form-group">
+                    <label>Notas (opcional)</label>
+                    <textarea id="notesInput" placeholder="Ej: Sin cebolla, extra picante..."></textarea>
+                </div>
+                <button class="submit-btn" id="submitBtn" onclick="sendOrder()">Enviar Pedido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation -->
+    <div class="confirm-screen" id="confirmScreen">
+        <div class="confirm-icon">✓</div>
+        <h2>¡Pedido Enviado!</h2>
+        <p>Tu pedido ha sido recibido y está siendo preparado.</p>
+        <p>Llegará a tu mesa en breve.</p>
+        <p class="order-num" id="orderNum"></p>
+        <button class="new-order-btn" onclick="location.reload()">Hacer otro pedido</button>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // SUPABASE
+        var SUPABASE_URL = 'https://hcpccmnzzvmruybfoigp.supabase.co';
+        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjcGNjbW56enZtcnV5YmZvaWdwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1OTQwOTAsImV4cCI6MjA4NDE3MDA5MH0.bt7bDbhoKQQ_mgU0392LPmOJlC5j_9oRBLL09a3NtVs';
+        var sb = null;
+
+        // Cart
+        var cart = [];
+
+        // Init Supabase when needed
+        function getSupabase() {
+            if (!sb && window.supabase) {
+                sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            }
+            return sb;
+        }
+
+        // URL params
+        function getParam(name) {
+            var params = new URLSearchParams(window.location.search);
+            return params.get(name) || '';
+        }
+
+        // On load
+        window.onload = function() {
+            var mesa = getParam('mesa') || getParam('table') || getParam('m');
+            if (mesa) {
+                document.getElementById('tableBadge').textContent = 'Mesa ' + mesa;
+                document.getElementById('tableInput').value = mesa;
+                document.getElementById('tableInput').readOnly = true;
+                document.getElementById('tableInput').style.backgroundColor = '#f5f5f5';
+            }
+            loadCart();
+        };
+
+        // Navigation
+        function goTo(id) {
+            var btns = document.querySelectorAll('.nav-btn');
+            btns.forEach(function(b) { b.classList.remove('active'); });
+            event.target.classList.add('active');
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Scroll indicators for nav
+        function scrollNav(direction) {
+            var nav = document.getElementById('nav');
+            nav.scrollBy({ left: direction * 150, behavior: 'smooth' });
+        }
+
+        function updateScrollIndicators() {
+            var nav = document.getElementById('nav');
+            var leftBtn = document.getElementById('scrollLeft');
+            var rightBtn = document.getElementById('scrollRight');
+
+            if (nav.scrollLeft <= 10) {
+                leftBtn.classList.add('hidden');
+            } else {
+                leftBtn.classList.remove('hidden');
+            }
+
+            if (nav.scrollLeft >= nav.scrollWidth - nav.clientWidth - 10) {
+                rightBtn.classList.add('hidden');
+            } else {
+                rightBtn.classList.remove('hidden');
+            }
+        }
+
+        // Init scroll indicators
+        document.getElementById('nav').addEventListener('scroll', updateScrollIndicators);
+        window.addEventListener('resize', updateScrollIndicators);
+        setTimeout(updateScrollIndicators, 100);
+
+        // Add to cart
+        function add(name, price, station) {
+            var item = cart.find(function(i) { return i.name === name; });
+            if (item) {
+                item.qty++;
+            } else {
+                cart.push({ name: name, price: price, station: station, qty: 1 });
+            }
+            saveCart();
+            updateUI();
+            toast(name + ' agregado');
+
+            // Button feedback
+            var btn = event.target;
+            btn.classList.add('added');
+            btn.textContent = '✓ Agregado';
+            setTimeout(function() {
+                btn.classList.remove('added');
+                btn.textContent = 'Agregar';
+            }, 1000);
+        }
+
+        // Update qty
+        function changeQty(name, delta) {
+            var item = cart.find(function(i) { return i.name === name; });
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    cart = cart.filter(function(i) { return i.name !== name; });
+                }
+                saveCart();
+                updateUI();
+                renderCart();
+            }
+        }
+
+        // Calculations
+        function totalCount() {
+            return cart.reduce(function(s, i) { return s + i.qty; }, 0);
+        }
+        function totalPrice() {
+            return cart.reduce(function(s, i) { return s + i.price * i.qty; }, 0);
+        }
+
+        // Update UI
+        function updateUI() {
+            var count = totalCount();
+            var total = totalPrice();
+            document.getElementById('cartCount').textContent = count;
+            document.getElementById('cartTotal').textContent = '$' + total;
+            document.getElementById('cartTotalModal').textContent = '$' + total;
+            var btn = document.getElementById('cartBtn');
+            if (count > 0) {
+                btn.classList.add('show');
+            } else {
+                btn.classList.remove('show');
+            }
+        }
+
+        // Render cart
+        function renderCart() {
+            var el = document.getElementById('cartItems');
+            if (cart.length === 0) {
+                el.innerHTML = '<div class="cart-empty">Tu carrito está vacío</div>';
+                return;
+            }
+            var html = '';
+            cart.forEach(function(item) {
+                html += '<div class="cart-item">' +
+                    '<div><div class="cart-item-name">' + item.name + '</div>' +
+                    '<div class="cart-item-price">$' + item.price + ' c/u</div></div>' +
+                    '<div class="qty-controls">' +
+                    '<button class="qty-btn" onclick="changeQty(\'' + item.name.replace(/'/g, "\\'") + '\', -1)">−</button>' +
+                    '<span class="qty-num">' + item.qty + '</span>' +
+                    '<button class="qty-btn" onclick="changeQty(\'' + item.name.replace(/'/g, "\\'") + '\', 1)">+</button>' +
+                    '</div></div>';
+            });
+            el.innerHTML = html;
+        }
+
+        // Save/Load cart
+        function saveCart() {
+            try { sessionStorage.setItem('teokaye_cart', JSON.stringify(cart)); } catch(e) {}
+        }
+        function loadCart() {
+            try {
+                var saved = sessionStorage.getItem('teokaye_cart');
+                if (saved) cart = JSON.parse(saved);
+                updateUI();
+            } catch(e) { cart = []; }
+        }
+
+        // Modal
+        function openCart() {
+            renderCart();
+            document.getElementById('cartModal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeCart() {
+            document.getElementById('cartModal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // Send order
+        function sendOrder() {
+            var name = document.getElementById('nameInput').value.trim();
+            var tableName = document.getElementById('tableInput').value.trim();
+            var phone = document.getElementById('phoneInput').value.replace(/\D/g, '');
+            var notes = document.getElementById('notesInput').value.trim();
+            var errBox = document.getElementById('errorBox');
+            var btn = document.getElementById('submitBtn');
+
+            errBox.innerHTML = '';
+
+            if (!name || name.length < 2) {
+                errBox.innerHTML = '<div class="error-box">Por favor ingresa tu nombre</div>';
+                return;
+            }
+            if (!tableName) {
+                errBox.innerHTML = '<div class="error-box">Por favor ingresa el número de mesa</div>';
+                return;
+            }
+            if (phone.length !== 10) {
+                errBox.innerHTML = '<div class="error-box">El WhatsApp debe tener 10 dígitos</div>';
+                return;
+            }
+            if (cart.length === 0) {
+                errBox.innerHTML = '<div class="error-box">Tu carrito está vacío</div>';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Enviando...';
+
+            var supabase = getSupabase();
+            if (!supabase) {
+                errBox.innerHTML = '<div class="error-box">Error de conexión. Intenta de nuevo.</div>';
+                btn.disabled = false;
+                btn.textContent = 'Enviar Pedido';
+                return;
+            }
+
+            // First, find the table by name
+            var tableSearchName = tableName.toLowerCase().replace(/mesa\s*/i, '').trim();
+
+            supabase.from('tables').select('id, name').then(function(tablesRes) {
+                if (tablesRes.error) throw tablesRes.error;
+
+                // Find matching table (try exact match first, then partial)
+                var foundTable = null;
+                var tables = tablesRes.data || [];
+
+                for (var i = 0; i < tables.length; i++) {
+                    var t = tables[i];
+                    var tName = t.name.toLowerCase();
+                    // Match "Mesa 4" with input "4" or "mesa 4"
+                    if (tName === 'mesa ' + tableSearchName ||
+                        tName === tableSearchName ||
+                        tName.replace('mesa ', '') === tableSearchName) {
+                        foundTable = t;
+                        break;
+                    }
+                }
+
+                var tableId = foundTable ? foundTable.id : null;
+
+                // Create ticket with table_id if found
+                return supabase.from('tickets').insert({
+                    table_id: tableId,
+                    customer_name: name,
+                    customer_phone: phone,
+                    notes: notes || null,
+                    status: 'open',
+                    source: 'qr'
+                }).select().single().then(function(res) {
+                    if (res.error) throw res.error;
+
+                    var ticket = res.data;
+
+                    // Update table status to occupied if we found it
+                    var updateTablePromise = tableId ?
+                        supabase.from('tables').update({
+                            status: 'occupied',
+                            current_ticket_id: ticket.id,
+                            occupied_at: new Date().toISOString()
+                        }).eq('id', tableId) :
+                        Promise.resolve({ error: null });
+
+                    return updateTablePromise.then(function() {
+                        // Insert ticket items
+                        var items = cart.map(function(item) {
+                            return {
+                                ticket_id: ticket.id,
+                                quantity: item.qty,
+                                unit_price: item.price,
+                                notes: item.name,
+                                status: 'pending',
+                                station: item.station
+                            };
+                        });
+
+                        return supabase.from('ticket_items').insert(items).then(function(res2) {
+                            if (res2.error) throw res2.error;
+
+                            // Success
+                            document.getElementById('orderNum').textContent = 'Pedido #' + ticket.id.slice(0, 8).toUpperCase();
+                            document.getElementById('confirmScreen').classList.add('show');
+                            closeCart();
+                            cart = [];
+                            saveCart();
+                            updateUI();
+                        });
+                    });
+                });
+            }).catch(function(err) {
+                console.error('Error:', err);
+                errBox.innerHTML = '<div class="error-box">Error: ' + (err.message || 'No se pudo enviar') + '</div>';
+            }).finally(function() {
+                btn.disabled = false;
+                btn.textContent = 'Enviar Pedido';
+            });
+        }
+
+        // Toast
+        function toast(msg) {
+            var el = document.getElementById('toast');
+            el.textContent = msg;
+            el.classList.add('show');
+            setTimeout(function() { el.classList.remove('show'); }, 2000);
+        }
+    </script>
+</body>
+</html>

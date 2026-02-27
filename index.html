@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Teokaye | El Hogar de las Artes Sensoriales</title>
+    <meta name="description" content="Barra de café, galería de arte y foro cultural en San Pedro Cholula. Aquí es.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Teokaye | Café, Arte y Cultura">
+    <meta property="og:description" content="El hogar de las artes sensoriales contemporáneas de México.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_MX">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css?v=25">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": ["CafeOrCoffeeShop", "ArtGallery"],
+        "name": "Teokaye",
+        "description": "Barra de café, galería de arte y foro cultural",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Av. 6 Ote. 402A",
+            "addressLocality": "San Pedro Cholula",
+            "addressRegion": "Puebla",
+            "addressCountry": "MX"
+        },
+        "telephone": "+522213628681"
+    }
+    </script>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor">
+        <div class="cursor__dot"></div>
+        <div class="cursor__circle"></div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+        <div class="progress-bar__fill"></div>
+    </div>
+
+    <!-- Loader -->
+    <div class="loader">
+        <div class="loader__content">
+            <div class="loader__logo-wrap">
+                <img src="logo-teokaye.png" alt="" class="loader__logo">
+                <div class="loader__logo-glow"></div>
+            </div>
+            <div class="loader__text">
+                <span>El sagrado arte</span>
+                <span>de compartir</span>
+            </div>
+            <div class="loader__progress">
+                <div class="loader__bar"></div>
+            </div>
+            <div class="loader__counter">
+                <span class="loader__counter-num">0</span>%
+            </div>
+        </div>
+        <div class="loader__reveal loader__reveal--1"></div>
+        <div class="loader__reveal loader__reveal--2"></div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="nav__logo">
+                <img src="logo-teokaye.png" alt="Teokaye">
+            </a>
+
+            <div class="nav__center">
+                <div class="nav__location">
+                    <span class="nav__location-dot"></span>
+                    <span>Cholula, Puebla</span>
+                </div>
+            </div>
+
+            <div class="nav__actions">
+                <a href="https://maps.app.goo.gl/mW4ZBzEHexEErw7R8" class="nav__cta" target="_blank" rel="noopener">
+                    <span>Visítanos</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                </a>
+                <button class="nav__toggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="menu">
+        <div class="menu__bg"></div>
+        <div class="menu__content">
+            <nav class="menu__nav">
+                <a href="#origen" class="menu__link" data-index="01">Nuestro Origen</a>
+                <a href="#experiencias" class="menu__link" data-index="02">Experiencias</a>
+                <a href="#filosofia" class="menu__link" data-index="03">Filosofía</a>
+                <a href="#eventos" class="menu__link" data-index="04">Eventos</a>
+                <a href="#galeria" class="menu__link" data-index="05">Galería</a>
+                <a href="#contacto" class="menu__link" data-index="06">Contacto</a>
+            </nav>
+            <div class="menu__footer">
+                <div class="menu__social">
+                    <a href="https://instagram.com/teokaye.mx" target="_blank" rel="noopener" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="18" cy="6" r="1" fill="currentColor"/></svg>
+                        <span>Instagram</span>
+                    </a>
+                    <a href="https://facebook.com/teokaye.mx" target="_blank" rel="noopener" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z"/></svg>
+                        <span>Facebook</span>
+                    </a>
+                    <a href="https://tiktok.com/@teokaye.mx" target="_blank" rel="noopener" aria-label="TikTok">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg>
+                        <span>TikTok</span>
+                    </a>
+                </div>
+                <a href="tel:+522213628681" class="menu__phone">+52 221 362 8681</a>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero__bg">
+                <div class="hero__gradient"></div>
+                <div class="hero__gradient-2"></div>
+                <div class="hero__noise"></div>
+                <div class="hero__grid-pattern"></div>
+            </div>
+
+            <!-- Decorative Elements -->
+            <div class="hero__deco hero__deco--1"></div>
+            <div class="hero__deco hero__deco--2"></div>
+            <div class="hero__deco hero__deco--3"></div>
+
+            <div class="hero__frame">
+                <span class="hero__frame-corner hero__frame-corner--tl"></span>
+                <span class="hero__frame-corner hero__frame-corner--tr"></span>
+                <span class="hero__frame-corner hero__frame-corner--bl"></span>
+                <span class="hero__frame-corner hero__frame-corner--br"></span>
+            </div>
+
+            <div class="hero__content">
+                <div class="hero__badge">
+                    <span class="hero__badge-line"></span>
+                    <span>San Pedro Cholula</span>
+                    <span class="hero__badge-dot"></span>
+                    <span>Est. 2024</span>
+                    <span class="hero__badge-line"></span>
+                </div>
+
+                <h1 class="hero__title">
+                    <span class="hero__title-line">
+                        <span class="hero__title-word">El</span>
+                        <span class="hero__title-word">hogar</span>
+                        <span class="hero__title-word">de</span>
+                        <span class="hero__title-word">las</span>
+                    </span>
+                    <span class="hero__title-line hero__title-line--accent">
+                        <span class="hero__title-word">artes</span>
+                        <span class="hero__title-word">sensoriales</span>
+                    </span>
+                </h1>
+
+                <div class="hero__tagline">
+                    <span class="hero__tagline-item">
+                        <span class="hero__tagline-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+                        </span>
+                        <span>Barra de café</span>
+                    </span>
+                    <span class="hero__tagline-sep"></span>
+                    <span class="hero__tagline-item">
+                        <span class="hero__tagline-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
+                        </span>
+                        <span>Galería de arte</span>
+                    </span>
+                    <span class="hero__tagline-sep"></span>
+                    <span class="hero__tagline-item">
+                        <span class="hero__tagline-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        </span>
+                        <span>Foro cultural</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="hero__footer">
+                <a href="#origen" class="hero__scroll">
+                    <span class="hero__scroll-text">Descubrir</span>
+                    <span class="hero__scroll-line">
+                        <span class="hero__scroll-dot"></span>
+                    </span>
+                </a>
+
+                <div class="hero__motto">
+                    <span class="hero__motto-line"></span>
+                    <span>Café · Arte · Cultura</span>
+                    <span class="hero__motto-line"></span>
+                </div>
+            </div>
+
+            <div class="hero__marquee">
+                <div class="hero__marquee-track">
+                    <span>Barra de café</span>
+                    <span class="hero__marquee-dot"></span>
+                    <span>Galería de arte contemporáneo</span>
+                    <span class="hero__marquee-dot"></span>
+                    <span>Foro cultural</span>
+                    <span class="hero__marquee-dot"></span>
+                    <span>Música en vivo</span>
+                    <span class="hero__marquee-dot"></span>
+                    <span>Talleres creativos</span>
+                    <span class="hero__marquee-dot"></span>
+                    <span>Barra de café</span>
+                    <span class="hero__marquee-dot"></span>
+                    <span>Galería de arte contemporáneo</span>
+                    <span class="hero__marquee-dot"></span>
+                    <span>Foro cultural</span>
+                    <span class="hero__marquee-dot"></span>
+                    <span>Música en vivo</span>
+                    <span class="hero__marquee-dot"></span>
+                    <span>Talleres creativos</span>
+                    <span class="hero__marquee-dot"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Divider -->
+        <div class="divider">
+            <span class="divider__line"></span>
+            <span class="divider__text">Teokaye</span>
+            <span class="divider__line"></span>
+        </div>
+
+        <!-- Origen -->
+        <section class="origen" id="origen">
+            <div class="origen__container">
+                <div class="origen__header">
+                    <div class="section-label-wrap">
+                        <span class="section-label">
+                            <span class="section-label__num">01</span>
+                            <span class="section-label__line"></span>
+                            <span class="section-label__text">Nuestro Origen</span>
+                        </span>
+                    </div>
+                    <h2 class="section-title origen__title">
+                        <span class="section-title__line">Donde nace</span>
+                        <span class="section-title__line section-title__line--accent">la experiencia</span>
+                    </h2>
+                </div>
+
+                <div class="origen__grid">
+                    <div class="origen__visual">
+                        <div class="origen__img-wrap origen__img-wrap--1">
+                            <div class="origen__img origen__img--1"></div>
+                            <div class="origen__img-overlay"></div>
+                        </div>
+                        <div class="origen__img-wrap origen__img-wrap--2">
+                            <div class="origen__img origen__img--2"></div>
+                            <div class="origen__img-overlay"></div>
+                        </div>
+                        <div class="origen__img-caption">
+                            <span class="origen__img-caption-line"></span>
+                            <span>Interior del espacio, 2024</span>
+                        </div>
+                        <div class="origen__visual-deco"></div>
+                    </div>
+
+                    <div class="origen__content">
+                        <div class="origen__intro">
+                            <p class="origen__lead">Un lugar donde sentirte como en casa. Aquí es.</p>
+                        </div>
+
+                        <div class="origen__text">
+                            <p>Teokaye es cafetería, galería y foro cultural. Un espacio donde el buen café se disfruta rodeado de arte, música y buena compañía.</p>
+                            <p><em>Teokaye</em> significa compartir en las lenguas de los pueblos Na'ayeri y Wixárika de Nayarit. Y eso es lo que hacemos aquí: compartir.</p>
+                        </div>
+
+                        <blockquote class="origen__quote">
+                            <span class="origen__quote-mark">"</span>
+                            <p>Aquí es. El lugar que estabas buscando.</p>
+                            <footer class="origen__quote-author">
+                                <span class="origen__quote-line"></span>
+                                <span>Teokaye</span>
+                            </footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Divider -->
+        <div class="divider divider--dark">
+            <span class="divider__line"></span>
+            <span class="divider__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2v20M2 12h20"/></svg>
+            </span>
+            <span class="divider__line"></span>
+        </div>
+
+        <!-- Experiencias -->
+        <section class="experiencias" id="experiencias">
+            <div class="experiencias__bg">
+                <div class="experiencias__gradient"></div>
+            </div>
+
+            <div class="experiencias__container">
+                <div class="experiencias__header">
+                    <div class="section-label-wrap">
+                        <span class="section-label section-label--light">
+                            <span class="section-label__num">02</span>
+                            <span class="section-label__line"></span>
+                            <span class="section-label__text">Experiencias</span>
+                        </span>
+                    </div>
+                    <div class="experiencias__title-wrap">
+                        <h2 class="section-title section-title--light">Tres espacios,</h2>
+                        <h2 class="section-title section-title--outline">un hogar</h2>
+                    </div>
+                    <p class="experiencias__intro">Café, arte y cultura en un solo lugar.</p>
+                </div>
+
+                <div class="experiencias__grid">
+                    <!-- Cafeteria -->
+                    <article class="exp" data-exp="cafe">
+                        <div class="exp__visual">
+                            <div class="exp__img"></div>
+                            <div class="exp__img-overlay"></div>
+                            <span class="exp__number">01</span>
+                            <a href="/menu" class="exp__visual-hover" target="_blank" rel="noopener">
+                                <span>Ver menú</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                            </a>
+                        </div>
+                        <div class="exp__content">
+                            <div class="exp__header">
+                                <div class="exp__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M17 8h1a4 4 0 010 8h-1M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z"/>
+                                        <path d="M6 1v3M10 1v3M14 1v3"/>
+                                    </svg>
+                                </div>
+                                <h3 class="exp__title">Cafetería</h3>
+                                <p class="exp__subtitle">Café que sabe a casa</p>
+                            </div>
+                            <p class="exp__desc">Barra de café, bebidas de autor, mezcal artesanal y antojitos para compartir.</p>
+                            <ul class="exp__features">
+                                <li>Bebidas de autor: Teokayita, Tyruara, Mezcalita</li>
+                                <li>Mezcal artesanal poblano y cócteles</li>
+                                <li>Chapatas, tapas y postres artesanales</li>
+                            </ul>
+                            <a href="/menu" class="exp__link" target="_blank" rel="noopener">
+                                <span>Ver menú completo</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Galeria -->
+                    <article class="exp" data-exp="galeria">
+                        <div class="exp__visual">
+                            <div class="exp__img"></div>
+                            <div class="exp__img-overlay"></div>
+                            <span class="exp__number">02</span>
+                            <a href="https://xurabe.com" class="exp__visual-hover" target="_blank" rel="noopener">
+                                <span>Ver galería</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                            </a>
+                        </div>
+                        <div class="exp__content">
+                            <div class="exp__header">
+                                <div class="exp__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                                        <path d="M21 15l-5-5L5 21"/>
+                                    </svg>
+                                </div>
+                                <h3 class="exp__title">Galería</h3>
+                                <p class="exp__subtitle">Arte para todos</p>
+                            </div>
+                            <p class="exp__desc">Arte mexicano que puedes ver mientras disfrutas tu café. Exposiciones nuevas cada dos meses.</p>
+                            <div class="exp__current">
+                                <span class="exp__current-label">Exposición actual</span>
+                                <p class="exp__current-title">"Xurabe"</p>
+                                <p class="exp__current-artist">Paula García Serrano</p>
+                            </div>
+                            <a href="https://xurabe.com" class="exp__link" target="_blank" rel="noopener">
+                                <span>Explorar galería</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Foro -->
+                    <article class="exp" data-exp="foro">
+                        <div class="exp__visual">
+                            <div class="exp__img"></div>
+                            <div class="exp__img-overlay"></div>
+                            <span class="exp__number">03</span>
+                            <a href="https://foro.teokaye.mx" class="exp__visual-hover" target="_blank" rel="noopener">
+                                <span>Ver eventos</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                            </a>
+                        </div>
+                        <div class="exp__content">
+                            <div class="exp__header">
+                                <div class="exp__icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M12 2a3 3 0 00-3 3v7a3 3 0 006 0V5a3 3 0 00-3-3z"/>
+                                        <path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/>
+                                    </svg>
+                                </div>
+                                <h3 class="exp__title">Foro</h3>
+                                <p class="exp__subtitle">Música, charlas y más</p>
+                            </div>
+                            <p class="exp__desc">Música en vivo, talleres y proyecciones de cine. Un espacio pequeño para que todo se sienta cercano.</p>
+                            <ul class="exp__features">
+                                <li>Jazz, folk, electrónica, spoken word</li>
+                                <li>Talleres con artistas invitados</li>
+                                <li>Ciclos de cine independiente</li>
+                            </ul>
+                            <a href="https://foro.teokaye.mx" class="exp__link" target="_blank" rel="noopener">
+                                <span>Ver calendario</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filosofia -->
+        <section class="filosofia" id="filosofia">
+            <div class="filosofia__bg">
+                <div class="filosofia__pattern"></div>
+                <div class="filosofia__glow"></div>
+            </div>
+
+            <div class="filosofia__container">
+                <div class="filosofia__header">
+                    <div class="section-label-wrap">
+                        <span class="section-label section-label--light">
+                            <span class="section-label__num">03</span>
+                            <span class="section-label__line"></span>
+                            <span class="section-label__text">Filosofía</span>
+                        </span>
+                    </div>
+                    <h2 class="filosofia__title">
+                        <span>Lo que nos hace</span>
+                        <em>diferentes</em>
+                    </h2>
+                </div>
+
+                <div class="filosofia__grid">
+                    <div class="filosofia__item" data-value="01">
+                        <div class="filosofia__item-num">01</div>
+                        <div class="filosofia__icon">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1">
+                                <path d="M24 4v40M4 24h40M12 12l24 24M36 12L12 36"/>
+                            </svg>
+                        </div>
+                        <h3>Tu casa</h3>
+                        <p>Aquí te sientes como en casa. Vienes a pasar el rato, a trabajar, a platicar o simplemente a estar.</p>
+                        <span class="filosofia__item-line"></span>
+                    </div>
+
+                    <div class="filosofia__item" data-value="02">
+                        <div class="filosofia__item-num">02</div>
+                        <div class="filosofia__icon">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1">
+                                <circle cx="24" cy="24" r="20"/>
+                                <circle cx="24" cy="24" r="12"/>
+                                <circle cx="24" cy="24" r="4"/>
+                            </svg>
+                        </div>
+                        <h3>Para todos</h3>
+                        <p>Buen café, buen arte, buena música. Sin complicaciones. La cultura es para disfrutarla.</p>
+                        <span class="filosofia__item-line"></span>
+                    </div>
+
+                    <div class="filosofia__item" data-value="03">
+                        <div class="filosofia__item-num">03</div>
+                        <div class="filosofia__icon">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1">
+                                <path d="M8 24c0-8.837 7.163-16 16-16s16 7.163 16 16"/>
+                                <path d="M14 24c0-5.523 4.477-10 10-10s10 4.477 10 10"/>
+                                <circle cx="24" cy="24" r="3"/>
+                            </svg>
+                        </div>
+                        <h3>Conexión</h3>
+                        <p>Un lugar para encontrarte con amigos, conocer gente nueva y crear buenos recuerdos.</p>
+                        <span class="filosofia__item-line"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Proximos Eventos -->
+        <section class="eventos" id="eventos">
+            <div class="eventos__container">
+                <div class="eventos__header">
+                    <div class="section-label-wrap">
+                        <span class="section-label section-label--light">
+                            <span class="section-label__num">04</span>
+                            <span class="section-label__line"></span>
+                            <span class="section-label__text">Agenda</span>
+                        </span>
+                    </div>
+                    <h2 class="section-title section-title--light eventos__title">
+                        <span class="section-title__line">Próximos</span>
+                        <span class="section-title__line section-title__line--accent">eventos</span>
+                    </h2>
+                </div>
+
+                <div class="eventos__grid">
+                    <article class="evento">
+                        <div class="evento__date">
+                            <span class="evento__day">24</span>
+                            <span class="evento__month">ENE</span>
+                        </div>
+                        <div class="evento__content">
+                            <span class="evento__category">Música de Autor</span>
+                            <h3 class="evento__title">Laura Murcia</h3>
+                            <p class="evento__desc">Música de autor en vivo. Una noche íntima con café de especialidad.</p>
+                            <div class="evento__meta">
+                                <span class="evento__time">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                    20:00 hrs
+                                </span>
+                                <span class="evento__price">$300 MXN</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="evento">
+                        <div class="evento__date">
+                            <span class="evento__day">30</span>
+                            <span class="evento__month">ENE</span>
+                        </div>
+                        <div class="evento__content">
+                            <span class="evento__category">Música de Autor</span>
+                            <h3 class="evento__title">Eve Matin</h3>
+                            <p class="evento__desc">Música de autor en vivo. Una noche íntima con café de especialidad.</p>
+                            <div class="evento__meta">
+                                <span class="evento__time">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                    20:00 hrs
+                                </span>
+                                <span class="evento__price">Cooperación voluntaria</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="evento">
+                        <div class="evento__date">
+                            <span class="evento__day">31</span>
+                            <span class="evento__month">ENE</span>
+                        </div>
+                        <div class="evento__content">
+                            <span class="evento__category">Música de Autor</span>
+                            <h3 class="evento__title">Rafa León</h3>
+                            <p class="evento__desc">Música de autor en vivo. Una noche íntima con café de especialidad.</p>
+                            <div class="evento__meta">
+                                <span class="evento__time">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                    20:00 hrs
+                                </span>
+                                <span class="evento__price">Cooperación voluntaria</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="eventos__footer">
+                    <a href="https://foro.teokaye.mx" class="eventos__cta" target="_blank" rel="noopener">
+                        <span>Ver calendario completo</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galeria Visual -->
+        <section class="galeria" id="galeria">
+            <div class="galeria__container">
+                <div class="galeria__header">
+                    <div class="section-label-wrap">
+                        <span class="section-label">
+                            <span class="section-label__num">05</span>
+                            <span class="section-label__line"></span>
+                            <span class="section-label__text">Galería</span>
+                        </span>
+                    </div>
+                    <h2 class="section-title">Momentos</h2>
+                    <p class="galeria__subtitle">Fragmentos de lo que vivimos cada día</p>
+                </div>
+
+                <div class="galeria__grid">
+                    <figure class="galeria__item galeria__item--wide">
+                        <div class="galeria__img"></div>
+                        <figcaption class="galeria__caption">
+                            <span class="galeria__caption-num">01</span>
+                            <span class="galeria__caption-text">Fachada de Teokaye</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="galeria__item">
+                        <div class="galeria__img"></div>
+                        <figcaption class="galeria__caption">
+                            <span class="galeria__caption-num">02</span>
+                            <span class="galeria__caption-text">Arte latte</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="galeria__item galeria__item--tall">
+                        <div class="galeria__img"></div>
+                        <figcaption class="galeria__caption">
+                            <span class="galeria__caption-num">03</span>
+                            <span class="galeria__caption-text">Exposición Xurabe</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="galeria__item">
+                        <div class="galeria__img"></div>
+                        <figcaption class="galeria__caption">
+                            <span class="galeria__caption-num">04</span>
+                            <span class="galeria__caption-text">Teokayita</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="galeria__item galeria__item--wide">
+                        <div class="galeria__img"></div>
+                        <figcaption class="galeria__caption">
+                            <span class="galeria__caption-num">05</span>
+                            <span class="galeria__caption-text">Tortilla española</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="galeria__item">
+                        <div class="galeria__img"></div>
+                        <figcaption class="galeria__caption">
+                            <span class="galeria__caption-num">06</span>
+                            <span class="galeria__caption-text">El ritual del café</span>
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <div class="galeria__footer">
+                    <a href="https://instagram.com/teokaye.mx" class="galeria__cta" target="_blank" rel="noopener">
+                        <span class="galeria__cta-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                                <circle cx="12" cy="12" r="4"/>
+                                <circle cx="18" cy="6" r="1" fill="currentColor"/>
+                            </svg>
+                        </span>
+                        <span class="galeria__cta-content">
+                            <span class="galeria__cta-text">Síguenos en Instagram</span>
+                            <span class="galeria__cta-handle">@teokaye.mx</span>
+                        </span>
+                        <span class="galeria__cta-arrow">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonios -->
+        <section class="testimonios">
+            <div class="testimonios__container">
+                <div class="testimonios__header">
+                    <span class="testimonios__label">Lo que dicen de nosotros</span>
+                    <div class="testimonios__rating">
+                        <div class="testimonios__stars">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <span class="testimonios__score">5.0 · 46 reseñas en Google</span>
+                    </div>
+                </div>
+
+                <div class="testimonios__grid">
+                    <blockquote class="testimonio">
+                        <div class="testimonio__content">
+                            <p>Un lugar del sagrado compartir. Siempre llega gente mágica e inspiradora. Lleno de arte, comida super rica, café delicioso. Siempre se crean encuentros inolvidables.</p>
+                        </div>
+                        <footer class="testimonio__author">
+                            <div class="testimonio__avatar">C</div>
+                            <div class="testimonio__info">
+                                <cite class="testimonio__name">Carola Saez</cite>
+                                <span class="testimonio__badge">Local Guide</span>
+                            </div>
+                        </footer>
+                    </blockquote>
+
+                    <blockquote class="testimonio">
+                        <div class="testimonio__content">
+                            <p>Excelente lugar para despertarnos un nuevo sentir a través de su exposición de arte. Me encanta el matcha, el café y los artistas invitados con música en vivo.</p>
+                        </div>
+                        <footer class="testimonio__author">
+                            <div class="testimonio__avatar">S</div>
+                            <div class="testimonio__info">
+                                <cite class="testimonio__name">Senda Prados</cite>
+                                <span class="testimonio__badge">Google</span>
+                            </div>
+                        </footer>
+                    </blockquote>
+
+                    <blockquote class="testimonio">
+                        <div class="testimonio__content">
+                            <p>Es uno de los espacios con mejor vibra y más auténtica de Cholula. Visítenlo y luego me dicen.</p>
+                        </div>
+                        <footer class="testimonio__author">
+                            <div class="testimonio__avatar">D</div>
+                            <div class="testimonio__info">
+                                <cite class="testimonio__name">Diego Salas</cite>
+                                <span class="testimonio__badge">Local Guide</span>
+                            </div>
+                        </footer>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto -->
+        <section class="contacto" id="contacto">
+            <div class="contacto__bg">
+                <div class="contacto__pattern"></div>
+            </div>
+
+            <!-- Full-width Map -->
+            <div class="contacto__map-section">
+                <div class="contacto__map">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1885!2d-98.302686!3d19.0627005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cfc7007647e3cd%3A0x11720db87ddc3ae3!2sTeokaye%20%7C%20Caf%C3%A9%20-%20Galeria!5e0!3m2!1ses!2smx!4v1706000000000"
+                        loading="lazy"
+                        title="Ubicación de Teokaye">
+                    </iframe>
+                </div>
+                <div class="contacto__map-overlay">
+                    <div class="contacto__map-card">
+                        <div class="contacto__map-card-header">
+                            <span class="contacto__map-card-label">Ubicación</span>
+                            <h3>Teokaye</h3>
+                        </div>
+                        <address>
+                            Av. 6 Oriente 402A<br>
+                            San Pedro Cholula, Puebla
+                        </address>
+                        <a href="https://maps.app.goo.gl/mW4ZBzEHexEErw7R8" class="contacto__map-link" target="_blank" rel="noopener">
+                            <span>Abrir en Google Maps</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contacto__container">
+                <div class="contacto__header">
+                    <div class="section-label-wrap">
+                        <span class="section-label">
+                            <span class="section-label__num">06</span>
+                            <span class="section-label__line"></span>
+                            <span class="section-label__text">Contacto</span>
+                        </span>
+                    </div>
+                    <h2 class="contacto__title">
+                        <span>Ven a</span>
+                        <em>visitarnos</em>
+                    </h2>
+                </div>
+
+                <div class="contacto__grid">
+                    <div class="contacto__card">
+                        <div class="contacto__card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                        </div>
+                        <div class="contacto__card-content">
+                            <h4>Dirección</h4>
+                            <p>Av. 6 Oriente 402A<br>Col. San Miguel, C.P. 72760<br>San Pedro Cholula, Puebla</p>
+                        </div>
+                        <div class="contacto__card-num">01</div>
+                    </div>
+
+                    <div class="contacto__card">
+                        <div class="contacto__card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                        </div>
+                        <div class="contacto__card-content">
+                            <h4>Horario</h4>
+                            <p>Martes — Sábado<br><strong>11:00 — 21:00</strong><br><span class="contacto__closed">Domingo y Lunes cerrado</span></p>
+                        </div>
+                        <div class="contacto__card-num">02</div>
+                    </div>
+
+                    <div class="contacto__card">
+                        <div class="contacto__card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                            </svg>
+                        </div>
+                        <div class="contacto__card-content">
+                            <h4>Reservaciones</h4>
+                            <p><a href="tel:+522213628681">+52 221 362 8681</a><br><a href="mailto:hola@teokaye.mx">hola@teokaye.mx</a></p>
+                        </div>
+                        <div class="contacto__card-num">03</div>
+                    </div>
+                </div>
+
+                <div class="contacto__cta-wrap">
+                    <a href="https://wa.me/522213628681?text=Hola%20Teokaye" class="contacto__wa" target="_blank" rel="noopener">
+                        <span class="contacto__wa-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        </span>
+                        <span class="contacto__wa-content">
+                            <span class="contacto__wa-label">Contacto directo</span>
+                            <span class="contacto__wa-text">Escríbenos por WhatsApp</span>
+                        </span>
+                        <span class="contacto__wa-arrow">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__top-deco">
+            <span class="footer__top-line"></span>
+            <span class="footer__top-diamond"></span>
+            <span class="footer__top-line"></span>
+        </div>
+
+        <div class="footer__container">
+            <!-- Main Footer Content -->
+            <div class="footer__main">
+                <div class="footer__brand-section">
+                    <img src="logo-teokaye.png" alt="Teokaye" class="footer__logo">
+                    <p class="footer__statement">
+                        <span class="footer__statement-quote">"</span>
+                        Aquí es
+                    </p>
+                    <p class="footer__location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        San Pedro Cholula, Puebla
+                    </p>
+                    <div class="footer__brand-social">
+                        <a href="https://instagram.com/teokaye.mx" target="_blank" rel="noopener" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="18" cy="6" r="1" fill="currentColor"/></svg>
+                        </a>
+                        <a href="https://facebook.com/teokaye.mx" target="_blank" rel="noopener" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z"/></svg>
+                        </a>
+                        <a href="https://tiktok.com/@teokaye.mx" target="_blank" rel="noopener" aria-label="TikTok">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer__links-section">
+                    <div class="footer__col">
+                        <h4>
+                            <span class="footer__col-num">01</span>
+                            Explora
+                        </h4>
+                        <nav class="footer__nav">
+                            <a href="#origen">Nuestro Origen</a>
+                            <a href="#experiencias">Experiencias</a>
+                            <a href="#filosofia">Filosofía</a>
+                            <a href="#eventos">Eventos</a>
+                            <a href="#galeria">Galería</a>
+                        </nav>
+                    </div>
+
+                    <div class="footer__col">
+                        <h4>
+                            <span class="footer__col-num">02</span>
+                            Servicios
+                        </h4>
+                        <nav class="footer__nav">
+                            <a href="/menu" target="_blank" rel="noopener">Menú de Cafetería</a>
+                            <a href="https://xurabe.com" target="_blank" rel="noopener">Galería de Arte</a>
+                            <a href="https://foro.teokaye.mx" target="_blank" rel="noopener">Calendario de Eventos</a>
+                        </nav>
+                    </div>
+
+                    <div class="footer__col">
+                        <h4>
+                            <span class="footer__col-num">03</span>
+                            Contacto
+                        </h4>
+                        <nav class="footer__nav">
+                            <a href="tel:+522213628681">+52 221 362 8681</a>
+                            <a href="mailto:hola@teokaye.mx">hola@teokaye.mx</a>
+                            <a href="https://maps.app.goo.gl/mW4ZBzEHexEErw7R8" target="_blank" rel="noopener">Cómo Llegar</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="footer__bottom">
+                <div class="footer__copyright">
+                    <span>&copy; 2026 Teokaye</span>
+                    <span class="footer__sep"></span>
+                    <span>Hecho con amor en Cholula</span>
+                </div>
+                <a href="#" class="footer__back-top">
+                    <span class="footer__back-top-text">Volver arriba</span>
+                    <span class="footer__back-top-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer__pattern"></div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/522213628681" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <span class="wa-float__pulse"></span>
+        <span class="wa-float__pulse wa-float__pulse--2"></span>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
