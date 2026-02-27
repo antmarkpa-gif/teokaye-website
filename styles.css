@@ -504,6 +504,12 @@ body.menu-open .menu__bg {
     transform: translateY(20px);
     transition: opacity 0.5s 0.2s, transform 0.5s 0.2s var(--ease-out-expo);
     overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+.menu__content::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
 }
 
 body.menu-open .menu__content {
