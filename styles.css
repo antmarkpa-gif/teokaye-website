@@ -809,6 +809,25 @@ body.menu-open .menu__content {
     text-align: center;
 }
 
+/* Fallback: ensure content is visible even if GSAP fails */
+@keyframes ensureVisible {
+    to { opacity: 1; transform: none; }
+}
+
+.hero__content,
+.hero__badge,
+.hero__title,
+.hero__title-word,
+.hero__tagline,
+.hero__tagline-item,
+.hero__scroll,
+.hero__motto,
+.hero__marquee,
+.hero__frame-corner,
+.hero__deco {
+    animation: ensureVisible 0.01s 4s forwards;
+}
+
 .hero__badge {
     display: inline-flex;
     align-items: center;
