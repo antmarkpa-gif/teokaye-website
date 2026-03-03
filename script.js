@@ -78,10 +78,9 @@
             }, remaining);
         });
 
-        // Fallback - reduced from 6s to 4s
+        // Fallback
         setTimeout(() => {
             if (!isLoaded) {
-                console.log('Loader fallback triggered');
                 loader.classList.add('is-done');
                 setTimeout(() => {
                     loader.classList.add('is-hidden');
@@ -89,7 +88,7 @@
                     initAnimations();
                 }, 1000);
             }
-        }, 4000);
+        }, 6000);
     }
 
     // ========================================
@@ -233,20 +232,7 @@
     // GSAP ANIMATIONS
     // ========================================
     function initAnimations() {
-        // Fallback: ensure content is visible even if GSAP fails
-        setTimeout(() => {
-            document.querySelectorAll('.hero__content, .hero__title, .hero__badge, .hero__tagline, .hero__footer, .hero__scroll, .hero__motto, .hero__marquee, .hero__frame-corner, .hero__deco').forEach(el => {
-                if (el) {
-                    el.style.opacity = '1';
-                    el.style.transform = 'none';
-                }
-            });
-        }, 500);
-
-        if (typeof gsap === 'undefined') {
-            console.warn('GSAP not loaded');
-            return;
-        }
+        if (typeof gsap === 'undefined') return;
 
         gsap.registerPlugin(ScrollTrigger);
 
