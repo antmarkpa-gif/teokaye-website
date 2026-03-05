@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teokaye | Un lugar muy especial en Cholula, Puebla</title>
-    <meta name="description" content="Barra de café en San Pedro Cholula. Café mexicano, arte nayarita y música en vivo. Abierto Mar-Sáb 11am-9pm. A 5 min de la Pirámide.">
+    <meta name="description" content="Barra de café en San Pedro Cholula. Café mexicano, arte nayarita y música en vivo. Abierto Mar-Jue 11am-8pm, Vie-Sáb 11am-9pm. A 5 min de la Pirámide.">
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph -->
@@ -48,7 +48,13 @@
         "openingHoursSpecification": [
             {
                 "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                "dayOfWeek": ["Tuesday", "Wednesday", "Thursday"],
+                "opens": "11:00",
+                "closes": "20:00"
+            },
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Friday", "Saturday"],
                 "opens": "11:00",
                 "closes": "21:00"
             }
@@ -1665,14 +1671,17 @@
         const textEl = document.getElementById('open-text');
         const dotEl = statusEl.querySelector('.hero__open-dot');
 
-        // Cerrado: Domingo (0) y Lunes (1)
-        // Abierto: Martes (2) a Sábado (6), 11am-9pm
+        // Horarios:
+        // Dom (0), Lun (1): Cerrado
+        // Mar (2), Mié (3), Jue (4): 11am-8pm
+        // Vie (5), Sáb (6): 11am-9pm
 
         const isOpenDay = day >= 2 && day <= 6;
-        const isOpenHour = hour >= 11 && hour < 21;
+        const closeHour = (day === 5 || day === 6) ? 21 : 20; // Vie/Sáb hasta 9pm, resto hasta 8pm
+        const isOpenHour = hour >= 11 && hour < closeHour;
         const isOpen = isOpenDay && isOpenHour;
 
-        const days = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+        const closeTime = (day === 5 || day === 6) ? '9pm' : '8pm';
 
         if (day === 0) { // Domingo
             textEl.textContent = 'Cerrado hoy · Abrimos martes 11am';
@@ -1696,7 +1705,7 @@
                 dotEl.style.animation = 'none';
             }
         } else if (isOpen) {
-            textEl.textContent = 'Abierto ahora · Hasta las 9pm';
+            textEl.textContent = 'Abierto ahora · Hasta las ' + closeTime;
             dotEl.style.background = '#22C55E';
         }
 
