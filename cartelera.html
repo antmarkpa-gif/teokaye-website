@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartelera · Teokaye | El sagrado arte de compartir</title>
+  <meta name="description" content="Próximos eventos en Teokaye, espacio cultural en San Pedro Cholula. Conciertos íntimos, música de autor y experiencias únicas.">
+
+  <!-- META PIXEL - INSERT ID HERE -->
+  <script>
+    // !function(f,b,e,v,n,t,s)
+    // {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    // n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    // if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    // n.queue=[];t=b.createElement(e);t.async=!0;
+    // t.src=v;s=b.getElementsByTagName(e)[0];
+    // s.parentNode.insertBefore(t,s)}(window, document,'script',
+    // 'https://connect.facebook.net/en_US/fbevents.js');
+    // fbq('init', 'YOUR_PIXEL_ID_HERE');
+    // fbq('track', 'PageView');
+  </script>
+  <!-- END META PIXEL -->
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brown: #461D14;
+      --brown-light: #5a2a1f;
+      --terra: #B8826B;
+      --terra-light: #c99a86;
+      --sand: #E6E0D6;
+      --sand-dark: #d4cdc1;
+      --bg: #F5F1EB;
+      --bg-warm: #FAF7F2;
+      --white: #FFFDF9;
+      --green: #4A7C59;
+      --green-light: #5a9469;
+      --amber: #C4841D;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', Georgia, serif;
+      background-color: var(--bg);
+      color: var(--brown);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.03;
+      z-index: 1000;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* Sticky Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(245, 241, 235, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(70, 29, 20, 0.08);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .header-logo img {
+      height: 36px;
+      width: auto;
+    }
+
+    .header-wa {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--brown);
+      color: var(--white);
+      padding: 10px 16px;
+      border-radius: 100px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .header-wa:hover {
+      background: var(--brown-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(70, 29, 20, 0.2);
+    }
+
+    .header-wa svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .header-wa span {
+      display: none;
+    }
+
+    @media (min-width: 480px) {
+      .header-wa span {
+        display: inline;
+      }
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 100px 24px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(184, 130, 107, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(184, 130, 107, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(70, 29, 20, 0.03) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-deer {
+      width: 60px;
+      height: auto;
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+      animation-delay: 0.1s;
+    }
+
+    .hero-deer svg {
+      width: 100%;
+      height: auto;
+      fill: var(--brown);
+    }
+
+    .hero-title {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(2.2rem, 8vw, 3.5rem);
+      color: var(--brown);
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+      animation-delay: 0.2s;
+      line-height: 1;
+    }
+
+    .hero-tagline {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+      color: var(--terra);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+      animation-delay: 0.3s;
+    }
+
+    .hero-subtitle {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: var(--brown);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 10px 20px;
+      border: 1px solid var(--sand-dark);
+      border-radius: 100px;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+      animation-delay: 0.4s;
+    }
+
+    .hero-subtitle::before,
+    .hero-subtitle::after {
+      content: '✦';
+      font-size: 0.7rem;
+      color: var(--terra);
+    }
+
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    /* Section Title */
+    .section-header {
+      text-align: center;
+      padding: 40px 24px 32px;
+      position: relative;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--terra);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: var(--brown);
+      line-height: 1.1;
+    }
+
+    /* Events Grid */
+    .events-section {
+      padding: 0 16px 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .events-grid {
+      display: grid;
+      gap: 32px;
+    }
+
+    @media (min-width: 768px) {
+      .events-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .events-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* Event Card */
+    .event-card {
+      background: var(--white);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow:
+        0 2px 8px rgba(70, 29, 20, 0.04),
+        0 8px 32px rgba(70, 29, 20, 0.06);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .event-card:hover {
+      transform: translateY(-8px);
+      box-shadow:
+        0 8px 24px rgba(70, 29, 20, 0.08),
+        0 24px 48px rgba(70, 29, 20, 0.12);
+    }
+
+    .event-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--terra), var(--brown));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .event-card:hover::before {
+      opacity: 1;
+    }
+
+    /* Video Container - 9:16 aspect ratio */
+    .event-video-wrap {
+      position: relative;
+      background: var(--sand);
+      overflow: hidden;
+    }
+
+    .event-video-container {
+      position: relative;
+      width: 100%;
+      padding-top: 120%; /* Adjusted for better mobile view */
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .event-video-container {
+        padding-top: 140%;
+      }
+    }
+
+    .event-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .event-video-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, var(--sand) 0%, var(--terra-light) 50%, var(--terra) 100%);
+    }
+
+    .event-video-placeholder svg {
+      width: 64px;
+      height: 64px;
+      fill: var(--white);
+      opacity: 0.9;
+      margin-bottom: 16px;
+    }
+
+    .event-video-placeholder span {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.5rem;
+      color: var(--white);
+      opacity: 0.9;
+    }
+
+    .video-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      background: rgba(255, 253, 249, 0.95);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 24px rgba(70, 29, 20, 0.2);
+      z-index: 2;
+    }
+
+    .video-play-btn:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+      box-shadow: 0 8px 32px rgba(70, 29, 20, 0.3);
+    }
+
+    .video-play-btn svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--brown);
+      margin-left: 4px;
+    }
+
+    .video-play-btn.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Event Date Banner */
+    .event-date-banner {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--white);
+      padding: 12px 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(70, 29, 20, 0.15);
+      z-index: 3;
+      text-align: center;
+      min-width: 70px;
+    }
+
+    .event-date-day {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.8rem;
+      color: var(--brown);
+      line-height: 1;
+    }
+
+    .event-date-month {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--terra);
+      margin-top: 2px;
+    }
+
+    .event-date-weekday {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--brown);
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+
+    /* Event Content */
+    .event-content {
+      padding: 24px;
+    }
+
+    .event-time {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--terra);
+      margin-bottom: 12px;
+    }
+
+    .event-time svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .event-artist {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.6rem;
+      color: var(--brown);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .event-genre {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--terra) 0%, var(--brown) 100%);
+      color: var(--white);
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 6px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .event-description {
+      font-size: 0.95rem;
+      color: var(--brown);
+      opacity: 0.8;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .event-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .event-badge {
+      font-size: 0.75rem;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .event-badge svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .badge-coop {
+      background: rgba(74, 124, 89, 0.12);
+      color: var(--green);
+    }
+
+    .badge-cover {
+      background: rgba(196, 132, 29, 0.12);
+      color: var(--amber);
+    }
+
+    .badge-capacity {
+      background: var(--sand);
+      color: var(--brown);
+    }
+
+    .event-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background: var(--brown);
+      color: var(--white);
+      text-align: center;
+      padding: 16px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .event-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .event-cta:hover {
+      background: var(--brown-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(70, 29, 20, 0.25);
+    }
+
+    .event-cta:hover::before {
+      left: 100%;
+    }
+
+    .event-cta svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--brown);
+      color: var(--sand);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 0% 100%, rgba(184, 130, 107, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 0%, rgba(184, 130, 107, 0.15) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      position: relative;
+    }
+
+    .footer-grid {
+      display: grid;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    @media (min-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr;
+      }
+    }
+
+    .footer-brand {
+      max-width: 300px;
+    }
+
+    .footer-logo {
+      height: 48px;
+      width: auto;
+      margin-bottom: 20px;
+      filter: brightness(0) invert(0.9);
+    }
+
+    .footer-tagline {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--terra-light);
+      margin-bottom: 24px;
+    }
+
+    .footer-description {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      opacity: 0.8;
+    }
+
+    .footer-section h4 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .footer-section p,
+    .footer-section a {
+      font-size: 0.9rem;
+      line-height: 2;
+      color: var(--sand);
+      text-decoration: none;
+      display: block;
+      transition: color 0.2s ease;
+    }
+
+    .footer-section a:hover {
+      color: var(--white);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .footer-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .footer-social a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .footer-social svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--sand);
+    }
+
+    .footer-bottom {
+      padding-top: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+      text-align: center;
+    }
+
+    @media (min-width: 640px) {
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+
+    .footer-copyright {
+      font-size: 0.8rem;
+      opacity: 0.6;
+    }
+
+    .footer-map-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--terra);
+      color: var(--white);
+      padding: 12px 20px;
+      border-radius: 100px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .footer-map-btn:hover {
+      background: var(--terra-light);
+      transform: translateY(-2px);
+    }
+
+    .footer-map-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    /* Scroll animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Decorative elements */
+    .decorative-line {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--terra), transparent);
+      margin: 24px auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header class="header">
+    <a href="#" class="header-logo">
+      <img src="logo-teokaye.png" alt="Teokaye">
+    </a>
+    <a href="https://wa.me/521221362861" target="_blank" rel="noopener" class="header-wa">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      <span>Reservar</span>
+    </a>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-deer">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M38.9 97.7c-9-10.9-21.7-32.4-27.2-45.9-7.1-17.6-10-32.2-9.9-50.2.2-31.9 10.5-57.5 38.1-93.9 16-21.1 26.6-32.3 49.2-51.7l6.5-5.6 15-0.5c14-0.4 15.7-0.7 25.9-4.1 18.6-6.4 36.6-17.2 47.7-28.9 2.7-2.9 5.4-4.8 6.7-4.8 1.2 0 2.2 0.2 2.2 0.5 0 1.6-5.7 26.9-8.6 38.4-6.4 25-21.2 71.3-22.7 70.8-0.5-0.1-1.9-3-3.1-6.2-4.4-12-12.1-21.7-25-31.7l-9.1-7-0.6 19.3c-1 30-3.2 46.4-9.1 69.4-4.7 18.5-12.7 39.5-15 39.5-0.6 0-0.8-0.7-0.4-1.5 3.8-9.9-0.9-42.9-9.1-63.3-4.4-11.2-14.3-31.6-14.9-30.9-0.4 0.3-0.1 4.1 0.5 8.4 3.6 24.6 3 48.3-1.4 63.9-3.7 12.7-8.1 21.4-20.3 40.3-11.9 18.2-15.4 25.4-17.3 34.9-1.8 9.6-0.7 24.1 2.6 33.2 3.7 10.3 3.9 11 2.9 10.9-0.5 0-2.1-1.5-3.6-3.3z"/>
+      </svg>
+    </div>
+    <h1 class="hero-title">Teokaye</h1>
+    <p class="hero-tagline">El sagrado arte de compartir</p>
+    <p class="hero-subtitle">Próximos eventos · San Pedro Cholula</p>
+  </section>
+
+  <!-- Section Header -->
+  <div class="section-header">
+    <p class="section-label">Marzo & Abril 2025</p>
+    <h2 class="section-title">Noches de música íntima</h2>
+    <div class="decorative-line"></div>
+  </div>
+
+  <!-- Events Section -->
+  <section class="events-section">
+    <div class="events-grid">
+
+      <!-- Event 1: Andy Mountains & Las Niñas Héroas -->
+      <article class="event-card reveal">
+        <div class="event-video-wrap">
+          <div class="event-date-banner">
+            <div class="event-date-day">20</div>
+            <div class="event-date-month">Marzo</div>
+            <div class="event-date-weekday">Viernes</div>
+          </div>
+          <div class="event-video-container">
+            <video
+              class="event-video"
+              src="videos/ninas-heroas.mp4"
+              poster=""
+              playsinline
+                            loop
+              preload="metadata"
+              id="video-1">
+            </video>
+            <div class="video-play-btn" data-video="video-1">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="event-content">
+          <div class="event-time">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg>
+            8:00 PM
+          </div>
+          <h3 class="event-artist">Andy Mountains & Las Niñas Héroas</h3>
+          <span class="event-genre">Folk · Música de autor</span>
+          <p class="event-description">Folk pagano y canciones que son conjuros. Tres proyectos, una noche.</p>
+          <div class="event-meta">
+            <span class="event-badge badge-coop">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              Cooperación voluntaria
+            </span>
+            <span class="event-badge badge-capacity">
+              <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+              30 lugares
+            </span>
+          </div>
+          <a
+            href="https://wa.me/521221362861?text=Hola%2C%20quiero%20reservar%20para%20Andy%20Mountains%20%26%20Las%20Ni%C3%B1as%20H%C3%A9roas%20el%20Viernes%2020%20de%20Marzo"
+            target="_blank"
+            rel="noopener"
+            class="event-cta">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Reservar lugar
+          </a>
+        </div>
+      </article>
+
+      <!-- Event 2: Dogie + Z Mali -->
+      <article class="event-card reveal">
+        <div class="event-video-wrap">
+          <div class="event-date-banner">
+            <div class="event-date-day">21</div>
+            <div class="event-date-month">Marzo</div>
+            <div class="event-date-weekday">Sábado</div>
+          </div>
+          <div class="event-video-container">
+            <video
+              class="event-video"
+              src="videos/dogie-zmali.mp4"
+              poster=""
+              playsinline
+                            loop
+              preload="metadata"
+              id="video-2">
+            </video>
+            <div class="video-play-btn" data-video="video-2">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="event-content">
+          <div class="event-time">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg>
+            8:00 PM
+          </div>
+          <h3 class="event-artist">Dogie + Z Mali</h3>
+          <span class="event-genre">Cantautor · Indie</span>
+          <p class="event-description">Cuatro solistas. Guitarras, voces y un jam final que no olvidarás.</p>
+          <div class="event-meta">
+            <span class="event-badge badge-coop">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              Cooperación voluntaria
+            </span>
+            <span class="event-badge badge-capacity">
+              <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+              30 lugares
+            </span>
+          </div>
+          <a
+            href="https://wa.me/521221362861?text=Hola%2C%20quiero%20reservar%20para%20Dogie%20%2B%20Z%20Mali%20el%20S%C3%A1bado%2021%20de%20Marzo"
+            target="_blank"
+            rel="noopener"
+            class="event-cta">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Reservar lugar
+          </a>
+        </div>
+      </article>
+
+      <!-- Event 3: Riosentí -->
+      <article class="event-card reveal">
+        <div class="event-video-wrap">
+          <div class="event-date-banner">
+            <div class="event-date-day">10</div>
+            <div class="event-date-month">Abril</div>
+            <div class="event-date-weekday">Viernes</div>
+          </div>
+          <div class="event-video-container">
+            <div class="event-video-placeholder">
+              <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+              <span>Riosentí</span>
+            </div>
+          </div>
+        </div>
+        <div class="event-content">
+          <div class="event-time">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg>
+            8:00 PM
+          </div>
+          <h3 class="event-artist">Riosentí</h3>
+          <span class="event-genre">Folk · Fusión Latina</span>
+          <p class="event-description">Argentina-México. Canciones nómadas con raíces latinoamericanas.</p>
+          <div class="event-meta">
+            <span class="event-badge badge-coop">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              Cooperación voluntaria
+            </span>
+            <span class="event-badge badge-capacity">
+              <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+              30 lugares
+            </span>
+          </div>
+          <a
+            href="https://wa.me/521221362861?text=Hola%2C%20quiero%20reservar%20para%20Riosent%C3%AD%20el%20Viernes%2010%20de%20Abril"
+            target="_blank"
+            rel="noopener"
+            class="event-cta">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Reservar lugar
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="logo-teokaye.png" alt="Teokaye" class="footer-logo">
+          <p class="footer-tagline">El sagrado arte de compartir</p>
+          <p class="footer-description">Un espacio íntimo para la música, el arte y las buenas conversaciones en el corazón de Cholula.</p>
+          <div class="footer-social">
+            <a href="https://wa.me/521221362861" target="_blank" rel="noopener" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </a>
+            <a href="https://instagram.com/teokaye.mx" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h4>Visítanos</h4>
+          <p>Av. 6 Ote. 402A</p>
+          <p>San Miguel, San Pedro Cholula</p>
+          <p>Puebla, México</p>
+          <p style="margin-top: 16px; opacity: 0.7;">Martes a Sábado</p>
+          <p style="opacity: 0.7;">11:00 AM – 9:00 PM</p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <a href="https://wa.me/521221362861">+52 221 362 8681</a>
+          <a href="https://instagram.com/teokaye.mx">@teokaye.mx</a>
+          <a href="mailto:hola@teokaye.mx">hola@teokaye.mx</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2025 Teokaye. Todos los derechos reservados.</p>
+        <a href="https://maps.app.goo.gl/gvuAMBRcdyj26nLp6" target="_blank" rel="noopener" class="footer-map-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          Cómo llegar
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Video play/pause functionality
+    document.querySelectorAll('.video-play-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const videoId = this.getAttribute('data-video');
+        const video = document.getElementById(videoId);
+
+        if (video.paused) {
+          // Pause all other videos first
+          document.querySelectorAll('.event-video').forEach(v => {
+            if (v !== video) {
+              v.pause();
+              const otherBtn = document.querySelector(`[data-video="${v.id}"]`);
+              if (otherBtn) otherBtn.classList.remove('hidden');
+            }
+          });
+
+          video.play();
+          this.classList.add('hidden');
+        } else {
+          video.pause();
+          this.classList.remove('hidden');
+        }
+      });
+    });
+
+    // Click on video to pause
+    document.querySelectorAll('.event-video').forEach(video => {
+      video.addEventListener('click', function() {
+        if (!this.paused) {
+          this.pause();
+          const btn = document.querySelector(`[data-video="${this.id}"]`);
+          if (btn) btn.classList.remove('hidden');
+        }
+      });
+    });
+
+    // Scroll reveal animation
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const revealOnScroll = () => {
+      revealElements.forEach(el => {
+        const elementTop = el.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if (elementTop < windowHeight - 100) {
+          el.classList.add('active');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+
+    // Header scroll effect
+    const header = document.querySelector('.header');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+
+      if (currentScroll > 100) {
+        header.style.boxShadow = '0 2px 20px rgba(70, 29, 20, 0.08)';
+      } else {
+        header.style.boxShadow = 'none';
+      }
+
+      lastScroll = currentScroll;
+    });
+  </script>
+
+</body>
+</html>
