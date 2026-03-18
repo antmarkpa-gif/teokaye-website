@@ -328,17 +328,13 @@
       }
     }
 
-    .event-video {
+    .event-video-container iframe {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      object-fit: cover;
-      cursor: pointer;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
     }
 
     .event-video-placeholder {
@@ -369,41 +365,7 @@
       opacity: 0.9;
     }
 
-    .video-play-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 72px;
-      height: 72px;
-      background: rgba(255, 253, 249, 0.95);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 24px rgba(70, 29, 20, 0.2);
-      z-index: 2;
-    }
-
-    .video-play-btn:hover {
-      transform: translate(-50%, -50%) scale(1.1);
-      box-shadow: 0 8px 32px rgba(70, 29, 20, 0.3);
-    }
-
-    .video-play-btn svg {
-      width: 28px;
-      height: 28px;
-      fill: var(--brown);
-      margin-left: 4px;
-    }
-
-    .video-play-btn.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
+    
     /* Event Date Banner */
     .event-date-banner {
       position: absolute;
@@ -800,18 +762,13 @@
             <div class="event-date-weekday">Viernes</div>
           </div>
           <div class="event-video-container">
-            <video
-              class="event-video"
-              src="videos/ninas-heroas.mp4"
-              poster=""
-              playsinline
-                            loop
-              preload="metadata"
-              id="video-1">
-            </video>
-            <div class="video-play-btn" data-video="video-1">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
+            <iframe
+              src="https://www.youtube.com/embed/nKYg6AEGTMU"
+              title="Andy Mountains & Las Niñas Héroas"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
           </div>
         </div>
         <div class="event-content">
@@ -852,18 +809,13 @@
             <div class="event-date-weekday">Sábado</div>
           </div>
           <div class="event-video-container">
-            <video
-              class="event-video"
-              src="videos/dogie-zmali.mp4"
-              poster=""
-              playsinline
-                            loop
-              preload="metadata"
-              id="video-2">
-            </video>
-            <div class="video-play-btn" data-video="video-2">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
+            <iframe
+              src="https://www.youtube.com/embed/hrj804LDUFs"
+              title="Dogie + Z Mali"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
           </div>
         </div>
         <div class="event-content">
@@ -988,42 +940,6 @@
   </footer>
 
   <script>
-    // Video play/pause functionality
-    document.querySelectorAll('.video-play-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const videoId = this.getAttribute('data-video');
-        const video = document.getElementById(videoId);
-
-        if (video.paused) {
-          // Pause all other videos first
-          document.querySelectorAll('.event-video').forEach(v => {
-            if (v !== video) {
-              v.pause();
-              const otherBtn = document.querySelector(`[data-video="${v.id}"]`);
-              if (otherBtn) otherBtn.classList.remove('hidden');
-            }
-          });
-
-          video.play();
-          this.classList.add('hidden');
-        } else {
-          video.pause();
-          this.classList.remove('hidden');
-        }
-      });
-    });
-
-    // Click on video to pause
-    document.querySelectorAll('.event-video').forEach(video => {
-      video.addEventListener('click', function() {
-        if (!this.paused) {
-          this.pause();
-          const btn = document.querySelector(`[data-video="${this.id}"]`);
-          if (btn) btn.classList.remove('hidden');
-        }
-      });
-    });
-
     // Scroll reveal animation
     const revealElements = document.querySelectorAll('.reveal');
 
