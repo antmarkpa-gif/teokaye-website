@@ -767,7 +767,7 @@
               class="event-video"
               src="videos/ninas-heroas.mp4"
               playsinline
-              controls
+              loop
               preload="metadata">
             </video>
           </div>
@@ -814,7 +814,7 @@
               class="event-video"
               src="videos/dogie-zmali.mp4"
               playsinline
-              controls
+              loop
               preload="metadata">
             </video>
           </div>
@@ -941,6 +941,64 @@
   </footer>
 
   <script>
+    // Video autoplay on hover and scroll
+    const videos = document.querySelectorAll('.event-video');
+
+    // Pause all videos except the one passed
+    function pauseAllExcept(currentVideo) {
+      videos.forEach(video => {
+        if (video !== currentVideo && !video.paused) {
+          video.pause();
+        }
+      });
+    }
+
+    // Play video with sound
+    function playVideo(video) {
+      pauseAllExcept(video);
+      video.muted = false;
+      video.play().catch(() => {
+        // If autoplay with sound fails, try muted first
+        video.muted = true;
+        video.play();
+      });
+    }
+
+    // Hover events for desktop
+    videos.forEach(video => {
+      const card = video.closest('.event-card');
+
+      card.addEventListener('mouseenter', () => {
+        playVideo(video);
+      });
+
+      card.addEventListener('mouseleave', () => {
+        video.pause();
+      });
+    });
+
+    // Intersection Observer for mobile/scroll
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.6
+    };
+
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          playVideo(video);
+        } else {
+          video.pause();
+        }
+      });
+    }, observerOptions);
+
+    videos.forEach(video => {
+      videoObserver.observe(video);
+    });
+
     // Scroll reveal animation
     const revealElements = document.querySelectorAll('.reveal');
 
