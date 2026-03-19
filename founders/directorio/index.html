@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Directorio de Founders | Teokaye</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    :root{
+      --bg:#E6E0D6;
+      --text:#1E1B18;
+      --accent:#B8826B;
+      --accent-dark:#461D14;
+      --white:#FFFCF8;
+      --gray-light:#F0EDE8;
+      --terra-light:rgba(184,130,107,0.15);
+      --green-earth:rgba(139,160,130,0.25);
+    }
+
+    html{font-size:16px;}
+
+    body{
+      font-family:'Source Sans 3',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* Header */
+    .header{
+      padding:1.25rem 1.5rem;
+      border-bottom:1px solid rgba(30,27,24,0.1);
+      background:var(--white);
+    }
+
+    .header-inner{
+      max-width:1100px;
+      margin:0 auto;
+    }
+
+    .header-brand{
+      font-family:'Cormorant Infant',serif;
+      font-size:1rem;
+      font-weight:500;
+      letter-spacing:0.02em;
+      color:var(--accent-dark);
+      text-decoration:none;
+      display:inline-block;
+      margin-bottom:1.5rem;
+    }
+
+    .header-brand span{
+      color:var(--accent);
+      margin:0 0.4rem;
+    }
+
+    .header-title{
+      font-family:'Cormorant Infant',serif;
+      font-size:2.25rem;
+      font-weight:500;
+      line-height:1.15;
+      color:var(--text);
+      margin-bottom:0.5rem;
+    }
+
+    .header-subtitle{
+      font-size:1.05rem;
+      color:rgba(30,27,24,0.65);
+      margin-bottom:0.75rem;
+    }
+
+    .header-counter{
+      display:inline-flex;
+      align-items:center;
+      gap:0.4rem;
+      font-size:0.9rem;
+      font-weight:500;
+      color:var(--accent-dark);
+      background:var(--terra-light);
+      padding:0.4rem 0.75rem;
+      border-radius:20px;
+    }
+
+    .header-counter .count{
+      font-weight:600;
+    }
+
+    /* Search & Filters */
+    .controls{
+      padding:1.5rem;
+      background:var(--white);
+      border-bottom:1px solid rgba(30,27,24,0.08);
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+
+    .controls-inner{
+      max-width:1100px;
+      margin:0 auto;
+    }
+
+    .search-wrap{
+      position:relative;
+      margin-bottom:1rem;
+    }
+
+    .search-icon{
+      position:absolute;
+      left:1rem;
+      top:50%;
+      transform:translateY(-50%);
+      width:18px;
+      height:18px;
+      stroke:rgba(30,27,24,0.4);
+      stroke-width:2;
+      fill:none;
+    }
+
+    .search-input{
+      width:100%;
+      padding:0.875rem 1rem 0.875rem 2.75rem;
+      font-family:'Source Sans 3',sans-serif;
+      font-size:1rem;
+      color:var(--text);
+      background:var(--bg);
+      border:2px solid transparent;
+      border-radius:10px;
+      outline:none;
+      transition:all 0.2s ease;
+    }
+
+    .search-input::placeholder{
+      color:rgba(30,27,24,0.4);
+    }
+
+    .search-input:focus{
+      border-color:var(--accent);
+      background:var(--white);
+      box-shadow:0 0 0 4px rgba(184,130,107,0.15);
+    }
+
+    .filters{
+      display:flex;
+      flex-wrap:wrap;
+      gap:0.5rem;
+    }
+
+    .filter-chip{
+      padding:0.5rem 1rem;
+      font-family:'Source Sans 3',sans-serif;
+      font-size:0.875rem;
+      font-weight:500;
+      color:var(--text);
+      background:var(--gray-light);
+      border:2px solid transparent;
+      border-radius:20px;
+      cursor:pointer;
+      transition:all 0.2s ease;
+    }
+
+    .filter-chip:hover{
+      background:var(--terra-light);
+    }
+
+    .filter-chip.active{
+      background:var(--accent-dark);
+      color:var(--white);
+    }
+
+    /* Main */
+    main{
+      flex:1;
+      padding:2rem 1.5rem;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+    }
+
+    /* Grid */
+    .founders-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:1.25rem;
+    }
+
+    @media(min-width:640px){
+      .founders-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(min-width:960px){
+      .founders-grid{
+        grid-template-columns:repeat(3,1fr);
+      }
+    }
+
+    /* Founder Card */
+    .founder-card{
+      background:var(--white);
+      border-radius:16px;
+      padding:1.5rem;
+      box-shadow:0 2px 12px rgba(70,29,20,0.06);
+      display:flex;
+      flex-direction:column;
+      animation:fadeInUp 0.4s ease forwards;
+      opacity:0;
+    }
+
+    @keyframes fadeInUp{
+      from{
+        opacity:0;
+        transform:translateY(12px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .card-header{
+      display:flex;
+      align-items:flex-start;
+      gap:1rem;
+      margin-bottom:1rem;
+    }
+
+    .avatar{
+      width:48px;
+      height:48px;
+      background:var(--accent);
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:'Cormorant Infant',serif;
+      font-size:1.25rem;
+      font-weight:600;
+      color:var(--white);
+      flex-shrink:0;
+    }
+
+    .card-header-info{
+      flex:1;
+      min-width:0;
+    }
+
+    .founder-name{
+      font-size:1.05rem;
+      font-weight:600;
+      color:var(--text);
+      margin-bottom:0.15rem;
+    }
+
+    .founder-project{
+      font-size:0.95rem;
+      font-weight:600;
+      color:var(--accent-dark);
+    }
+
+    .founder-desc{
+      font-size:0.9rem;
+      color:rgba(30,27,24,0.75);
+      line-height:1.5;
+      margin-bottom:1rem;
+    }
+
+    .badge{
+      display:inline-block;
+      padding:0.3rem 0.65rem;
+      font-size:0.75rem;
+      font-weight:600;
+      border-radius:6px;
+      margin-bottom:1rem;
+    }
+
+    .badge.idea{
+      background:var(--gray-light);
+      color:rgba(30,27,24,0.7);
+    }
+
+    .badge.construccion{
+      background:var(--terra-light);
+      color:var(--accent-dark);
+    }
+
+    .badge.ingresos{
+      background:var(--green-earth);
+      color:#4A5D44;
+    }
+
+    .badge.escalando{
+      background:var(--accent-dark);
+      color:var(--white);
+    }
+
+    .founder-reto{
+      font-size:0.85rem;
+      color:var(--accent);
+      font-style:italic;
+      margin-bottom:1rem;
+      padding-left:0.75rem;
+      border-left:2px solid var(--accent);
+    }
+
+    .card-footer{
+      margin-top:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      padding-top:1rem;
+      border-top:1px solid rgba(30,27,24,0.08);
+    }
+
+    .founder-date{
+      font-size:0.8rem;
+      color:rgba(30,27,24,0.5);
+    }
+
+    .btn-contact{
+      display:inline-flex;
+      align-items:center;
+      gap:0.4rem;
+      padding:0.5rem 1rem;
+      font-family:'Source Sans 3',sans-serif;
+      font-size:0.85rem;
+      font-weight:600;
+      color:var(--white);
+      background:#25D366;
+      border:none;
+      border-radius:8px;
+      text-decoration:none;
+      transition:all 0.2s ease;
+    }
+
+    .btn-contact:hover{
+      background:#1DA851;
+      transform:translateY(-1px);
+    }
+
+    .btn-contact svg{
+      width:16px;
+      height:16px;
+      fill:currentColor;
+    }
+
+    /* Loading Skeleton */
+    .skeleton-card{
+      background:var(--white);
+      border-radius:16px;
+      padding:1.5rem;
+      box-shadow:0 2px 12px rgba(70,29,20,0.06);
+    }
+
+    .skeleton{
+      background:linear-gradient(90deg,var(--gray-light) 25%,#E8E4DE 50%,var(--gray-light) 75%);
+      background-size:200% 100%;
+      animation:shimmer 1.5s infinite;
+      border-radius:6px;
+    }
+
+    @keyframes shimmer{
+      0%{background-position:200% 0;}
+      100%{background-position:-200% 0;}
+    }
+
+    .skeleton-header{
+      display:flex;
+      gap:1rem;
+      margin-bottom:1rem;
+    }
+
+    .skeleton-avatar{
+      width:48px;
+      height:48px;
+      border-radius:50%;
+    }
+
+    .skeleton-lines{
+      flex:1;
+    }
+
+    .skeleton-line{
+      height:14px;
+      margin-bottom:0.5rem;
+    }
+
+    .skeleton-line:last-child{
+      width:60%;
+      margin-bottom:0;
+    }
+
+    .skeleton-body{
+      height:60px;
+      margin-bottom:1rem;
+    }
+
+    .skeleton-badge{
+      width:100px;
+      height:24px;
+      margin-bottom:1rem;
+    }
+
+    .skeleton-footer{
+      height:36px;
+    }
+
+    /* Empty State */
+    .empty-state{
+      text-align:center;
+      padding:4rem 2rem;
+    }
+
+    .empty-icon{
+      width:80px;
+      height:80px;
+      margin:0 auto 1.5rem;
+      background:var(--gray-light);
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .empty-icon svg{
+      width:36px;
+      height:36px;
+      stroke:rgba(30,27,24,0.3);
+      stroke-width:1.5;
+      fill:none;
+    }
+
+    .empty-title{
+      font-family:'Cormorant Infant',serif;
+      font-size:1.5rem;
+      font-weight:500;
+      color:var(--text);
+      margin-bottom:0.5rem;
+    }
+
+    .empty-text{
+      font-size:1rem;
+      color:rgba(30,27,24,0.6);
+    }
+
+    /* Footer */
+    footer{
+      padding:2rem 1.5rem;
+      text-align:center;
+      border-top:1px solid rgba(30,27,24,0.1);
+      background:var(--white);
+    }
+
+    .footer-cta{
+      display:inline-flex;
+      align-items:center;
+      gap:0.5rem;
+      font-size:1rem;
+      font-weight:500;
+      color:var(--accent-dark);
+      text-decoration:none;
+      margin-bottom:1rem;
+      padding:0.75rem 1.25rem;
+      background:var(--terra-light);
+      border-radius:10px;
+      transition:all 0.2s ease;
+    }
+
+    .footer-cta:hover{
+      background:var(--accent);
+      color:var(--white);
+    }
+
+    .footer-cta svg{
+      width:18px;
+      height:18px;
+      stroke:currentColor;
+      stroke-width:2;
+      fill:none;
+    }
+
+    .footer-text{
+      font-size:0.85rem;
+      color:rgba(30,27,24,0.5);
+      letter-spacing:0.02em;
+    }
+
+    .footer-text a{
+      color:var(--accent-dark);
+      text-decoration:none;
+    }
+
+    .footer-text a:hover{
+      text-decoration:underline;
+    }
+
+    /* Desktop adjustments */
+    @media(min-width:640px){
+      .header{
+        padding:2rem 2rem;
+      }
+
+      .header-title{
+        font-size:2.75rem;
+      }
+
+      .controls{
+        padding:1.5rem 2rem;
+      }
+
+      main{
+        padding:2.5rem 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="/founders/meetup" class="header-brand">Teokaye<span>×</span>Founders Meetup</a>
+      <h1 class="header-title">Directorio de founders</h1>
+      <p class="header-subtitle">Personas construyendo proyectos en Puebla</p>
+      <div class="header-counter">
+        <span class="count" id="founderCount">0</span> founders en la comunidad
+      </div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="controls-inner">
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Buscar por nombre o proyecto...">
+      </div>
+      <div class="filters" id="filters">
+        <button class="filter-chip active" data-filter="all">Todos</button>
+        <button class="filter-chip" data-filter="idea">Idea</button>
+        <button class="filter-chip" data-filter="construccion">En construcción</button>
+        <button class="filter-chip" data-filter="ingresos">Con ingresos</button>
+        <button class="filter-chip" data-filter="escalando">Escalando</button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="container">
+      <div class="founders-grid" id="foundersGrid">
+        <!-- Loading skeletons -->
+        <div class="skeleton-card">
+          <div class="skeleton-header">
+            <div class="skeleton skeleton-avatar"></div>
+            <div class="skeleton-lines">
+              <div class="skeleton skeleton-line"></div>
+              <div class="skeleton skeleton-line"></div>
+            </div>
+          </div>
+          <div class="skeleton skeleton-body"></div>
+          <div class="skeleton skeleton-badge"></div>
+          <div class="skeleton skeleton-footer"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-header">
+            <div class="skeleton skeleton-avatar"></div>
+            <div class="skeleton-lines">
+              <div class="skeleton skeleton-line"></div>
+              <div class="skeleton skeleton-line"></div>
+            </div>
+          </div>
+          <div class="skeleton skeleton-body"></div>
+          <div class="skeleton skeleton-badge"></div>
+          <div class="skeleton skeleton-footer"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-header">
+            <div class="skeleton skeleton-avatar"></div>
+            <div class="skeleton-lines">
+              <div class="skeleton skeleton-line"></div>
+              <div class="skeleton skeleton-line"></div>
+            </div>
+          </div>
+          <div class="skeleton skeleton-body"></div>
+          <div class="skeleton skeleton-badge"></div>
+          <div class="skeleton skeleton-footer"></div>
+        </div>
+      </div>
+
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <h2 class="empty-title">Aún no hay founders registrados</h2>
+        <p class="empty-text">Sé el primero en unirte a la comunidad</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <a href="/founders/meetup" class="footer-cta">
+      <svg viewBox="0 0 24 24">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+        <circle cx="8.5" cy="7" r="4"></circle>
+        <line x1="20" y1="8" x2="20" y2="14"></line>
+        <line x1="23" y1="11" x2="17" y2="11"></line>
+      </svg>
+      ¿Quieres registrarte?
+    </a>
+    <p class="footer-text">Teokaye • El sagrado arte de compartir • <a href="https://teokaye.mx">teokaye.mx</a></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Supabase config - reemplazar con tus credenciales
+    const SUPABASE_URL = 'TU_SUPABASE_URL';
+    const SUPABASE_ANON_KEY = 'TU_SUPABASE_ANON_KEY';
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // DOM elements
+    const foundersGrid = document.getElementById('foundersGrid');
+    const emptyState = document.getElementById('emptyState');
+    const founderCount = document.getElementById('founderCount');
+    const searchInput = document.getElementById('searchInput');
+    const filters = document.getElementById('filters');
+
+    // State
+    let allFounders = [];
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    // Stage labels and classes
+    const stageConfig = {
+      'idea': { label: 'Todavía es una idea', class: 'idea' },
+      'construccion': { label: 'En construcción', class: 'construccion' },
+      'ingresos': { label: 'Ya genera ingresos', class: 'ingresos' },
+      'escalando': { label: 'Escalando', class: 'escalando' }
+    };
+
+    // Format date
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+                      'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+      return `Desde ${months[date.getMonth()]} ${date.getFullYear()}`;
+    }
+
+    // Format WhatsApp number
+    function formatWhatsApp(phone) {
+      return phone.replace(/[\s\-\+\(\)]/g, '');
+    }
+
+    // Get initials
+    function getInitial(name) {
+      return name.trim().charAt(0).toUpperCase();
+    }
+
+    // Create founder card HTML
+    function createFounderCard(founder, index) {
+      const stage = stageConfig[founder.etapa] || { label: founder.etapa, class: 'idea' };
+      const waNumber = formatWhatsApp(founder.whatsapp);
+
+      return `
+        <article class="founder-card" style="animation-delay: ${index * 0.08}s">
+          <div class="card-header">
+            <div class="avatar">${getInitial(founder.nombre)}</div>
+            <div class="card-header-info">
+              <h3 class="founder-name">${founder.nombre}</h3>
+              <p class="founder-project">${founder.proyecto}</p>
+            </div>
+          </div>
+          <p class="founder-desc">${founder.descripcion_proyecto}</p>
+          <span class="badge ${stage.class}">${stage.label}</span>
+          <p class="founder-reto">${founder.mayor_reto}</p>
+          <div class="card-footer">
+            <span class="founder-date">${formatDate(founder.created_at)}</span>
+            <a href="https://wa.me/${waNumber}" target="_blank" class="btn-contact">
+              <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Contactar
+            </a>
+          </div>
+        </article>
+      `;
+    }
+
+    // Filter founders
+    function filterFounders() {
+      let filtered = allFounders;
+
+      // Filter by stage
+      if (currentFilter !== 'all') {
+        filtered = filtered.filter(f => f.etapa === currentFilter);
+      }
+
+      // Filter by search
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        filtered = filtered.filter(f =>
+          f.nombre.toLowerCase().includes(query) ||
+          f.proyecto.toLowerCase().includes(query)
+        );
+      }
+
+      return filtered;
+    }
+
+    // Render founders
+    function renderFounders() {
+      const filtered = filterFounders();
+
+      if (filtered.length === 0) {
+        foundersGrid.innerHTML = '';
+        emptyState.style.display = 'block';
+        if (searchQuery || currentFilter !== 'all') {
+          emptyState.querySelector('.empty-title').textContent = 'No se encontraron resultados';
+          emptyState.querySelector('.empty-text').textContent = 'Intenta con otra búsqueda o filtro';
+        } else {
+          emptyState.querySelector('.empty-title').textContent = 'Aún no hay founders registrados';
+          emptyState.querySelector('.empty-text').textContent = 'Sé el primero en unirte a la comunidad';
+        }
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      foundersGrid.innerHTML = filtered.map((f, i) => createFounderCard(f, i)).join('');
+    }
+
+    // Load founders from Supabase
+    async function loadFounders() {
+      try {
+        const { data, error } = await supabase
+          .from('founders_meetup')
+          .select('nombre, proyecto, descripcion_proyecto, etapa, mayor_reto, whatsapp, created_at')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        allFounders = data || [];
+        founderCount.textContent = allFounders.length;
+        renderFounders();
+
+      } catch (err) {
+        console.error('Error loading founders:', err);
+        foundersGrid.innerHTML = '';
+        emptyState.style.display = 'block';
+        emptyState.querySelector('.empty-title').textContent = 'Error al cargar';
+        emptyState.querySelector('.empty-text').textContent = err.message || 'No se pudo conectar con la base de datos';
+      }
+    }
+
+    // Search handler
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      renderFounders();
+    });
+
+    // Filter handler
+    filters.addEventListener('click', (e) => {
+      if (e.target.classList.contains('filter-chip')) {
+        filters.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        e.target.classList.add('active');
+        currentFilter = e.target.dataset.filter;
+        renderFounders();
+      }
+    });
+
+    // Initialize
+    loadFounders();
+  </script>
+</body>
+</html>
