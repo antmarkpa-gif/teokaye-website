@@ -675,6 +675,21 @@
           </div>
 
           <div class="form-group">
+            <label for="interes">¿Qué buscas en la comunidad?</label>
+            <select id="interes" name="interes" required>
+              <option value="" disabled selected>Selecciona tu interés principal</option>
+              <option value="networking">Hacer networking y conexiones</option>
+              <option value="inversion">Buscar inversión para mi proyecto</option>
+              <option value="invertir">Invertir en otros proyectos</option>
+              <option value="socio">Encontrar un cofundador o socio</option>
+              <option value="talento">Encontrar talento o colaboradores</option>
+              <option value="aprender">Aprender de otros founders</option>
+              <option value="servicios">Ofrecer mis servicios a founders</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
             <label for="pin">Elige un PIN de 4 dígitos
               <span class="label-hint">Este PIN te servirá para iniciar sesión al directorio</span>
             </label>
@@ -964,12 +979,13 @@
         // Collect form data
         const formData = {
           nombre: form.nombre.value.trim(),
-          ciudad: form.ciudad.value.trim(),
+          ciudad: form.ciudad.value,
           telefono: form.telefono.value.trim(),
           email: form.email.value.trim(),
           proyecto: form.proyecto.value.trim(),
           descripcion_proyecto: form.descripcion.value.trim(),
           etapa: form.etapa.value,
+          interes: form.interes.value,
           pin: pinValue,
           visible_en_directorio: false,
           evento: 'Founders Meetup #1 — Marzo 2026'
