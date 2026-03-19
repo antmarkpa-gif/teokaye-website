@@ -793,27 +793,6 @@
       'escalando': { label: 'Escalando', class: 'escalando' }
     };
 
-    // Check for existing session
-    const storedUuid = localStorage.getItem('founders_uuid');
-    if (storedUuid) {
-      const { data: user, error } = await db
-        .from('founders_meetup')
-        .select('*')
-        .eq('id', storedUuid)
-        .single();
-
-      if (!error && user) {
-        currentUser = user;
-        showDirectory();
-        return;
-      } else {
-        localStorage.removeItem('founders_uuid');
-      }
-    }
-
-    // Show login
-    loginScreen.classList.add('visible');
-
     // Login form handler
     loginForm.addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -1023,6 +1002,26 @@
         renderFounders();
       }
     });
+
+    // Check for existing session (must be after event listeners are set up)
+    const storedUuid = localStorage.getItem('founders_uuid');
+    if (storedUuid) {
+      const { data: user, error } = await db
+        .from('founders_meetup')
+        .select('*')
+        .eq('id', storedUuid)
+        .single();
+
+      if (!error && user) {
+        currentUser = user;
+        showDirectory();
+      } else {
+        localStorage.removeItem('founders_uuid');
+        loginScreen.classList.add('visible');
+      }
+    } else {
+      loginScreen.classList.add('visible');
+    }
   });
   </script>
 </body>
