@@ -34,6 +34,144 @@
       flex-direction:column;
     }
 
+    /* Login Screen */
+    .login-screen{
+      flex:1;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:2rem 1.5rem;
+    }
+
+    .login-screen.visible{
+      display:flex;
+    }
+
+    .login-card{
+      background:var(--white);
+      border-radius:16px;
+      padding:2.5rem 2rem;
+      box-shadow:0 4px 24px rgba(70,29,20,0.08);
+      width:100%;
+      max-width:400px;
+    }
+
+    .login-brand{
+      font-family:'Cormorant Infant',serif;
+      font-size:1rem;
+      font-weight:500;
+      color:var(--accent-dark);
+      text-align:center;
+      margin-bottom:2rem;
+    }
+
+    .login-brand span{
+      color:var(--accent);
+      margin:0 0.4rem;
+    }
+
+    .login-title{
+      font-family:'Cormorant Infant',serif;
+      font-size:1.75rem;
+      font-weight:500;
+      color:var(--text);
+      text-align:center;
+      margin-bottom:0.5rem;
+    }
+
+    .login-subtitle{
+      font-size:0.95rem;
+      color:rgba(30,27,24,0.6);
+      text-align:center;
+      margin-bottom:2rem;
+    }
+
+    .form-group{
+      margin-bottom:1.25rem;
+    }
+
+    label{
+      display:block;
+      font-size:0.9rem;
+      font-weight:600;
+      color:var(--text);
+      margin-bottom:0.5rem;
+    }
+
+    input,select{
+      width:100%;
+      padding:0.875rem 1rem;
+      font-family:'Source Sans 3',sans-serif;
+      font-size:1rem;
+      color:var(--text);
+      background:var(--bg);
+      border:2px solid transparent;
+      border-radius:10px;
+      outline:none;
+      transition:all 0.2s ease;
+    }
+
+    input::placeholder{
+      color:rgba(30,27,24,0.4);
+    }
+
+    input:focus{
+      border-color:var(--accent);
+      background:var(--white);
+      box-shadow:0 0 0 4px rgba(184,130,107,0.15);
+    }
+
+    .btn-login{
+      width:100%;
+      padding:1rem 1.5rem;
+      font-family:'Source Sans 3',sans-serif;
+      font-size:1.05rem;
+      font-weight:600;
+      color:var(--white);
+      background:var(--accent-dark);
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      transition:all 0.25s ease;
+      margin-top:0.5rem;
+    }
+
+    .btn-login:hover:not(:disabled){
+      background:var(--accent);
+      transform:translateY(-1px);
+    }
+
+    .btn-login:disabled{
+      opacity:0.7;
+      cursor:not-allowed;
+    }
+
+    .login-error{
+      margin-top:1rem;
+      padding:0.875rem;
+      background:rgba(180,60,60,0.1);
+      border-radius:8px;
+      color:#8B3A3A;
+      font-size:0.9rem;
+      text-align:center;
+      display:none;
+    }
+
+    .login-error.visible{
+      display:block;
+    }
+
+    /* Directory Screen */
+    .directory-screen{
+      display:none;
+      flex-direction:column;
+      flex:1;
+    }
+
+    .directory-screen.visible{
+      display:flex;
+    }
+
     /* Header */
     .header{
       padding:1.25rem 1.5rem;
@@ -44,6 +182,13 @@
     .header-inner{
       max-width:1100px;
       margin:0 auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+    }
+
+    .header-content{
+      flex:1;
     }
 
     .header-brand{
@@ -52,9 +197,8 @@
       font-weight:500;
       letter-spacing:0.02em;
       color:var(--accent-dark);
-      text-decoration:none;
       display:inline-block;
-      margin-bottom:1.5rem;
+      margin-bottom:1rem;
     }
 
     .header-brand span{
@@ -64,7 +208,7 @@
 
     .header-title{
       font-family:'Cormorant Infant',serif;
-      font-size:2.25rem;
+      font-size:2rem;
       font-weight:500;
       line-height:1.15;
       color:var(--text);
@@ -72,7 +216,7 @@
     }
 
     .header-subtitle{
-      font-size:1.05rem;
+      font-size:1rem;
       color:rgba(30,27,24,0.65);
       margin-bottom:0.75rem;
     }
@@ -89,13 +233,134 @@
       border-radius:20px;
     }
 
-    .header-counter .count{
+    .btn-logout{
+      font-family:'Source Sans 3',sans-serif;
+      font-size:0.85rem;
+      color:rgba(30,27,24,0.5);
+      background:none;
+      border:none;
+      cursor:pointer;
+      padding:0.5rem 0.75rem;
+      border-radius:6px;
+      transition:all 0.2s ease;
+    }
+
+    .btn-logout:hover{
+      color:var(--accent-dark);
+      background:var(--terra-light);
+    }
+
+    /* User Profile Section */
+    .user-section{
+      background:var(--white);
+      border-bottom:1px solid rgba(30,27,24,0.08);
+      padding:1.25rem 1.5rem;
+    }
+
+    .user-section-inner{
+      max-width:1100px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:1rem;
+    }
+
+    .user-info{
+      display:flex;
+      align-items:center;
+      gap:0.75rem;
+    }
+
+    .user-avatar{
+      width:40px;
+      height:40px;
+      background:var(--accent);
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:'Cormorant Infant',serif;
+      font-size:1.1rem;
       font-weight:600;
+      color:var(--white);
+    }
+
+    .user-details{
+      line-height:1.3;
+    }
+
+    .user-name{
+      font-weight:600;
+      font-size:0.95rem;
+      color:var(--text);
+    }
+
+    .user-project{
+      font-size:0.85rem;
+      color:var(--accent-dark);
+    }
+
+    .visibility-toggle{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:0.25rem;
+    }
+
+    .toggle-row{
+      display:flex;
+      align-items:center;
+      gap:0.75rem;
+    }
+
+    .toggle-label{
+      font-size:0.9rem;
+      font-weight:500;
+      color:var(--text);
+    }
+
+    .toggle-switch{
+      position:relative;
+      width:48px;
+      height:26px;
+      background:var(--gray-light);
+      border-radius:13px;
+      cursor:pointer;
+      transition:all 0.25s ease;
+    }
+
+    .toggle-switch.active{
+      background:var(--accent);
+    }
+
+    .toggle-switch::after{
+      content:'';
+      position:absolute;
+      top:3px;
+      left:3px;
+      width:20px;
+      height:20px;
+      background:var(--white);
+      border-radius:50%;
+      transition:all 0.25s ease;
+      box-shadow:0 1px 3px rgba(0,0,0,0.15);
+    }
+
+    .toggle-switch.active::after{
+      left:25px;
+    }
+
+    .toggle-hint{
+      font-size:0.75rem;
+      color:rgba(30,27,24,0.5);
+      text-align:right;
     }
 
     /* Search & Filters */
     .controls{
-      padding:1.5rem;
+      padding:1.25rem 1.5rem;
       background:var(--white);
       border-bottom:1px solid rgba(30,27,24,0.08);
       position:sticky;
@@ -128,24 +393,6 @@
     .search-input{
       width:100%;
       padding:0.875rem 1rem 0.875rem 2.75rem;
-      font-family:'Source Sans 3',sans-serif;
-      font-size:1rem;
-      color:var(--text);
-      background:var(--bg);
-      border:2px solid transparent;
-      border-radius:10px;
-      outline:none;
-      transition:all 0.2s ease;
-    }
-
-    .search-input::placeholder{
-      color:rgba(30,27,24,0.4);
-    }
-
-    .search-input:focus{
-      border-color:var(--accent);
-      background:var(--white);
-      box-shadow:0 0 0 4px rgba(184,130,107,0.15);
     }
 
     .filters{
@@ -161,7 +408,7 @@
       font-weight:500;
       color:var(--text);
       background:var(--gray-light);
-      border:2px solid transparent;
+      border:none;
       border-radius:20px;
       cursor:pointer;
       transition:all 0.2s ease;
@@ -195,18 +442,14 @@
     }
 
     @media(min-width:640px){
-      .founders-grid{
-        grid-template-columns:repeat(2,1fr);
-      }
+      .founders-grid{grid-template-columns:repeat(2,1fr);}
     }
 
     @media(min-width:960px){
-      .founders-grid{
-        grid-template-columns:repeat(3,1fr);
-      }
+      .founders-grid{grid-template-columns:repeat(3,1fr);}
     }
 
-    /* Founder Card */
+    /* Founder Card - New Design */
     .founder-card{
       background:var(--white);
       border-radius:16px;
@@ -219,57 +462,62 @@
     }
 
     @keyframes fadeInUp{
-      from{
-        opacity:0;
-        transform:translateY(12px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
+      from{opacity:0;transform:translateY(12px);}
+      to{opacity:1;transform:translateY(0);}
     }
 
-    .card-header{
-      display:flex;
-      align-items:flex-start;
-      gap:1rem;
-      margin-bottom:1rem;
-    }
-
-    .avatar{
-      width:48px;
-      height:48px;
+    .card-avatar{
+      width:56px;
+      height:56px;
       background:var(--accent);
       border-radius:50%;
       display:flex;
       align-items:center;
       justify-content:center;
       font-family:'Cormorant Infant',serif;
-      font-size:1.25rem;
+      font-size:1.5rem;
       font-weight:600;
       color:var(--white);
-      flex-shrink:0;
+      margin-bottom:1rem;
     }
 
-    .card-header-info{
-      flex:1;
-      min-width:0;
-    }
-
-    .founder-name{
-      font-size:1.05rem;
+    .card-name{
+      font-family:'Cormorant Infant',serif;
+      font-size:1.35rem;
       font-weight:600;
       color:var(--text);
-      margin-bottom:0.15rem;
+      margin-bottom:0.25rem;
     }
 
-    .founder-project{
-      font-size:0.95rem;
+    .card-city{
+      font-size:0.85rem;
+      color:rgba(30,27,24,0.5);
+      margin-bottom:1rem;
+    }
+
+    .card-separator{
+      height:1px;
+      background:rgba(30,27,24,0.08);
+      margin-bottom:1rem;
+    }
+
+    .card-section-label{
+      font-size:0.7rem;
+      font-weight:600;
+      letter-spacing:0.08em;
+      color:rgba(30,27,24,0.4);
+      text-transform:uppercase;
+      margin-bottom:0.35rem;
+    }
+
+    .card-project{
+      font-size:1rem;
       font-weight:600;
       color:var(--accent-dark);
+      margin-bottom:0.5rem;
     }
 
-    .founder-desc{
+    .card-desc{
       font-size:0.9rem;
       color:rgba(30,27,24,0.75);
       line-height:1.5;
@@ -285,114 +533,40 @@
       margin-bottom:1rem;
     }
 
-    .badge.idea{
-      background:var(--gray-light);
-      color:rgba(30,27,24,0.7);
-    }
+    .badge.idea{background:var(--gray-light);color:rgba(30,27,24,0.7);}
+    .badge.construccion{background:var(--terra-light);color:var(--accent-dark);}
+    .badge.ingresos{background:var(--green-earth);color:#4A5D44;}
+    .badge.escalando{background:var(--accent-dark);color:var(--white);}
 
-    .badge.construccion{
-      background:var(--terra-light);
-      color:var(--accent-dark);
-    }
-
-    .badge.ingresos{
-      background:var(--green-earth);
-      color:#4A5D44;
-    }
-
-    .badge.escalando{
-      background:var(--accent-dark);
-      color:var(--white);
-    }
-
-
-    .founder-city{
-      font-size:0.8rem;
-      color:rgba(30,27,24,0.5);
-      margin-bottom:0.75rem;
-    }
-
-    .card-footer{
+    .card-events{
       margin-top:auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:1rem;
-      padding-top:0.75rem;
+      padding-top:1rem;
       border-top:1px solid rgba(30,27,24,0.08);
     }
 
-    .founder-event{
+    .card-events-label{
       font-size:0.7rem;
-      color:var(--accent);
-      letter-spacing:0.02em;
-    }
-
-    /* Loading Skeleton */
-    .skeleton-card{
-      background:var(--white);
-      border-radius:16px;
-      padding:1.5rem;
-      box-shadow:0 2px 12px rgba(70,29,20,0.06);
-    }
-
-    .skeleton{
-      background:linear-gradient(90deg,var(--gray-light) 25%,#E8E4DE 50%,var(--gray-light) 75%);
-      background-size:200% 100%;
-      animation:shimmer 1.5s infinite;
-      border-radius:6px;
-    }
-
-    @keyframes shimmer{
-      0%{background-position:200% 0;}
-      100%{background-position:-200% 0;}
-    }
-
-    .skeleton-header{
-      display:flex;
-      gap:1rem;
-      margin-bottom:1rem;
-    }
-
-    .skeleton-avatar{
-      width:48px;
-      height:48px;
-      border-radius:50%;
-    }
-
-    .skeleton-lines{
-      flex:1;
-    }
-
-    .skeleton-line{
-      height:14px;
+      font-weight:600;
+      letter-spacing:0.08em;
+      color:rgba(30,27,24,0.4);
+      text-transform:uppercase;
       margin-bottom:0.5rem;
     }
 
-    .skeleton-line:last-child{
-      width:60%;
-      margin-bottom:0;
-    }
-
-    .skeleton-body{
-      height:60px;
-      margin-bottom:1rem;
-    }
-
-    .skeleton-badge{
-      width:100px;
-      height:24px;
-      margin-bottom:1rem;
-    }
-
-    .skeleton-footer{
-      height:36px;
+    .card-event-item{
+      font-size:0.8rem;
+      color:var(--accent);
     }
 
     /* Empty State */
     .empty-state{
       text-align:center;
       padding:4rem 2rem;
+      display:none;
+    }
+
+    .empty-state.visible{
+      display:block;
     }
 
     .empty-icon{
@@ -427,46 +601,37 @@
       color:rgba(30,27,24,0.6);
     }
 
+    /* Loading */
+    .loading-spinner{
+      text-align:center;
+      padding:3rem;
+    }
+
+    .loading-spinner .spinner{
+      width:40px;
+      height:40px;
+      border:3px solid var(--gray-light);
+      border-top-color:var(--accent);
+      border-radius:50%;
+      animation:spin 0.8s linear infinite;
+      margin:0 auto;
+    }
+
+    @keyframes spin{
+      to{transform:rotate(360deg);}
+    }
+
     /* Footer */
     footer{
-      padding:2rem 1.5rem;
+      padding:1.5rem;
       text-align:center;
       border-top:1px solid rgba(30,27,24,0.1);
       background:var(--white);
     }
 
-    .footer-cta{
-      display:inline-flex;
-      align-items:center;
-      gap:0.5rem;
-      font-size:1rem;
-      font-weight:500;
-      color:var(--accent-dark);
-      text-decoration:none;
-      margin-bottom:1rem;
-      padding:0.75rem 1.25rem;
-      background:var(--terra-light);
-      border-radius:10px;
-      transition:all 0.2s ease;
-    }
-
-    .footer-cta:hover{
-      background:var(--accent);
-      color:var(--white);
-    }
-
-    .footer-cta svg{
-      width:18px;
-      height:18px;
-      stroke:currentColor;
-      stroke-width:2;
-      fill:none;
-    }
-
     .footer-text{
       font-size:0.85rem;
       color:rgba(30,27,24,0.5);
-      letter-spacing:0.02em;
     }
 
     .footer-text a{
@@ -474,126 +639,123 @@
       text-decoration:none;
     }
 
-    .footer-text a:hover{
-      text-decoration:underline;
-    }
-
-    /* Desktop adjustments */
+    /* Desktop */
     @media(min-width:640px){
-      .header{
-        padding:2rem 2rem;
-      }
-
-      .header-title{
-        font-size:2.75rem;
-      }
-
-      .controls{
-        padding:1.5rem 2rem;
-      }
-
-      main{
-        padding:2.5rem 2rem;
-      }
+      .header{padding:1.5rem 2rem;}
+      .header-title{font-size:2.25rem;}
+      .user-section{padding:1.25rem 2rem;}
+      .controls{padding:1.25rem 2rem;}
+      main{padding:2rem;}
+      .login-card{padding:3rem 2.5rem;}
     }
   </style>
 </head>
 <body>
-  <header class="header">
-    <div class="header-inner">
-      <a href="/founders/meetup" class="header-brand">Teokaye<span>×</span>Founders Meetup</a>
-      <h1 class="header-title">Directorio de founders</h1>
-      <p class="header-subtitle">Personas construyendo proyectos en Puebla</p>
-      <div class="header-counter">
-        <span class="count" id="founderCount">0</span> founders en la comunidad
-      </div>
-    </div>
-  </header>
+  <!-- Login Screen -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <p class="login-brand">Teokaye<span>×</span>Founders Meetup</p>
+      <h1 class="login-title">Acceso a la comunidad</h1>
+      <p class="login-subtitle">Ingresa con los datos que registraste</p>
 
-  <div class="controls">
-    <div class="controls-inner">
-      <div class="search-wrap">
-        <svg class="search-icon" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" class="search-input" id="searchInput" placeholder="Buscar por nombre o proyecto...">
-      </div>
-      <div class="filters" id="filters">
-        <button class="filter-chip active" data-filter="all">Todos</button>
-        <button class="filter-chip" data-filter="idea">Idea</button>
-        <button class="filter-chip" data-filter="construccion">En construcción</button>
-        <button class="filter-chip" data-filter="ingresos">Con ingresos</button>
-        <button class="filter-chip" data-filter="escalando">Escalando</button>
-      </div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginIdentifier">Teléfono o correo</label>
+          <input type="text" id="loginIdentifier" placeholder="+52 222 123 4567 o tu@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPin">PIN de 4 dígitos</label>
+          <input type="number" id="loginPin" placeholder="1234" min="1000" max="9999" required>
+        </div>
+        <button type="submit" class="btn-login" id="btnLogin">Entrar</button>
+        <div class="login-error" id="loginError">Datos incorrectos. ¿Ya te registraste en el evento?</div>
+      </form>
     </div>
   </div>
 
-  <main>
-    <div class="container">
-      <div class="founders-grid" id="foundersGrid">
-        <!-- Loading skeletons -->
-        <div class="skeleton-card">
-          <div class="skeleton-header">
-            <div class="skeleton skeleton-avatar"></div>
-            <div class="skeleton-lines">
-              <div class="skeleton skeleton-line"></div>
-              <div class="skeleton skeleton-line"></div>
-            </div>
+  <!-- Directory Screen -->
+  <div class="directory-screen" id="directoryScreen">
+    <header class="header">
+      <div class="header-inner">
+        <div class="header-content">
+          <span class="header-brand">Teokaye<span>×</span>Founders Meetup</span>
+          <h1 class="header-title">Directorio de founders</h1>
+          <p class="header-subtitle">Personas construyendo proyectos en Puebla</p>
+          <div class="header-counter">
+            <span id="founderCount">0</span> founders visibles
           </div>
-          <div class="skeleton skeleton-body"></div>
-          <div class="skeleton skeleton-badge"></div>
-          <div class="skeleton skeleton-footer"></div>
         </div>
-        <div class="skeleton-card">
-          <div class="skeleton-header">
-            <div class="skeleton skeleton-avatar"></div>
-            <div class="skeleton-lines">
-              <div class="skeleton skeleton-line"></div>
-              <div class="skeleton skeleton-line"></div>
-            </div>
-          </div>
-          <div class="skeleton skeleton-body"></div>
-          <div class="skeleton skeleton-badge"></div>
-          <div class="skeleton skeleton-footer"></div>
-        </div>
-        <div class="skeleton-card">
-          <div class="skeleton-header">
-            <div class="skeleton skeleton-avatar"></div>
-            <div class="skeleton-lines">
-              <div class="skeleton skeleton-line"></div>
-              <div class="skeleton skeleton-line"></div>
-            </div>
-          </div>
-          <div class="skeleton skeleton-body"></div>
-          <div class="skeleton skeleton-badge"></div>
-          <div class="skeleton skeleton-footer"></div>
-        </div>
+        <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
       </div>
+    </header>
 
-      <div class="empty-state" id="emptyState" style="display:none;">
-        <div class="empty-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-            <circle cx="9" cy="7" r="4"></circle>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-          </svg>
+    <div class="user-section">
+      <div class="user-section-inner">
+        <div class="user-info">
+          <div class="user-avatar" id="userAvatar">A</div>
+          <div class="user-details">
+            <div class="user-name" id="userName">Cargando...</div>
+            <div class="user-project" id="userProject"></div>
+          </div>
         </div>
-        <h2 class="empty-title">Aún no hay founders registrados</h2>
-        <p class="empty-text">Sé el primero en unirte a la comunidad</p>
+        <div class="visibility-toggle">
+          <div class="toggle-row">
+            <span class="toggle-label">Aparecer en el directorio</span>
+            <div class="toggle-switch" id="visibilityToggle"></div>
+          </div>
+          <span class="toggle-hint">Si está activo, los demás miembros pueden ver tu tarjeta.</span>
+        </div>
       </div>
     </div>
-  </main>
 
-  <footer>
-    <p class="footer-text">Teokaye • El sagrado arte de compartir • <a href="https://teokaye.mx">teokaye.mx</a></p>
-  </footer>
+    <div class="controls">
+      <div class="controls-inner">
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" class="search-input" id="searchInput" placeholder="Buscar por nombre o proyecto...">
+        </div>
+        <div class="filters" id="filters">
+          <button class="filter-chip active" data-filter="all">Todos</button>
+          <button class="filter-chip" data-filter="idea">Idea</button>
+          <button class="filter-chip" data-filter="construccion">En construcción</button>
+          <button class="filter-chip" data-filter="ingresos">Con ingresos</button>
+          <button class="filter-chip" data-filter="escalando">Escalando</button>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <div class="container">
+        <div class="loading-spinner" id="loadingSpinner">
+          <div class="spinner"></div>
+        </div>
+        <div class="founders-grid" id="foundersGrid"></div>
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h2 class="empty-title">No hay founders visibles</h2>
+          <p class="empty-text">Aún no hay miembros que hayan activado su visibilidad</p>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p class="footer-text">Teokaye • El sagrado arte de compartir • <a href="https://teokaye.mx">teokaye.mx</a></p>
+    </footer>
+  </div>
 
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
   document.addEventListener('DOMContentLoaded', async function() {
-    // Supabase config
     const SUPABASE_URL = 'https://xfllewbfqxsnkltybqiw.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmbGxld2JmcXhzbmtsdHlicWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MzgyMTYsImV4cCI6MjA4OTUxNDIxNn0.8DgRYmM7_pBQ3shLk0hRiAUf4FE8DSYCXgPbVJkThG4';
 
@@ -604,39 +766,26 @@
 
     const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Access restriction - verify UUID exists in Supabase
-    const foundersUuid = localStorage.getItem('founders_uuid');
-    if (!foundersUuid) {
-      window.location.href = '/founders/meetup';
-      return;
-    }
-
-    // Verify UUID exists in database
-    const { data: userCheck, error: userError } = await db
-      .from('founders_meetup')
-      .select('id')
-      .eq('id', foundersUuid)
-      .single();
-
-    if (userError || !userCheck) {
-      localStorage.removeItem('founders_uuid');
-      window.location.href = '/founders/meetup';
-      return;
-    }
-
     // DOM elements
+    const loginScreen = document.getElementById('loginScreen');
+    const directoryScreen = document.getElementById('directoryScreen');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+    const btnLogout = document.getElementById('btnLogout');
+    const visibilityToggle = document.getElementById('visibilityToggle');
     const foundersGrid = document.getElementById('foundersGrid');
     const emptyState = document.getElementById('emptyState');
     const founderCount = document.getElementById('founderCount');
     const searchInput = document.getElementById('searchInput');
     const filters = document.getElementById('filters');
+    const loadingSpinner = document.getElementById('loadingSpinner');
 
     // State
+    let currentUser = null;
     let allFounders = [];
     let currentFilter = 'all';
     let searchQuery = '';
 
-    // Stage labels and classes
     const stageConfig = {
       'idea': { label: 'Todavía es una idea', class: 'idea' },
       'construccion': { label: 'En construcción', class: 'construccion' },
@@ -644,30 +793,148 @@
       'escalando': { label: 'Escalando', class: 'escalando' }
     };
 
-    // Get initials
+    // Check for existing session
+    const storedUuid = localStorage.getItem('founders_uuid');
+    if (storedUuid) {
+      const { data: user, error } = await db
+        .from('founders_meetup')
+        .select('*')
+        .eq('id', storedUuid)
+        .single();
+
+      if (!error && user) {
+        currentUser = user;
+        showDirectory();
+        return;
+      } else {
+        localStorage.removeItem('founders_uuid');
+      }
+    }
+
+    // Show login
+    loginScreen.classList.add('visible');
+
+    // Login form handler
+    loginForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      loginError.classList.remove('visible');
+
+      const identifier = document.getElementById('loginIdentifier').value.trim();
+      const pin = parseInt(document.getElementById('loginPin').value);
+
+      if (!identifier || !pin || pin < 1000 || pin > 9999) {
+        loginError.textContent = 'Por favor ingresa datos válidos';
+        loginError.classList.add('visible');
+        return;
+      }
+
+      document.getElementById('btnLogin').disabled = true;
+
+      // Try to find user by phone or email
+      const { data, error } = await db
+        .from('founders_meetup')
+        .select('*')
+        .or(`telefono.eq.${identifier},email.eq.${identifier}`)
+        .eq('pin', pin)
+        .single();
+
+      if (error || !data) {
+        loginError.textContent = 'Datos incorrectos. ¿Ya te registraste en el evento?';
+        loginError.classList.add('visible');
+        document.getElementById('btnLogin').disabled = false;
+        return;
+      }
+
+      // Success
+      currentUser = data;
+      localStorage.setItem('founders_uuid', data.id);
+      loginScreen.classList.remove('visible');
+      showDirectory();
+    });
+
+    // Logout handler
+    btnLogout.addEventListener('click', function() {
+      localStorage.removeItem('founders_uuid');
+      localStorage.removeItem('founders_telefono');
+      currentUser = null;
+      directoryScreen.classList.remove('visible');
+      loginScreen.classList.add('visible');
+      loginForm.reset();
+    });
+
+    // Show directory
+    async function showDirectory() {
+      directoryScreen.classList.add('visible');
+
+      // Update user section
+      document.getElementById('userAvatar').textContent = currentUser.nombre.charAt(0).toUpperCase();
+      document.getElementById('userName').textContent = currentUser.nombre;
+      document.getElementById('userProject').textContent = currentUser.proyecto;
+
+      // Set visibility toggle state
+      if (currentUser.visible_en_directorio) {
+        visibilityToggle.classList.add('active');
+      }
+
+      // Load founders
+      await loadFounders();
+    }
+
+    // Visibility toggle handler
+    visibilityToggle.addEventListener('click', async function() {
+      const newValue = !visibilityToggle.classList.contains('active');
+
+      // Optimistic update
+      if (newValue) {
+        visibilityToggle.classList.add('active');
+      } else {
+        visibilityToggle.classList.remove('active');
+      }
+
+      // Update in Supabase
+      const { error } = await db
+        .from('founders_meetup')
+        .update({ visible_en_directorio: newValue })
+        .eq('id', currentUser.id);
+
+      if (error) {
+        console.error('Error updating visibility:', error);
+        // Revert on error
+        if (newValue) {
+          visibilityToggle.classList.remove('active');
+        } else {
+          visibilityToggle.classList.add('active');
+        }
+        return;
+      }
+
+      currentUser.visible_en_directorio = newValue;
+      await loadFounders();
+    });
+
+    // Get initial
     function getInitial(name) {
       return name.trim().charAt(0).toUpperCase();
     }
 
-    // Create founder card HTML
+    // Create founder card
     function createFounderCard(founder, index) {
       const stage = stageConfig[founder.etapa] || { label: founder.etapa, class: 'idea' };
       const evento = founder.evento || 'Founders Meetup #1 — Marzo 2026';
 
       return `
         <article class="founder-card" style="animation-delay: ${index * 0.08}s">
-          <div class="card-header">
-            <div class="avatar">${getInitial(founder.nombre)}</div>
-            <div class="card-header-info">
-              <h3 class="founder-name">${founder.nombre}</h3>
-              <p class="founder-project">${founder.proyecto}</p>
-            </div>
-          </div>
-          <p class="founder-desc">${founder.descripcion_proyecto}</p>
+          <div class="card-avatar">${getInitial(founder.nombre)}</div>
+          <h3 class="card-name">${founder.nombre}</h3>
+          <p class="card-city">${founder.ciudad}</p>
+          <div class="card-separator"></div>
+          <span class="card-section-label">Proyecto</span>
+          <p class="card-project">${founder.proyecto}</p>
+          <p class="card-desc">${founder.descripcion_proyecto}</p>
           <span class="badge ${stage.class}">${stage.label}</span>
-          <p class="founder-city">${founder.ciudad}</p>
-          <div class="card-footer">
-            <span class="founder-event">${evento}</span>
+          <div class="card-events">
+            <span class="card-events-label">Asistencias</span>
+            <p class="card-event-item">· ${evento}</p>
           </div>
         </article>
       `;
@@ -677,12 +944,10 @@
     function filterFounders() {
       let filtered = allFounders;
 
-      // Filter by stage
       if (currentFilter !== 'all') {
         filtered = filtered.filter(f => f.etapa === currentFilter);
       }
 
-      // Filter by search
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
         filtered = filtered.filter(f =>
@@ -700,41 +965,46 @@
 
       if (filtered.length === 0) {
         foundersGrid.innerHTML = '';
-        emptyState.style.display = 'block';
+        emptyState.classList.add('visible');
         if (searchQuery || currentFilter !== 'all') {
           emptyState.querySelector('.empty-title').textContent = 'No se encontraron resultados';
           emptyState.querySelector('.empty-text').textContent = 'Intenta con otra búsqueda o filtro';
         } else {
-          emptyState.querySelector('.empty-title').textContent = 'Aún no hay founders registrados';
-          emptyState.querySelector('.empty-text').textContent = 'Sé el primero en unirte a la comunidad';
+          emptyState.querySelector('.empty-title').textContent = 'No hay founders visibles';
+          emptyState.querySelector('.empty-text').textContent = 'Aún no hay miembros que hayan activado su visibilidad';
         }
         return;
       }
 
-      emptyState.style.display = 'none';
+      emptyState.classList.remove('visible');
       foundersGrid.innerHTML = filtered.map((f, i) => createFounderCard(f, i)).join('');
     }
 
-    // Load founders from Supabase
+    // Load founders
     async function loadFounders() {
+      loadingSpinner.style.display = 'block';
+      foundersGrid.innerHTML = '';
+
       try {
         const { data, error } = await db
           .from('founders_meetup')
           .select('nombre, ciudad, proyecto, descripcion_proyecto, etapa, evento')
+          .eq('visible_en_directorio', true)
           .order('created_at', { ascending: false });
 
         if (error) throw error;
 
         allFounders = data || [];
         founderCount.textContent = allFounders.length;
+        loadingSpinner.style.display = 'none';
         renderFounders();
 
       } catch (err) {
         console.error('Error loading founders:', err);
-        foundersGrid.innerHTML = '';
-        emptyState.style.display = 'block';
+        loadingSpinner.style.display = 'none';
+        emptyState.classList.add('visible');
         emptyState.querySelector('.empty-title').textContent = 'Error al cargar';
-        emptyState.querySelector('.empty-text').textContent = err.message || 'No se pudo conectar con la base de datos';
+        emptyState.querySelector('.empty-text').textContent = err.message || 'No se pudo conectar';
       }
     }
 
@@ -753,9 +1023,6 @@
         renderFounders();
       }
     });
-
-    // Initialize
-    loadFounders();
   });
   </script>
 </body>
