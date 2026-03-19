@@ -586,11 +586,18 @@
         </div>
         <h2 class="status-title">Necesitamos tu ubicación</h2>
         <p class="status-text" id="permissionText">Necesitamos verificar tu ubicación para registrarte. El registro solo está disponible en el evento.</p>
-        <p class="status-text ios-instructions" id="iosInstructions" style="display:none; font-size:0.9rem; background:var(--bg); padding:1rem; border-radius:8px; text-align:left;">
+        <p class="status-text device-instructions" id="iosInstructions" style="display:none; font-size:0.9rem; background:var(--bg); padding:1rem; border-radius:8px; text-align:left;">
           <strong>En iPhone:</strong><br>
           1. Abre <strong>Configuración</strong><br>
           2. Busca <strong>Chrome</strong><br>
           3. En <strong>Ubicación</strong>, selecciona <strong>"Mientras se usa la app"</strong><br>
+          4. Regresa aquí y recarga la página
+        </p>
+        <p class="status-text device-instructions" id="androidInstructions" style="display:none; font-size:0.9rem; background:var(--bg); padding:1rem; border-radius:8px; text-align:left;">
+          <strong>En Android:</strong><br>
+          1. Abre <strong>Configuración</strong><br>
+          2. Ve a <strong>Apps</strong> → <strong>Chrome</strong><br>
+          3. Toca <strong>Permisos</strong> → <strong>Ubicación</strong> → <strong>Permitir</strong><br>
           4. Regresa aquí y recarga la página
         </p>
         <button class="btn-action" id="retryLocationBtn">Activar ubicación</button>
@@ -724,10 +731,12 @@
       const retryLocationBtn = document.getElementById('retryLocationBtn');
       const permissionText = document.getElementById('permissionText');
       const iosInstructions = document.getElementById('iosInstructions');
+      const androidInstructions = document.getElementById('androidInstructions');
 
-      // Detect iOS
+      // Detect iOS and Android
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
                     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      const isAndroid = /Android/.test(navigator.userAgent);
 
       // Config variables
       let eventoLat = null;
@@ -765,6 +774,10 @@
         hideAllCards();
         permissionCard.classList.add('visible');
 
+        // Hide both instruction sets first
+        iosInstructions.style.display = 'none';
+        androidInstructions.style.display = 'none';
+
         // errorCode: 1 = PERMISSION_DENIED, 2 = POSITION_UNAVAILABLE, 3 = TIMEOUT
         if (isIOS) {
           // On iOS, show specific instructions
@@ -775,8 +788,16 @@
             permissionText.textContent = 'No pudimos obtener tu ubicación. Verifica que la ubicación esté activada:';
           }
           retryLocationBtn.textContent = 'Ya lo activé, intentar de nuevo';
+        } else if (isAndroid) {
+          // On Android, show specific instructions
+          androidInstructions.style.display = 'block';
+          if (errorCode === 1) {
+            permissionText.textContent = 'El acceso a tu ubicación está bloqueado. Actívalo en Configuración:';
+          } else {
+            permissionText.textContent = 'No pudimos obtener tu ubicación. Verifica que la ubicación esté activada:';
+          }
+          retryLocationBtn.textContent = 'Ya lo activé, intentar de nuevo';
         } else {
-          iosInstructions.style.display = 'none';
           permissionText.textContent = 'Necesitamos verificar tu ubicación para registrarte. El registro solo está disponible en el evento.';
           retryLocationBtn.textContent = 'Activar ubicación';
         }
