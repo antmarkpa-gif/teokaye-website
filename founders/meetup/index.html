@@ -646,7 +646,6 @@
         </div>
         <h2 class="status-title">No estás en el evento</h2>
         <p class="status-text">El registro solo está disponible para personas presentes en Teokaye.</p>
-        <p class="status-text" id="debugInfo" style="font-size:0.75rem; background:var(--bg); padding:0.75rem; border-radius:8px; text-align:left; margin-top:1rem; font-family:monospace;"></p>
       </div>
 
       <!-- Form -->
@@ -786,7 +785,6 @@
       const closedCard = document.getElementById('closedCard');
       const permissionCard = document.getElementById('permissionCard');
       const outsideCard = document.getElementById('outsideCard');
-      const debugInfo = document.getElementById('debugInfo');
       const formCard = document.getElementById('formCard');
       const successCard = document.getElementById('successCard');
       const form = document.getElementById('registroForm');
@@ -912,15 +910,8 @@
               // User is within the event radius
               formCard.classList.add('visible');
             } else {
-              // User is too far - show debug info
+              // User is too far
               outsideCard.classList.add('visible');
-              debugInfo.innerHTML = `
-                <strong>Debug:</strong><br>
-                Tu ubicación: ${userLat.toFixed(6)}, ${userLng.toFixed(6)}<br>
-                Evento: ${eventoLat}, ${eventoLng}<br>
-                Distancia: ${distance.toFixed(1)} metros<br>
-                Radio permitido: ${eventoRadio} metros
-              `;
             }
           },
           // Error
