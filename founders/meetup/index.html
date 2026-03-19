@@ -119,8 +119,8 @@
       50%{opacity:0.4;}
     }
 
-    /* Blocked State */
-    .blocked-card{
+    /* Status Cards (Blocked, Location, etc.) */
+    .status-card{
       background:var(--white);
       border-radius:16px;
       padding:3rem 2rem;
@@ -129,11 +129,11 @@
       display:none;
     }
 
-    .blocked-card.visible{
+    .status-card.visible{
       display:block;
     }
 
-    .blocked-icon{
+    .status-icon{
       width:64px;
       height:64px;
       margin:0 auto 1.5rem;
@@ -144,7 +144,7 @@
       justify-content:center;
     }
 
-    .blocked-icon svg{
+    .status-icon svg{
       width:32px;
       height:32px;
       stroke:var(--accent);
@@ -152,7 +152,7 @@
       fill:none;
     }
 
-    .blocked-title{
+    .status-title{
       font-family:'Cormorant Infant',serif;
       font-size:1.75rem;
       font-weight:600;
@@ -160,10 +160,77 @@
       margin-bottom:0.75rem;
     }
 
-    .blocked-text{
+    .status-text{
       font-size:1rem;
       color:rgba(30,27,24,0.6);
       line-height:1.5;
+      margin-bottom:1.5rem;
+    }
+
+    .status-text:last-child{
+      margin-bottom:0;
+    }
+
+    .btn-action{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:0.5rem;
+      padding:0.875rem 1.5rem;
+      font-family:'Source Sans 3',sans-serif;
+      font-size:1rem;
+      font-weight:600;
+      color:var(--white);
+      background:var(--accent-dark);
+      border:none;
+      border-radius:10px;
+      text-decoration:none;
+      cursor:pointer;
+      transition:all 0.25s ease;
+    }
+
+    .btn-action:hover{
+      background:var(--accent);
+      transform:translateY(-1px);
+      box-shadow:0 4px 16px rgba(184,130,107,0.3);
+    }
+
+    .btn-secondary{
+      background:transparent;
+      border:2px solid var(--accent);
+      color:var(--accent-dark);
+    }
+
+    .btn-secondary:hover{
+      background:var(--accent);
+      color:var(--white);
+      border-color:var(--accent);
+    }
+
+    /* Loading state for page */
+    .loading-page{
+      text-align:center;
+      padding:3rem;
+      display:none;
+    }
+
+    .loading-page.visible{
+      display:block;
+    }
+
+    .loading-page .spinner{
+      width:40px;
+      height:40px;
+      border:3px solid var(--bg);
+      border-top-color:var(--accent);
+      border-radius:50%;
+      animation:spin 0.8s linear infinite;
+      margin:0 auto 1rem;
+    }
+
+    .loading-text{
+      font-size:1rem;
+      color:rgba(30,27,24,0.6);
     }
 
     /* Form */
@@ -454,29 +521,13 @@
       text-decoration:underline;
     }
 
-    /* Loading state for page */
-    .loading-page{
-      text-align:center;
-      padding:3rem;
-    }
-
-    .loading-page .spinner{
-      width:40px;
-      height:40px;
-      border:3px solid var(--bg);
-      border-top-color:var(--accent);
-      border-radius:50%;
-      animation:spin 0.8s linear infinite;
-      margin:0 auto;
-    }
-
     /* Desktop */
     @media (min-width:640px){
       .hero-title{
         font-size:3rem;
       }
 
-      .form-card,.success-card,.blocked-card{
+      .form-card,.success-card,.status-card{
         padding:2.5rem 2rem;
       }
 
@@ -506,21 +557,49 @@
       </section>
 
       <!-- Loading state -->
-      <div class="loading-page" id="loadingState">
+      <div class="loading-page visible" id="loadingState">
         <div class="spinner"></div>
+        <p class="loading-text">Verificando que estás en el evento...</p>
       </div>
 
-      <!-- Blocked state -->
-      <div class="blocked-card" id="blockedCard">
-        <div class="blocked-icon">
+      <!-- Registro cerrado -->
+      <div class="status-card" id="closedCard">
+        <div class="status-icon">
           <svg viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10"></circle>
             <line x1="12" y1="8" x2="12" y2="12"></line>
             <line x1="12" y1="16" x2="12.01" y2="16"></line>
           </svg>
         </div>
-        <h2 class="blocked-title">El registro está cerrado</h2>
-        <p class="blocked-text">El registro solo está disponible durante los eventos.</p>
+        <h2 class="status-title">El registro está cerrado</h2>
+        <p class="status-text">Los registros solo están disponibles durante los eventos.</p>
+        <a href="/founders" class="btn-action">Ver próximos eventos</a>
+      </div>
+
+      <!-- Permiso de ubicación denegado -->
+      <div class="status-card" id="permissionCard">
+        <div class="status-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+        </div>
+        <h2 class="status-title">Necesitamos tu ubicación</h2>
+        <p class="status-text">Necesitamos verificar tu ubicación para registrarte. El registro solo está disponible en el evento.</p>
+        <button class="btn-action" id="retryLocationBtn">Intentar de nuevo</button>
+      </div>
+
+      <!-- Fuera del evento -->
+      <div class="status-card" id="outsideCard">
+        <div class="status-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg>
+        </div>
+        <h2 class="status-title">No estás en el evento</h2>
+        <p class="status-text">El registro solo está disponible para personas presentes en Teokaye.</p>
       </div>
 
       <!-- Form -->
@@ -590,7 +669,7 @@
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
         </div>
-        <h2 class="success-title">Ya eres parte de la comunidad 🤝</h2>
+        <h2 class="success-title">Ya eres parte de la comunidad</h2>
         <p class="success-text">Usa tu teléfono y PIN para entrar al directorio.</p>
         <div class="success-buttons">
           <a href="https://chat.whatsapp.com/Fmjob5mKWCkDtGObjVGEYv?mode=gi_t" target="_blank" class="btn-whatsapp">
@@ -613,8 +692,8 @@
   <script>
     document.addEventListener('DOMContentLoaded', async function() {
       // Supabase config
-      const SUPABASE_URL = 'https://xfllewbfqxsnkltybqiw.supabase.co';
-      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmbGxld2JmcXhzbmtsdHlicWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MzgyMTYsImV4cCI6MjA4OTUxNDIxNn0.8DgRYmM7_pBQ3shLk0hRiAUf4FE8DSYCXgPbVJkThG4';
+      const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+      const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
 
       // Check if Supabase loaded
       if (typeof supabase === 'undefined') {
@@ -627,35 +706,138 @@
 
       // DOM elements
       const loadingState = document.getElementById('loadingState');
-      const blockedCard = document.getElementById('blockedCard');
+      const closedCard = document.getElementById('closedCard');
+      const permissionCard = document.getElementById('permissionCard');
+      const outsideCard = document.getElementById('outsideCard');
       const formCard = document.getElementById('formCard');
       const successCard = document.getElementById('successCard');
       const form = document.getElementById('registroForm');
       const btnSubmit = document.getElementById('btnSubmit');
       const errorMsg = document.getElementById('errorMsg');
+      const retryLocationBtn = document.getElementById('retryLocationBtn');
 
-      // Check if registration is active
-      try {
-        const { data: configData, error: configError } = await db
-          .from('config')
-          .select('value')
-          .eq('key', 'registro_activo')
-          .single();
+      // Config variables
+      let eventoLat = null;
+      let eventoLng = null;
+      let eventoRadio = null;
 
-        loadingState.style.display = 'none';
+      // Haversine formula to calculate distance between two coordinates
+      function haversineDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371000; // Earth's radius in meters
+        const toRad = (deg) => deg * (Math.PI / 180);
 
-        if (configError || !configData || configData.value === 'false') {
-          blockedCard.classList.add('visible');
+        const dLat = toRad(lat2 - lat1);
+        const dLon = toRad(lon2 - lon1);
+
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                  Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+                  Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c; // Distance in meters
+      }
+
+      // Hide all cards
+      function hideAllCards() {
+        loadingState.classList.remove('visible');
+        closedCard.classList.remove('visible');
+        permissionCard.classList.remove('visible');
+        outsideCard.classList.remove('visible');
+        formCard.classList.remove('visible');
+      }
+
+      // Request geolocation
+      function requestLocation() {
+        loadingState.classList.add('visible');
+
+        if (!navigator.geolocation) {
+          hideAllCards();
+          permissionCard.classList.add('visible');
           return;
         }
 
-        // Registration is active, show form
-        formCard.classList.add('visible');
+        navigator.geolocation.getCurrentPosition(
+          // Success
+          (position) => {
+            const userLat = position.coords.latitude;
+            const userLng = position.coords.longitude;
+
+            const distance = haversineDistance(userLat, userLng, eventoLat, eventoLng);
+
+            hideAllCards();
+
+            if (distance <= eventoRadio) {
+              // User is within the event radius
+              formCard.classList.add('visible');
+            } else {
+              // User is too far
+              outsideCard.classList.add('visible');
+            }
+          },
+          // Error (permission denied or other)
+          (error) => {
+            hideAllCards();
+            permissionCard.classList.add('visible');
+          },
+          // Options
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+          }
+        );
+      }
+
+      // Retry location button
+      retryLocationBtn.addEventListener('click', function() {
+        hideAllCards();
+        requestLocation();
+      });
+
+      // Initial check: fetch config from Supabase
+      try {
+        const { data: configData, error: configError } = await db
+          .from('config')
+          .select('key, value')
+          .in('key', ['registro_activo', 'evento_lat', 'evento_lng', 'evento_radio_metros']);
+
+        if (configError) throw configError;
+
+        // Parse config
+        const config = {};
+        if (configData) {
+          configData.forEach(item => {
+            config[item.key] = item.value;
+          });
+        }
+
+        // Check if registration is active
+        if (!config.registro_activo || config.registro_activo === 'false') {
+          hideAllCards();
+          closedCard.classList.add('visible');
+          return;
+        }
+
+        // Get event coordinates and radius
+        eventoLat = parseFloat(config.evento_lat);
+        eventoLng = parseFloat(config.evento_lng);
+        eventoRadio = parseFloat(config.evento_radio_metros);
+
+        if (!eventoLat || !eventoLng || !eventoRadio) {
+          console.error('Coordenadas del evento no configuradas');
+          hideAllCards();
+          closedCard.classList.add('visible');
+          return;
+        }
+
+        // Request geolocation
+        requestLocation();
 
       } catch (err) {
         console.error('Error checking config:', err);
-        loadingState.style.display = 'none';
-        blockedCard.classList.add('visible');
+        hideAllCards();
+        closedCard.classList.add('visible');
         return;
       }
 
