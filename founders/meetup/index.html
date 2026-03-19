@@ -585,8 +585,15 @@
           </svg>
         </div>
         <h2 class="status-title">Necesitamos tu ubicación</h2>
-        <p class="status-text">Necesitamos verificar tu ubicación para registrarte. El registro solo está disponible en el evento.</p>
-        <button class="btn-action" id="retryLocationBtn">Intentar de nuevo</button>
+        <p class="status-text" id="permissionText">Necesitamos verificar tu ubicación para registrarte. El registro solo está disponible en el evento.</p>
+        <p class="status-text ios-instructions" id="iosInstructions" style="display:none; font-size:0.9rem; background:var(--bg); padding:1rem; border-radius:8px; text-align:left;">
+          <strong>En iPhone:</strong><br>
+          1. Abre <strong>Configuración</strong><br>
+          2. Ve a <strong>Privacidad y seguridad</strong> → <strong>Localización</strong><br>
+          3. Busca <strong>Chrome</strong> y selecciona <strong>"Mientras se usa la app"</strong><br>
+          4. Regresa aquí y presiona el botón
+        </p>
+        <button class="btn-action" id="retryLocationBtn">Activar ubicación</button>
       </div>
 
       <!-- Fuera del evento -->
@@ -715,6 +722,12 @@
       const btnSubmit = document.getElementById('btnSubmit');
       const errorMsg = document.getElementById('errorMsg');
       const retryLocationBtn = document.getElementById('retryLocationBtn');
+      const permissionText = document.getElementById('permissionText');
+      const iosInstructions = document.getElementById('iosInstructions');
+
+      // Detect iOS
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
       // Config variables
       let eventoLat = null;
@@ -747,16 +760,59 @@
         formCard.classList.remove('visible');
       }
 
+      // Show permission card with appropriate message
+      function showPermissionError(errorCode) {
+        hideAllCards();
+        permissionCard.classList.add('visible');
+
+        // errorCode: 1 = PERMISSION_DENIED, 2 = POSITION_UNAVAILABLE, 3 = TIMEOUT
+        if (isIOS) {
+          // On iOS, show specific instructions
+          iosInstructions.style.display = 'block';
+          if (errorCode === 1) {
+            permissionText.textContent = 'El acceso a tu ubicación está bloqueado. Actívalo en Configuración:';
+          } else {
+            permissionText.textContent = 'No pudimos obtener tu ubicación. Verifica que la ubicación esté activada:';
+          }
+          retryLocationBtn.textContent = 'Ya lo activé, intentar de nuevo';
+        } else {
+          iosInstructions.style.display = 'none';
+          permissionText.textContent = 'Necesitamos verificar tu ubicación para registrarte. El registro solo está disponible en el evento.';
+          retryLocationBtn.textContent = 'Activar ubicación';
+        }
+      }
+
       // Request geolocation
       function requestLocation() {
+        hideAllCards();
         loadingState.classList.add('visible');
 
         if (!navigator.geolocation) {
-          hideAllCards();
-          permissionCard.classList.add('visible');
+          showPermissionError(2);
           return;
         }
 
+        // First check permission status if available (not supported on all browsers)
+        if (navigator.permissions && navigator.permissions.query) {
+          navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+            if (result.state === 'denied') {
+              // Permission already denied, show instructions
+              showPermissionError(1);
+              return;
+            }
+            // Permission granted or prompt - proceed with location request
+            getLocation();
+          }).catch(() => {
+            // permissions.query not supported, just try to get location
+            getLocation();
+          });
+        } else {
+          // permissions API not available, just try to get location
+          getLocation();
+        }
+      }
+
+      function getLocation() {
         navigator.geolocation.getCurrentPosition(
           // Success
           (position) => {
@@ -775,16 +831,16 @@
               outsideCard.classList.add('visible');
             }
           },
-          // Error (permission denied or other)
+          // Error
           (error) => {
-            hideAllCards();
-            permissionCard.classList.add('visible');
+            console.log('Geolocation error:', error.code, error.message);
+            showPermissionError(error.code);
           },
-          // Options
+          // Options - be more lenient on iOS
           {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 0
+            enableHighAccuracy: !isIOS, // On iOS, high accuracy can cause issues
+            timeout: 15000, // Give more time
+            maximumAge: 60000 // Accept cached position up to 1 minute old
           }
         );
       }
