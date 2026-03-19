@@ -516,68 +516,84 @@
     <p class="footer-text">Teokaye • El sagrado arte de compartir • <a href="https://teokaye.mx">teokaye.mx</a></p>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
-    // Supabase config
-    const SUPABASE_URL = 'https://xfllewbfqxsnkltybqiw.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmbGxld2JmcXhzbmtsdHlicWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MzgyMTYsImV4cCI6MjA4OTUxNDIxNn0.8DgRYmM7_pBQ3shLk0hRiAUf4FE8DSYCXgPbVJkThG4';
+    document.addEventListener('DOMContentLoaded', function() {
+      // Supabase config
+      const SUPABASE_URL = 'https://xfllewbfqxsnkltybqiw.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmbGxld2JmcXhzbmtsdHlicWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MzgyMTYsImV4cCI6MjA4OTUxNDIxNn0.8DgRYmM7_pBQ3shLk0hRiAUf4FE8DSYCXgPbVJkThG4';
 
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    const form = document.getElementById('registroForm');
-    const formCard = document.getElementById('formCard');
-    const successCard = document.getElementById('successCard');
-    const btnSubmit = document.getElementById('btnSubmit');
-    const errorMsg = document.getElementById('errorMsg');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      // Reset error
-      errorMsg.classList.remove('visible');
-      errorMsg.textContent = '';
-
-      // Loading state
-      btnSubmit.classList.add('loading');
-      btnSubmit.disabled = true;
-
-      // Collect form data
-      const formData = {
-        nombre: form.nombre.value.trim(),
-        edad: parseInt(form.edad.value),
-        ciudad: form.ciudad.value.trim(),
-        proyecto: form.proyecto.value.trim(),
-        descripcion_proyecto: form.descripcion.value.trim(),
-        etapa: form.etapa.value,
-        mayor_reto: form.reto.value.trim(),
-        por_que_vino: form.motivo.value.trim(),
-        whatsapp: form.whatsapp.value.trim(),
-        created_at: new Date().toISOString()
-      };
-
-      try {
-        const { data, error } = await supabase
-          .from('founders_meetup')
-          .insert([formData]);
-
-        if (error) throw error;
-
-        // Success - show success card
-        formCard.style.display = 'none';
-        successCard.classList.add('visible');
-
-        // Scroll to top smoothly
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      } catch (err) {
-        console.error('Error:', err);
-        errorMsg.textContent = err.message || 'Hubo un error al guardar tus datos. Por favor intenta de nuevo.';
-        errorMsg.classList.add('visible');
-
-        // Reset button
-        btnSubmit.classList.remove('loading');
-        btnSubmit.disabled = false;
+      // Check if Supabase loaded
+      if (typeof supabase === 'undefined') {
+        console.error('Supabase no cargó');
+        alert('Error: No se pudo cargar Supabase. Recarga la página.');
+        return;
       }
+
+      const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      const form = document.getElementById('registroForm');
+      const formCard = document.getElementById('formCard');
+      const successCard = document.getElementById('successCard');
+      const btnSubmit = document.getElementById('btnSubmit');
+      const errorMsg = document.getElementById('errorMsg');
+
+      if (!form) {
+        console.error('Form not found');
+        return;
+      }
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Reset error
+        errorMsg.classList.remove('visible');
+        errorMsg.textContent = '';
+
+        // Loading state
+        btnSubmit.classList.add('loading');
+        btnSubmit.disabled = true;
+
+        // Collect form data
+        const formData = {
+          nombre: form.nombre.value.trim(),
+          edad: parseInt(form.edad.value),
+          ciudad: form.ciudad.value.trim(),
+          proyecto: form.proyecto.value.trim(),
+          descripcion_proyecto: form.descripcion.value.trim(),
+          etapa: form.etapa.value,
+          mayor_reto: form.reto.value.trim(),
+          por_que_vino: form.motivo.value.trim(),
+          whatsapp: form.whatsapp.value.trim()
+        };
+
+        try {
+          const { data, error } = await db
+            .from('founders_meetup')
+            .insert([formData]);
+
+          if (error) throw error;
+
+          // Success - show success card
+          formCard.style.display = 'none';
+          successCard.classList.add('visible');
+
+          // Scroll to top smoothly
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        } catch (err) {
+          console.error('Error:', err);
+          errorMsg.textContent = err.message || 'Hubo un error al guardar tus datos. Por favor intenta de nuevo.';
+          errorMsg.classList.add('visible');
+
+          // Reset button
+          btnSubmit.classList.remove('loading');
+          btnSubmit.disabled = false;
+        }
+
+        return false;
+      });
     });
   </script>
 </body>
