@@ -717,13 +717,6 @@
           </svg>
           <input type="text" class="search-input" id="searchInput" placeholder="Buscar por nombre o proyecto...">
         </div>
-        <div class="filters" id="filters">
-          <button class="filter-chip active" data-filter="all">Todos</button>
-          <button class="filter-chip" data-filter="idea">Idea</button>
-          <button class="filter-chip" data-filter="construccion">En construcción</button>
-          <button class="filter-chip" data-filter="ingresos">Con ingresos</button>
-          <button class="filter-chip" data-filter="escalando">Escalando</button>
-        </div>
       </div>
     </div>
 
@@ -777,21 +770,13 @@
     const emptyState = document.getElementById('emptyState');
     const founderCount = document.getElementById('founderCount');
     const searchInput = document.getElementById('searchInput');
-    const filters = document.getElementById('filters');
     const loadingSpinner = document.getElementById('loadingSpinner');
 
     // State
     let currentUser = null;
     let allFounders = [];
-    let currentFilter = 'all';
     let searchQuery = '';
 
-    const stageConfig = {
-      'idea': { label: 'Todavía es una idea', class: 'idea' },
-      'construccion': { label: 'En construcción', class: 'construccion' },
-      'ingresos': { label: 'Ya genera ingresos', class: 'ingresos' },
-      'escalando': { label: 'Escalando', class: 'escalando' }
-    };
 
     // Login form handler
     loginForm.addEventListener('submit', async function(e) {
@@ -898,7 +883,6 @@
 
     // Create founder card
     function createFounderCard(founder, index) {
-      const stage = stageConfig[founder.etapa] || { label: founder.etapa, class: 'idea' };
       const evento = founder.evento || 'Founders Meetup #1 — Marzo 2026';
 
       return `
@@ -910,7 +894,6 @@
           <span class="card-section-label">Proyecto</span>
           <p class="card-project">${founder.proyecto}</p>
           <p class="card-desc">${founder.descripcion_proyecto}</p>
-          <span class="badge ${stage.class}">${stage.label}</span>
           <div class="card-events">
             <span class="card-events-label">Asistencias</span>
             <p class="card-event-item">· ${evento}</p>
@@ -922,10 +905,6 @@
     // Filter founders
     function filterFounders() {
       let filtered = allFounders;
-
-      if (currentFilter !== 'all') {
-        filtered = filtered.filter(f => f.etapa === currentFilter);
-      }
 
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
@@ -945,9 +924,9 @@
       if (filtered.length === 0) {
         foundersGrid.innerHTML = '';
         emptyState.classList.add('visible');
-        if (searchQuery || currentFilter !== 'all') {
+        if (searchQuery) {
           emptyState.querySelector('.empty-title').textContent = 'No se encontraron resultados';
-          emptyState.querySelector('.empty-text').textContent = 'Intenta con otra búsqueda o filtro';
+          emptyState.querySelector('.empty-text').textContent = 'Intenta con otra búsqueda';
         } else {
           emptyState.querySelector('.empty-title').textContent = 'No hay founders visibles';
           emptyState.querySelector('.empty-text').textContent = 'Aún no hay miembros que hayan activado su visibilidad';
@@ -991,16 +970,6 @@
     searchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value.trim();
       renderFounders();
-    });
-
-    // Filter handler
-    filters.addEventListener('click', (e) => {
-      if (e.target.classList.contains('filter-chip')) {
-        filters.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-        e.target.classList.add('active');
-        currentFilter = e.target.dataset.filter;
-        renderFounders();
-      }
     });
 
     // Check for existing session (must be after event listeners are set up)
