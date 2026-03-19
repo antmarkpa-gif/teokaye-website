@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidad | Founders Meetup | Teokaye</title>
+  <link rel="icon" type="image/svg+xml" href="/simbolo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    :root{
+      --bg:#E6E0D6;
+      --text:#1E1B18;
+      --accent:#B8826B;
+      --accent-dark:#461D14;
+      --white:#FFFCF8;
+    }
+
+    html{font-size:16px;}
+
+    body{
+      font-family:'Source Sans 3',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.7;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* Header */
+    .header{
+      padding:1.25rem 1.5rem;
+      border-bottom:1px solid rgba(30,27,24,0.1);
+      background:var(--white);
+    }
+
+    .header-inner{
+      max-width:720px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .header-brand{
+      font-family:'Cormorant Infant',serif;
+      font-size:1rem;
+      font-weight:500;
+      letter-spacing:0.02em;
+      color:var(--accent-dark);
+      text-decoration:none;
+    }
+
+    .header-brand span{
+      color:var(--accent);
+      margin:0 0.4rem;
+    }
+
+    .header-back{
+      font-size:0.9rem;
+      color:var(--accent-dark);
+      text-decoration:none;
+      padding:0.5rem 0.75rem;
+      border-radius:6px;
+      transition:all 0.2s ease;
+    }
+
+    .header-back:hover{
+      background:rgba(184,130,107,0.15);
+    }
+
+    /* Main */
+    main{
+      flex:1;
+      padding:2.5rem 1.5rem 4rem;
+    }
+
+    .container{
+      max-width:720px;
+      margin:0 auto;
+    }
+
+    /* Hero */
+    .hero{
+      margin-bottom:3rem;
+    }
+
+    .hero-title{
+      font-family:'Cormorant Infant',serif;
+      font-size:2.25rem;
+      font-weight:500;
+      line-height:1.2;
+      color:var(--text);
+      margin-bottom:0.75rem;
+    }
+
+    .hero-subtitle{
+      font-size:1.05rem;
+      color:rgba(30,27,24,0.65);
+    }
+
+    /* Content */
+    .content{
+      background:var(--white);
+      border-radius:16px;
+      padding:2rem 1.5rem;
+      box-shadow:0 4px 24px rgba(70,29,20,0.08);
+    }
+
+    .section{
+      margin-bottom:2.5rem;
+    }
+
+    .section:last-child{
+      margin-bottom:0;
+    }
+
+    .section-number{
+      display:inline-block;
+      width:28px;
+      height:28px;
+      background:var(--accent);
+      color:var(--white);
+      border-radius:50%;
+      font-size:0.85rem;
+      font-weight:600;
+      text-align:center;
+      line-height:28px;
+      margin-right:0.5rem;
+    }
+
+    .section-title{
+      font-family:'Cormorant Infant',serif;
+      font-size:1.35rem;
+      font-weight:600;
+      color:var(--accent-dark);
+      margin-bottom:1rem;
+      display:flex;
+      align-items:center;
+    }
+
+    .section p{
+      margin-bottom:1rem;
+      color:rgba(30,27,24,0.85);
+    }
+
+    .section p:last-child{
+      margin-bottom:0;
+    }
+
+    .section ul{
+      margin:0.75rem 0 1rem 1.25rem;
+      color:rgba(30,27,24,0.85);
+    }
+
+    .section li{
+      margin-bottom:0.5rem;
+    }
+
+    .section li:last-child{
+      margin-bottom:0;
+    }
+
+    .highlight{
+      background:rgba(184,130,107,0.12);
+      padding:1rem 1.25rem;
+      border-radius:10px;
+      border-left:3px solid var(--accent);
+      margin:1rem 0;
+    }
+
+    .highlight p{
+      margin:0;
+      font-weight:500;
+      color:var(--accent-dark);
+    }
+
+    .contact-item{
+      display:flex;
+      align-items:center;
+      gap:0.5rem;
+      margin-bottom:0.5rem;
+      color:rgba(30,27,24,0.85);
+    }
+
+    .contact-item a{
+      color:var(--accent-dark);
+      text-decoration:none;
+    }
+
+    .contact-item a:hover{
+      text-decoration:underline;
+    }
+
+    /* Update info */
+    .update-info{
+      margin-top:2rem;
+      padding-top:1.5rem;
+      border-top:1px solid rgba(30,27,24,0.1);
+      font-size:0.9rem;
+      color:rgba(30,27,24,0.5);
+      text-align:center;
+    }
+
+    /* Footer */
+    footer{
+      padding:1.5rem;
+      text-align:center;
+      border-top:1px solid rgba(30,27,24,0.1);
+      background:var(--white);
+    }
+
+    .footer-text{
+      font-size:0.85rem;
+      color:rgba(30,27,24,0.5);
+      letter-spacing:0.02em;
+    }
+
+    .footer-text a{
+      color:var(--accent-dark);
+      text-decoration:none;
+    }
+
+    .footer-text a:hover{
+      text-decoration:underline;
+    }
+
+    /* Desktop */
+    @media (min-width:640px){
+      .hero-title{
+        font-size:2.75rem;
+      }
+
+      .content{
+        padding:3rem 2.5rem;
+      }
+
+      .section-title{
+        font-size:1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="header-brand">Teokaye<span>×</span>Founders Meetup</a>
+      <a href="/founders/directorio" class="header-back">Volver al directorio</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section class="hero">
+        <h1 class="hero-title">Política de Privacidad</h1>
+        <p class="hero-subtitle">Términos de uso para la comunidad Founders Meetup</p>
+      </section>
+
+      <div class="content">
+        <!-- 1. Quiénes somos -->
+        <div class="section">
+          <h2 class="section-title">
+            <span class="section-number">1</span>
+            Quiénes somos
+          </h2>
+          <p>Founders Meetup es una comunidad privada organizada por Teokaye (Av. 6 Ote. 402A, San Miguel, Cholula, Puebla) para conectar founders y emprendedores que asisten físicamente a sus eventos.</p>
+        </div>
+
+        <!-- 2. Qué datos recopilamos -->
+        <div class="section">
+          <h2 class="section-title">
+            <span class="section-number">2</span>
+            Qué datos recopilamos
+          </h2>
+          <ul>
+            <li>Nombre completo</li>
+            <li>Ciudad</li>
+            <li>Teléfono</li>
+            <li>Información sobre tu proyecto</li>
+            <li>Etapa de tu proyecto</li>
+            <li>PIN de acceso (almacenado de forma segura)</li>
+            <li>Datos de geolocalización (solo para verificar presencia en el evento, no se almacenan)</li>
+            <li>Fecha y hora de registro</li>
+          </ul>
+        </div>
+
+        <!-- 3. Cómo recopilamos los datos -->
+        <div class="section">
+          <h2 class="section-title">
+            <span class="section-number">3</span>
+            Cómo recopilamos los datos
+          </h2>
+          <p>Los datos se recopilan únicamente a través del formulario de registro, el cual solo está disponible:</p>
+          <ul>
+            <li>Durante la fecha y horario del evento</li>
+            <li>Estando físicamente presente en Teokaye, Cholula (verificado mediante geolocalización en tiempo real)</li>
+          </ul>
+          <div class="highlight">
+            <p>El link del formulario no funciona fuera de estas condiciones.</p>
+          </div>
+        </div>
+
+        <!-- 4. Para qué usamos tus datos -->
+        <div class="section">
+          <h2 class="section-title">
+            <span class="section-number">4</span>
+            Para qué usamos tus datos
+          </h2>
+          <ul>
+            <li>Crear tu perfil en el directorio privado de la comunidad</li>
+            <li>Permitirte acceder al directorio con tu número de teléfono y PIN</li>
+            <li>Facilitar la conexión entre miembros de la comunidad</li>
+          </ul>
+          <div class="highlight">
+            <p>Tus datos NO serán vendidos, compartidos ni utilizados para fines comerciales o publicitarios bajo ninguna circunstancia.</p>
+          </div>
+        </div>
+
+        <!-- 5. Quién puede ver tus datos -->
+        <div class="section">
+          <h2 class="section-title">
+            <span class="section-number">5</span>
+            Quién puede ver tus datos
+          </h2>
+          <ul>
+            <li>Tú mismo, al iniciar sesión</li>
+            <li>Otros miembros del directorio, SOLO si tú decides activar la visibilidad de tu perfil</li>
+            <li>El organizador del evento, únicamente para gestión interna</li>
+          </ul>
+          <div class="highlight">
+            <p>Ningún dato es público fuera de la comunidad.</p>
+          </div>
+        </div>
+
+        <!-- 6. Tus derechos -->
+        <div class="section">
+          <h2 class="section-title">
+            <span class="section-number">6</span>
+            Tus derechos
+          </h2>
+          <p>Como miembro tienes derecho a:</p>
+          <ul>
+            <li>Activar o desactivar tu perfil del directorio en cualquier momento</li>
+            <li>Solicitar la eliminación completa de tus datos escribiendo a <a href="mailto:teokaye.mx@gmail.com">teokaye.mx@gmail.com</a></li>
+            <li>Solicitar una copia de tus datos</li>
+            <li>Corregir cualquier dato incorrecto</li>
+          </ul>
+        </div>
+
+        <!-- 7. Seguridad -->
+        <div class="section">
+          <h2 class="section-title">
+            <span class="section-number">7</span>
+            Seguridad
+          </h2>
+          <ul>
+            <li>Los datos se almacenan en Supabase con cifrado en tránsito</li>
+            <li>El acceso al directorio requiere número de teléfono y PIN personal</li>
+            <li>El organizador puede revocar el acceso de cualquier miembro si se detecta uso indebido de credenciales</li>
+          </ul>
+          <div class="highlight">
+            <p>El único riesgo identificado es que un miembro comparta sus credenciales voluntariamente con terceros. En ese caso, el organizador se reserva el derecho de remover el acceso del miembro involucrado sin previo aviso.</p>
+          </div>
+        </div>
+
+        <!-- 8. Grupo de WhatsApp -->
+        <div class="section">
+          <h2 class="section-title">
+            <span class="section-number">8</span>
+            Grupo de WhatsApp
+          </h2>
+          <p>Al registrarte, obtienes acceso al grupo de WhatsApp de la comunidad. Este grupo está sujeto a las mismas reglas: no se permite compartir el link de acceso con personas que no hayan asistido físicamente a un evento.</p>
+        </div>
+
+        <!-- 9. Cambios a esta política -->
+        <div class="section">
+          <h2 class="section-title">
+            <span class="section-number">9</span>
+            Cambios a esta política
+          </h2>
+          <p>Nos reservamos el derecho de actualizar esta política. Los cambios se comunicarán a través del grupo de WhatsApp de la comunidad.</p>
+        </div>
+
+        <!-- 10. Contacto -->
+        <div class="section">
+          <h2 class="section-title">
+            <span class="section-number">10</span>
+            Contacto
+          </h2>
+          <p>Para cualquier duda o solicitud relacionada con tus datos:</p>
+          <div class="contact-item">
+            <span>📧</span>
+            <a href="mailto:teokaye.mx@gmail.com">teokaye.mx@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <span>📍</span>
+            <span>Teokaye, Av. 6 Ote. 402A, San Miguel, Cholula, Puebla</span>
+          </div>
+          <div class="contact-item">
+            <span>📱</span>
+            <a href="tel:+522213628681">221 362 8681</a>
+          </div>
+        </div>
+
+        <div class="update-info">
+          Última actualización: Marzo 2026
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p class="footer-text">Teokaye • El sagrado arte de compartir • <a href="https://teokaye.mx">teokaye.mx</a></p>
+  </footer>
+</body>
+</html>
