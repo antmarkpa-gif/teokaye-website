@@ -305,13 +305,11 @@
       color:var(--white);
     }
 
-    .founder-reto{
-      font-size:0.85rem;
-      color:var(--accent);
-      font-style:italic;
-      margin-bottom:1rem;
-      padding-left:0.75rem;
-      border-left:2px solid var(--accent);
+
+    .founder-city{
+      font-size:0.8rem;
+      color:rgba(30,27,24,0.5);
+      margin-bottom:0.75rem;
     }
 
     .card-footer{
@@ -320,40 +318,14 @@
       align-items:center;
       justify-content:space-between;
       gap:1rem;
-      padding-top:1rem;
+      padding-top:0.75rem;
       border-top:1px solid rgba(30,27,24,0.08);
     }
 
-    .founder-date{
-      font-size:0.8rem;
-      color:rgba(30,27,24,0.5);
-    }
-
-    .btn-contact{
-      display:inline-flex;
-      align-items:center;
-      gap:0.4rem;
-      padding:0.5rem 1rem;
-      font-family:'Source Sans 3',sans-serif;
-      font-size:0.85rem;
-      font-weight:600;
-      color:var(--white);
-      background:#25D366;
-      border:none;
-      border-radius:8px;
-      text-decoration:none;
-      transition:all 0.2s ease;
-    }
-
-    .btn-contact:hover{
-      background:#1DA851;
-      transform:translateY(-1px);
-    }
-
-    .btn-contact svg{
-      width:16px;
-      height:16px;
-      fill:currentColor;
+    .founder-event{
+      font-size:0.7rem;
+      color:var(--accent);
+      letter-spacing:0.02em;
     }
 
     /* Loading Skeleton */
@@ -629,7 +601,7 @@
 
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', async function() {
     // Supabase config
     const SUPABASE_URL = 'https://xfllewbfqxsnkltybqiw.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmbGxld2JmcXhzbmtsdHlicWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MzgyMTYsImV4cCI6MjA4OTUxNDIxNn0.8DgRYmM7_pBQ3shLk0hRiAUf4FE8DSYCXgPbVJkThG4';
@@ -640,6 +612,26 @@
     }
 
     const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Access restriction - verify UUID exists in Supabase
+    const foundersUuid = localStorage.getItem('founders_uuid');
+    if (!foundersUuid) {
+      window.location.href = '/founders/meetup';
+      return;
+    }
+
+    // Verify UUID exists in database
+    const { data: userCheck, error: userError } = await db
+      .from('founders_meetup')
+      .select('id')
+      .eq('id', foundersUuid)
+      .single();
+
+    if (userError || !userCheck) {
+      localStorage.removeItem('founders_uuid');
+      window.location.href = '/founders/meetup';
+      return;
+    }
 
     // DOM elements
     const foundersGrid = document.getElementById('foundersGrid');
@@ -661,19 +653,6 @@
       'escalando': { label: 'Escalando', class: 'escalando' }
     };
 
-    // Format date
-    function formatDate(dateStr) {
-      const date = new Date(dateStr);
-      const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-                      'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-      return `Desde ${months[date.getMonth()]} ${date.getFullYear()}`;
-    }
-
-    // Format WhatsApp number
-    function formatWhatsApp(phone) {
-      return phone.replace(/[\s\-\+\(\)]/g, '');
-    }
-
     // Get initials
     function getInitial(name) {
       return name.trim().charAt(0).toUpperCase();
@@ -682,6 +661,7 @@
     // Create founder card HTML
     function createFounderCard(founder, index) {
       const stage = stageConfig[founder.etapa] || { label: founder.etapa, class: 'idea' };
+      const evento = founder.evento || 'Founders Meetup #1 — Marzo 2026';
 
       return `
         <article class="founder-card" style="animation-delay: ${index * 0.08}s">
@@ -693,9 +673,10 @@
             </div>
           </div>
           <p class="founder-desc">${founder.descripcion_proyecto}</p>
+          <span class="badge ${stage.class}">${stage.label}</span>
+          <p class="founder-city">${founder.ciudad}</p>
           <div class="card-footer">
-            <span class="badge ${stage.class}">${stage.label}</span>
-            <span class="founder-date">${formatDate(founder.created_at)}</span>
+            <span class="founder-event">${evento}</span>
           </div>
         </article>
       `;
@@ -748,7 +729,7 @@
       try {
         const { data, error } = await db
           .from('founders_meetup')
-          .select('nombre, ciudad, proyecto, descripcion_proyecto, etapa, created_at')
+          .select('nombre, ciudad, proyecto, descripcion_proyecto, etapa, evento')
           .order('created_at', { ascending: false });
 
         if (error) throw error;
