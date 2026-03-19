@@ -627,13 +627,19 @@
     <p class="footer-text">Teokaye • El sagrado arte de compartir • <a href="https://teokaye.mx">teokaye.mx</a></p>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
+  document.addEventListener('DOMContentLoaded', function() {
     // Supabase config
     const SUPABASE_URL = 'https://xfllewbfqxsnkltybqiw.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmbGxld2JmcXhzbmtsdHlicWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MzgyMTYsImV4cCI6MjA4OTUxNDIxNn0.8DgRYmM7_pBQ3shLk0hRiAUf4FE8DSYCXgPbVJkThG4';
 
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    if (typeof supabase === 'undefined') {
+      console.error('Supabase no cargó');
+      return;
+    }
+
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // DOM elements
     const foundersGrid = document.getElementById('foundersGrid');
@@ -746,7 +752,7 @@
     // Load founders from Supabase
     async function loadFounders() {
       try {
-        const { data, error } = await supabase
+        const { data, error } = await db
           .from('founders_meetup')
           .select('nombre, proyecto, descripcion_proyecto, etapa, mayor_reto, whatsapp, created_at')
           .order('created_at', { ascending: false });
@@ -784,6 +790,7 @@
 
     // Initialize
     loadFounders();
+  });
   </script>
 </body>
 </html>
