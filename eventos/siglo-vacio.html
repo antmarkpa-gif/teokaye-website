@@ -549,8 +549,8 @@ footer{background:#100D0B;padding:28px 24px 100px;text-align:center;}
           <input class="form-input" type="tel" id="f-phone" placeholder="222 123 4567" autocomplete="tel">
         </div>
         <button class="btn-submit" id="submit-btn" onclick="handleSubmit()">
-          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-          Reservar lugar — $50 MXN
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+          Pagar y reservar — $50 MXN
         </button>
         <div class="form-guarantee">
           <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
@@ -561,8 +561,8 @@ footer{background:#100D0B;padding:28px 24px 100px;text-align:center;}
       <!-- SUCCESS -->
       <div class="form-success" id="form-success">
         <svg class="success-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L21 10l-9 9z"/></svg>
-        <div class="success-title">¡Tu lugar está reservado!</div>
-        <div class="success-body">En unos minutos recibirás un WhatsApp con todos los detalles del evento y cómo llegar a Teokaye.<br><br>Te esperamos el <strong>sábado 28 de marzo</strong>.</div>
+        <div class="success-title">¡Redirigiendo al pago!</div>
+        <div class="success-body">Te estamos llevando a Mercado Pago para completar tu reserva de $50 MXN.<br><br>Después del pago recibirás confirmación por WhatsApp.</div>
       </div>
     </div>
   </div>
@@ -573,10 +573,10 @@ footer{background:#100D0B;padding:28px 24px 100px;text-align:center;}
   <p class="s-label">El proceso</p>
   <h2 class="s-title">Así de simple</h2>
   <div class="steps">
-    <div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">Llenas el formulario</div><div class="step-desc">Tu lugar queda apartado al instante.</div></div></div>
+    <div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">Llenas el formulario y pagas</div><div class="step-desc">Pagas $50 MXN con tarjeta o transferencia vía Mercado Pago.</div></div></div>
     <div class="step"><div class="step-n">2</div><div class="step-body"><div class="step-title">Recibes confirmación por WhatsApp</div><div class="step-desc">Te mandamos los detalles del evento, cómo llegar y un recordatorio el día del concierto.</div></div></div>
     <div class="step"><div class="step-n">3</div><div class="step-body"><div class="step-title">Llegas a Teokaye</div><div class="step-desc">Av. 6 Ote. 402A, San Pedro Cholula. Llega 10 minutos antes para elegir tu lugar.</div></div></div>
-    <div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Pagas tu reserva y disfrutas</div><div class="step-desc">Pagas los $50 al llegar, recibes tu bebida gratis y disfrutas de Siglo Vacío en vivo.</div></div></div>
+    <div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Muestras tu comprobante y disfrutas</div><div class="step-desc">Recibes tu bebida gratis y disfrutas de Siglo Vacío en vivo.</div></div></div>
   </div>
 </section>
 
@@ -709,8 +709,15 @@ function faq(btn) {
   if (!open) { a.classList.add('open'); btn.classList.add('open'); }
 }
 
+// Supabase config
+const SUPABASE_URL = 'https://xfllewbfqxsnkltybqiw.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmbGxld2JmcXhzbmtsdHlicWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MzgyMTYsImV4cCI6MjA4OTUxNDIxNn0.8DgRYmM7_pBQ3shLk0hRiAUf4FE8DSYCXgPbVJkThG4';
+
+// Link de Mercado Pago (CAMBIAR POR EL REAL)
+const MERCADO_PAGO_LINK = 'https://mpago.la/EJEMPLO_SIGLO_VACIO';
+
 // Form submit
-function handleSubmit() {
+async function handleSubmit() {
   const name  = document.getElementById('f-name').value.trim();
   const phone = document.getElementById('f-phone').value.trim();
   if (!name)  { alert('Por favor ingresa tu nombre.'); return; }
@@ -720,13 +727,43 @@ function handleSubmit() {
   btn.disabled = true;
   btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:var(--sand);animation:spin .8s linear infinite"><path d="M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8z"/></svg> Procesando...';
 
-  setTimeout(() => {
+  try {
+    // Guardar en Supabase
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/reservas_eventos`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+      },
+      body: JSON.stringify({
+        evento: 'Siglo Vacío',
+        fecha_evento: '2026-03-28',
+        nombre: name,
+        telefono: phone,
+        monto: 50,
+        estado: 'pendiente'
+      })
+    });
+
+    if (!response.ok) throw new Error('Error al guardar');
+
+    // Mostrar éxito y redirigir
     document.getElementById('form-wrap').style.display = 'none';
     document.getElementById('form-success').style.display = 'block';
     if (EVENT.spotsLeft > 0) { EVENT.spotsLeft--; updateSpots(); }
-    const msg = encodeURIComponent(`Hola, quiero reservar mi lugar para Siglo Vacío el sábado 28 de marzo. Mi nombre es ${name}.`);
-    setTimeout(() => { window.open(`https://wa.me/522213628681?text=${msg}`, '_blank'); }, 1500);
-  }, 1500);
+
+    // Redirigir a Mercado Pago después de 2 segundos
+    setTimeout(() => {
+      window.location.href = MERCADO_PAGO_LINK;
+    }, 2000);
+
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Hubo un error. Por favor intenta de nuevo.');
+    btn.disabled = false;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:var(--sand)"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg> Pagar y reservar — $50 MXN';
+  }
 }
 </script>
 </body>
