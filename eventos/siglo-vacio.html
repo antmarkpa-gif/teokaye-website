@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siglo Vacío en Vivo | Teokaye</title>
+<meta name="description" content="Siglo Vacío en concierto íntimo. Sábado 28 de Marzo, 8PM en Teokaye, Cholula. Solo 30 lugares. Cooperación voluntaria.">
+<link rel="icon" type="image/svg+xml" href="/simbolo.svg">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deep:#461D14;--terra:#B8826B;--sand:#E6E0D6;
+  --bg:#F5F1EB;--carbon:#1E1B18;--card:#FDFBF8;
+  --border:rgba(70,29,20,0.12);--muted:rgba(30,27,24,0.5);
+  --green:#2E7D52;--red:#9B2926;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+
+/* ── URGENCY BAR ── */
+.urgency-bar{
+  background:var(--deep);color:var(--sand);
+  text-align:center;padding:10px 16px;
+  font-size:13px;font-weight:500;
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  flex-wrap:wrap;
+}
+.urgency-bar svg{width:14px;height:14px;fill:var(--terra);flex-shrink:0;}
+.urgency-spots{color:var(--terra);font-weight:700;}
+.countdown-inline{
+  display:inline-flex;align-items:center;gap:4px;
+  background:rgba(184,130,107,0.2);border-radius:6px;
+  padding:2px 8px;font-size:12px;font-variant-numeric:tabular-nums;
+}
+
+/* ── HERO ── */
+.hero{
+  position:relative;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  overflow:hidden;background:var(--carbon);
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(160deg,#1E1B18 0%,#2D1A14 50%,#461D14 100%);
+}
+.hero-image{
+  position:absolute;inset:0;
+  background-image:url('/eventos/siglo-vacio-cover.jpg');
+  background-size:cover;
+  background-position:center top;
+  opacity:0.6;
+}
+.hero-image::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom, transparent 0%, rgba(30,27,24,0.4) 50%, rgba(30,27,24,0.95) 100%);
+}
+.hero-grain{
+  position:absolute;inset:0;opacity:0.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px;
+}
+.hero-content{
+  position:relative;z-index:2;
+  padding:40px 24px 36px;
+  max-width:620px;margin:0 auto;width:100%;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(184,130,107,0.18);border:1px solid rgba(184,130,107,0.35);
+  border-radius:99px;padding:5px 14px;
+  font-size:11px;font-weight:600;color:var(--terra);
+  letter-spacing:.07em;text-transform:uppercase;margin-bottom:20px;
+}
+.hero-badge svg{width:7px;height:7px;fill:var(--terra);}
+.hero-logo{
+  font-family:'DM Serif Display',serif;font-size:13px;
+  color:rgba(230,224,214,0.28);letter-spacing:.14em;
+  text-transform:uppercase;margin-bottom:14px;
+}
+.hero-artist{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(42px,12vw,72px);
+  color:var(--sand);line-height:1.03;margin-bottom:10px;
+}
+.hero-genre{
+  font-size:13px;color:rgba(230,224,214,0.5);
+  letter-spacing:.09em;text-transform:uppercase;margin-bottom:24px;
+}
+.hero-meta{display:flex;flex-direction:column;gap:9px;margin-bottom:28px;}
+.hero-meta-item{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--sand);}
+.hero-meta-item svg{width:16px;height:16px;fill:var(--terra);flex-shrink:0;}
+
+/* spots bar in hero */
+.spots-bar{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px;padding:10px 14px;margin-bottom:20px;
+}
+.spots-track{flex:1;background:rgba(255,255,255,0.1);border-radius:99px;height:5px;}
+.spots-fill{height:5px;border-radius:99px;background:var(--terra);transition:width .5s ease;}
+.spots-text{font-size:12px;color:rgba(230,224,214,0.7);white-space:nowrap;}
+.spots-num{color:var(--terra);font-weight:700;}
+
+.hero-cta-wrap{display:flex;flex-direction:column;gap:10px;}
+.btn-hero{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;padding:18px 24px;
+  background:var(--terra);color:var(--sand);
+  border:none;border-radius:12px;
+  font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;
+  cursor:pointer;text-decoration:none;
+  transition:all .2s;letter-spacing:.01em;
+}
+.btn-hero:hover{background:#C49070;transform:translateY(-1px);}
+.btn-hero svg{width:20px;height:20px;fill:var(--sand);flex-shrink:0;}
+.hero-guarantee{
+  text-align:center;font-size:12px;
+  color:rgba(230,224,214,0.4);line-height:1.5;
+}
+.hero-guarantee strong{color:rgba(230,224,214,0.65);}
+
+/* ── COUNTDOWN SECTION ── */
+.countdown-section{
+  background:var(--deep);padding:28px 24px;
+  text-align:center;
+}
+.countdown-label{
+  font-size:11px;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:rgba(230,224,214,0.4);
+  margin-bottom:16px;
+}
+.countdown-grid{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.cd-unit{
+  background:rgba(255,255,255,0.06);border:1px solid rgba(184,130,107,0.2);
+  border-radius:8px;padding:10px 12px;min-width:58px;
+}
+.cd-num{
+  font-family:'DM Serif Display',serif;font-size:28px;
+  color:var(--sand);line-height:1;display:block;
+  font-variant-numeric:tabular-nums;
+}
+.cd-label{font-size:9px;color:rgba(230,224,214,0.35);text-transform:uppercase;letter-spacing:.06em;}
+.cd-sep{font-family:'DM Serif Display',serif;font-size:22px;color:var(--terra);padding:0 1px;margin-top:-6px;}
+@media(min-width:400px){
+  .countdown-grid{gap:8px;}
+  .cd-unit{padding:12px 18px;min-width:72px;border-radius:10px;}
+  .cd-num{font-size:36px;}
+  .cd-label{font-size:10px;letter-spacing:.08em;}
+  .cd-sep{font-size:28px;padding:0 2px;margin-top:-8px;}
+}
+
+/* ── SECTIONS ── */
+.section{padding:52px 24px;max-width:620px;margin:0 auto;}
+.s-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--terra);margin-bottom:12px;}
+.s-title{font-family:'DM Serif Display',serif;font-size:clamp(26px,6vw,36px);color:var(--deep);line-height:1.15;margin-bottom:14px;}
+.s-body{font-size:15px;color:var(--muted);line-height:1.78;}
+.divider{height:1px;background:var(--border);max-width:620px;margin:0 auto;}
+
+/* ── EXPERIENCE GRID ── */
+.exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px;}
+.exp-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 16px;}
+.exp-icon{width:32px;height:32px;fill:var(--terra);margin-bottom:10px;}
+.exp-title{font-size:14px;font-weight:600;color:var(--deep);margin-bottom:5px;}
+.exp-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+
+/* ── SOCIAL PROOF ── */
+.reviews-wrap{background:var(--deep);padding:48px 24px;}
+.reviews-inner{max-width:620px;margin:0 auto;}
+.reviews-header{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px;margin-bottom:20px;
+}
+.reviews-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--terra);}
+.google-badge{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  border-radius:99px;padding:5px 12px;font-size:12px;color:rgba(230,224,214,0.5);
+}
+.google-badge svg{width:14px;height:14px;fill:#FFC107;}
+.review-card{
+  background:rgba(230,224,214,0.05);border:1px solid rgba(230,224,214,0.1);
+  border-radius:12px;padding:18px;margin-bottom:12px;
+}
+.review-stars{display:flex;gap:2px;margin-bottom:8px;}
+.review-stars svg{width:13px;height:13px;fill:#FFC107;}
+.review-text{font-size:14px;color:rgba(230,224,214,0.72);line-height:1.6;font-style:italic;margin-bottom:8px;}
+.review-meta{font-size:11px;color:rgba(230,224,214,0.35);}
+.review-meta strong{color:rgba(230,224,214,0.5);font-weight:500;}
+
+/* ── PRICING / FORM ── */
+.pricing-section{background:var(--bg);padding:52px 24px;}
+.pricing-inner{max-width:620px;margin:0 auto;}
+.pricing-card{
+  background:var(--card);border:2px solid var(--terra);
+  border-radius:16px;overflow:hidden;
+}
+.pricing-top{
+  background:var(--deep);padding:24px;text-align:center;
+}
+.price-amount{
+  font-family:'DM Serif Display',serif;font-size:60px;
+  color:var(--sand);line-height:1;
+}
+.price-amount sup{font-size:24px;font-family:'DM Sans',sans-serif;font-weight:300;vertical-align:super;}
+.price-tag{
+  display:inline-block;
+  background:var(--terra);color:var(--sand);
+  padding:4px 12px;border-radius:99px;
+  font-size:12px;font-weight:600;
+  margin-top:8px;
+}
+.price-desc{font-size:13px;color:rgba(230,224,214,0.45);margin-top:8px;}
+.price-includes{padding:24px;display:flex;flex-direction:column;gap:13px;border-bottom:1px solid var(--border);}
+.pi-item{display:flex;align-items:flex-start;gap:11px;}
+.pi-check{
+  width:20px;height:20px;background:rgba(184,130,107,0.12);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+}
+.pi-check svg{width:11px;height:11px;fill:var(--terra);}
+.pi-text{font-size:14px;color:var(--carbon);line-height:1.4;}
+.pi-text strong{color:var(--deep);}
+
+/* FORM */
+.form-wrap{padding:24px;}
+.form-wrap h3{font-size:15px;font-weight:600;color:var(--deep);margin-bottom:16px;}
+.form-group{margin-bottom:14px;}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.form-input{
+  width:100%;padding:13px 14px;
+  background:var(--bg);border:1.5px solid var(--border);
+  border-radius:9px;font-family:'DM Sans',sans-serif;font-size:15px;
+  color:var(--carbon);transition:border-color .15s;
+}
+.form-input:focus{outline:none;border-color:var(--terra);}
+.form-input::placeholder{color:rgba(30,27,24,0.3);}
+.btn-submit{
+  width:100%;padding:18px;
+  background:var(--terra);color:var(--sand);
+  border:none;border-radius:10px;
+  font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;
+  cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.btn-submit:hover{background:#C49070;transform:translateY(-1px);}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.btn-submit svg{width:18px;height:18px;fill:var(--sand);}
+.form-guarantee{
+  display:flex;align-items:flex-start;gap:8px;
+  margin-top:12px;padding:12px 14px;
+  background:rgba(46,125,82,0.06);border-radius:8px;border:1px solid rgba(46,125,82,0.15);
+}
+.form-guarantee svg{width:16px;height:16px;fill:#2E7D52;flex-shrink:0;margin-top:1px;}
+.form-guarantee p{font-size:12px;color:#2E7D52;line-height:1.5;}
+
+/* SUCCESS STATE */
+.form-success{
+  display:none;text-align:center;padding:32px 24px;
+}
+.success-icon{width:52px;height:52px;fill:var(--green);margin:0 auto 16px;}
+.success-title{font-family:'DM Serif Display',serif;font-size:24px;color:var(--deep);margin-bottom:8px;}
+.success-body{font-size:14px;color:var(--muted);line-height:1.6;}
+
+/* ── HOW IT WORKS ── */
+.steps{display:flex;flex-direction:column;gap:0;margin-top:24px;}
+.step{display:flex;gap:16px;padding-bottom:24px;position:relative;}
+.step:not(:last-child)::before{content:'';position:absolute;left:15px;top:32px;bottom:0;width:1px;background:var(--border);}
+.step-n{width:32px;height:32px;border-radius:50%;background:var(--deep);color:var(--sand);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Sans',sans-serif;}
+.step-body{padding-top:4px;}
+.step-title{font-size:15px;font-weight:600;color:var(--deep);margin-bottom:3px;}
+.step-desc{font-size:13px;color:var(--muted);line-height:1.5;}
+
+/* ── ABOUT ── */
+.about-wrap{background:var(--carbon);padding:52px 24px;}
+.about-inner{max-width:620px;margin:0 auto;}
+.about-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--terra);margin-bottom:12px;}
+.about-title{font-family:'DM Serif Display',serif;font-size:clamp(24px,6vw,34px);color:var(--sand);line-height:1.15;margin-bottom:14px;}
+.about-body{font-size:15px;color:rgba(230,224,214,0.55);line-height:1.75;margin-bottom:20px;}
+.about-tags{display:flex;flex-wrap:wrap;gap:7px;}
+.about-tag{background:rgba(184,130,107,0.12);border:1px solid rgba(184,130,107,0.25);border-radius:99px;padding:4px 13px;font-size:11px;color:var(--terra);font-weight:500;}
+
+/* ── FAQ ── */
+.faq{display:flex;flex-direction:column;gap:10px;margin-top:24px;}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;padding:15px 17px;background:none;border:none;cursor:pointer;text-align:left;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--deep);gap:12px;}
+.faq-q svg{width:16px;height:16px;fill:var(--terra);flex-shrink:0;transition:transform .2s;}
+.faq-q.open svg{transform:rotate(45deg);}
+.faq-a{display:none;padding:0 17px 15px;font-size:14px;color:var(--muted);line-height:1.65;}
+.faq-a.open{display:block;}
+
+/* ── BOTTOM CTA ── */
+.bottom-cta{background:var(--deep);padding:48px 24px;text-align:center;}
+.bottom-inner{max-width:480px;margin:0 auto;}
+.bottom-spots{display:inline-flex;align-items:center;gap:6px;background:rgba(184,130,107,0.15);border:1px solid rgba(184,130,107,0.3);border-radius:99px;padding:4px 13px;font-size:11px;color:var(--terra);font-weight:600;margin-bottom:16px;}
+.bottom-spots svg{width:8px;height:8px;fill:var(--terra);}
+.bottom-title{font-family:'DM Serif Display',serif;font-size:28px;color:var(--sand);margin-bottom:6px;line-height:1.2;}
+.bottom-sub{font-size:13px;color:rgba(230,224,214,0.45);margin-bottom:20px;}
+.btn-bottom{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:360px;margin:0 auto;padding:17px 24px;background:var(--terra);color:var(--sand);border:none;border-radius:11px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s;}
+.btn-bottom:hover{background:#C49070;transform:translateY(-1px);}
+.btn-bottom svg{width:18px;height:18px;fill:var(--sand);}
+
+/* ── FOOTER ── */
+footer{background:#100D0B;padding:28px 24px;text-align:center;}
+.foot-logo{font-family:'DM Serif Display',serif;font-size:16px;color:rgba(230,224,214,0.25);margin-bottom:5px;}
+.foot-tag{font-size:12px;color:rgba(230,224,214,0.15);font-style:italic;margin-bottom:16px;}
+.foot-links{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;}
+.foot-link{display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(230,224,214,0.25);text-decoration:none;}
+.foot-link svg{width:13px;height:13px;fill:rgba(230,224,214,0.18);}
+
+/* ── STICKY BAR ── */
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(30,27,24,0.96);backdrop-filter:blur(10px);border-top:1px solid rgba(184,130,107,0.25);padding:10px 20px;z-index:300;display:flex;align-items:center;justify-content:space-between;gap:12px;transform:translateY(100%);transition:transform .3s ease;}
+.sticky-bar.visible{transform:translateY(0);}
+.sb-left{display:flex;flex-direction:column;}
+.sb-artist{font-size:13px;font-weight:600;color:var(--sand);}
+.sb-price{font-size:11px;color:var(--terra);}
+.sb-spots{font-size:11px;color:rgba(230,224,214,0.35);}
+.sb-btn{display:flex;align-items:center;gap:7px;background:var(--terra);color:var(--sand);border:none;border-radius:8px;padding:10px 18px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:all .15s;}
+.sb-btn:hover{background:#C49070;}
+.sb-btn svg{width:15px;height:15px;fill:var(--sand);}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.hero-content>*{animation:fadeUp .55s ease forwards;opacity:0;}
+.hero-logo{animation-delay:.05s;}.hero-badge{animation-delay:.15s;}
+.hero-artist{animation-delay:.25s;}.hero-genre{animation-delay:.32s;}
+.hero-meta{animation-delay:.38s;}.spots-bar{animation-delay:.44s;}
+.hero-cta-wrap{animation-delay:.5s;}
+
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.6;}}
+.live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#E05555;animation:pulse 1.5s ease-in-out infinite;margin-right:4px;vertical-align:middle;}
+
+@media(min-width:600px){.exp-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:400px){.cd-num{font-size:28px;}.cd-unit{min-width:58px;padding:10px 12px;}}
+</style>
+</head>
+<body>
+
+<!-- URGENCY BAR -->
+<div class="urgency-bar" id="urgency-bar">
+  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 15l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 10l-9 9z"/></svg>
+  <span><span class="live-dot"></span>Solo quedan <span class="urgency-spots" id="bar-spots">—</span> lugares · El evento es en <span class="countdown-inline" id="bar-countdown">—</span></span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-image"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-content">
+    <div class="hero-logo">Teokaye</div>
+    <div class="hero-badge">
+      <svg viewBox="0 0 8 8"><circle cx="4" cy="4" r="3"/></svg>
+      Música en vivo · San Pedro Cholula
+    </div>
+    <h1 class="hero-artist">Siglo Vacío</h1>
+    <p class="hero-genre">Rock Alternativo · Indie</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5zM7 12h5v5H7z"/></svg>
+        <span>Sábado 28 de Marzo · 8PM</span>
+      </div>
+      <div class="hero-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        <span>Teokaye · Av. 6 Ote. 402A, San Pedro Cholula</span>
+      </div>
+    </div>
+    <div class="spots-bar" id="hero-spots-bar">
+      <div class="spots-track"><div class="spots-fill" id="spots-fill" style="width:70%"></div></div>
+      <span class="spots-text">Quedan <span class="spots-num" id="hero-spots">—</span> de 30 lugares</span>
+    </div>
+    <div class="hero-cta-wrap">
+      <a href="#reservar" class="btn-hero">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+        Reservar lugar — $50 MXN
+      </a>
+      <p class="hero-guarantee"><strong>Cooperación voluntaria.</strong> Tu reserva de $50 incluye tu primera bebida gratis.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<div class="countdown-section">
+  <p class="countdown-label">El evento comienza en</p>
+  <div class="countdown-grid">
+    <div class="cd-unit"><span class="cd-num" id="cd-days">00</span><span class="cd-label">días</span></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><span class="cd-num" id="cd-hours">00</span><span class="cd-label">horas</span></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><span class="cd-num" id="cd-mins">00</span><span class="cd-label">min</span></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><span class="cd-num" id="cd-secs">00</span><span class="cd-label">seg</span></div>
+  </div>
+</div>
+
+<!-- QUÉ ESPERAR -->
+<section class="section">
+  <p class="s-label">La experiencia</p>
+  <h2 class="s-title">Una noche que no vas a olvidar</h2>
+  <p class="s-body">Teokaye no es un bar ni un auditorio. Es un espacio íntimo de 30 personas donde el arte Wixárika está en las paredes, hay café, mezcal artesanal y coctelería mientras Siglo Vacío toca a metros de ti.</p>
+  <div class="exp-grid">
+    <div class="exp-card">
+      <svg class="exp-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      <div class="exp-title">Música en vivo</div>
+      <div class="exp-desc">Siglo Vacío tocando en vivo a metros de ti. Sin pantallas. Sin intermediarios.</div>
+    </div>
+    <div class="exp-card">
+      <svg class="exp-icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      <div class="exp-title">Solo 30 personas</div>
+      <div class="exp-desc">Espacio íntimo. Conversaciones reales. Personas que quieren estar ahí.</div>
+    </div>
+    <div class="exp-card">
+      <svg class="exp-icon" viewBox="0 0 24 24"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
+      <div class="exp-title">Café & Bar</div>
+      <div class="exp-desc">Café, mezcal artesanal y coctelería disponible toda la noche.</div>
+    </div>
+    <div class="exp-card">
+      <svg class="exp-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L21 10l-9 9z"/></svg>
+      <div class="exp-title">Arte Wixárika</div>
+      <div class="exp-desc">Galería de arte Nayarita auténtico. Piezas únicas mientras disfrutas la noche.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOCIAL PROOF -->
+<div class="reviews-wrap">
+  <div class="reviews-inner">
+    <div class="reviews-header">
+      <p class="reviews-label">Lo que dicen quienes ya vinieron</p>
+      <div class="google-badge">
+        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        5.0 en Google · 49 reseñas
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+      <p class="review-text">"Un lugar de sagrado compartir donde siempre se reúnen personas mágicas e inspiradoras. Lleno de arte, comida deliciosa, café increíble. Los sábados invitan músicos talentosos."</p>
+      <div class="review-meta"><strong>Carola Saez</strong> · Reseña de Google</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+      <p class="review-text">"Es el lugar perfecto para pasar la tarde. Café delicioso, comida muy rica, el arte es increíble, y luego hay música cool."</p>
+      <div class="review-meta"><strong>Jack Prz</strong> · Reseña de Google</div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING + FORM -->
+<div class="pricing-section" id="reservar">
+  <div class="pricing-inner">
+    <p class="s-label">Reserva tu lugar</p>
+    <h2 class="s-title" style="margin-bottom:20px;">Aparta tu lugar con $50</h2>
+    <div class="pricing-card">
+      <div class="pricing-top">
+        <div>
+          <span class="price-amount"><sup>$</sup>50 <span style="font-size:18px;font-family:'DM Sans',sans-serif;font-weight:300;color:rgba(230,224,214,0.5);">MXN</span></span>
+        </div>
+        <div class="price-tag">Incluye primera bebida</div>
+        <div class="price-desc">Cooperación voluntaria el día del evento</div>
+      </div>
+      <div class="price-includes">
+        <div class="pi-item"><div class="pi-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="pi-text"><strong>Lugar garantizado</strong> en un espacio de solo 30 personas</div></div>
+        <div class="pi-item"><div class="pi-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="pi-text"><strong>Primera bebida gratis</strong> — café, cerveza o refresco</div></div>
+        <div class="pi-item"><div class="pi-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="pi-text"><strong>Acceso a la galería</strong> de arte Wixárika durante el evento</div></div>
+        <div class="pi-item"><div class="pi-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="pi-text"><strong>Confirmación por WhatsApp</strong> con todos los detalles</div></div>
+      </div>
+
+      <!-- FORM -->
+      <div class="form-wrap" id="form-wrap">
+        <h3>Tus datos para la reserva</h3>
+        <div class="form-group">
+          <label class="form-label" for="f-name">Nombre completo</label>
+          <input class="form-input" type="text" id="f-name" placeholder="Tu nombre" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-phone">WhatsApp</label>
+          <input class="form-input" type="tel" id="f-phone" placeholder="222 123 4567" autocomplete="tel">
+        </div>
+        <button class="btn-submit" id="submit-btn" onclick="handleSubmit()">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          Reservar lugar — $50 MXN
+        </button>
+        <div class="form-guarantee">
+          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+          <p>Si no puedes asistir, tu reserva es válida para el siguiente evento. Sin preguntas ni penalizaciones.</p>
+        </div>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="form-success" id="form-success">
+        <svg class="success-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L21 10l-9 9z"/></svg>
+        <div class="success-title">¡Tu lugar está reservado!</div>
+        <div class="success-body">En unos minutos recibirás un WhatsApp con todos los detalles del evento y cómo llegar a Teokaye.<br><br>Te esperamos el <strong>sábado 28 de marzo</strong>.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CÓMO FUNCIONA -->
+<section class="section">
+  <p class="s-label">El proceso</p>
+  <h2 class="s-title">Así de simple</h2>
+  <div class="steps">
+    <div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">Llenas el formulario</div><div class="step-desc">Tu lugar queda apartado al instante.</div></div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-body"><div class="step-title">Recibes confirmación por WhatsApp</div><div class="step-desc">Te mandamos los detalles del evento, cómo llegar y un recordatorio el día del concierto.</div></div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-body"><div class="step-title">Llegas a Teokaye</div><div class="step-desc">Av. 6 Ote. 402A, San Pedro Cholula. Llega 10 minutos antes para elegir tu lugar.</div></div></div>
+    <div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Pagas tu reserva y disfrutas</div><div class="step-desc">Pagas los $50 al llegar, recibes tu bebida gratis y disfrutas de Siglo Vacío en vivo.</div></div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="about-wrap">
+  <div class="about-inner">
+    <p class="about-label">El espacio</p>
+    <h2 class="about-title">Teokaye no es solo una cafetería</h2>
+    <p class="about-body">Nació de la incomodidad con los espacios culturales distantes. En Teokaye el arte Wixárika está en las paredes, hay café, mezcal artesanal y coctelería, y la música en vivo suena a metros de ti. Cada persona que entra es tratada como visita, no como cliente.</p>
+    <p class="about-body">A 5 minutos de la Pirámide de Cholula. Abierto martes a sábado desde las 11am.</p>
+    <div class="about-tags">
+      <span class="about-tag">Arte Wixárika auténtico</span>
+      <span class="about-tag">Café & Mezcal artesanal</span>
+      <span class="about-tag">Música en vivo</span>
+      <span class="about-tag">San Pedro Cholula</span>
+      <span class="about-tag">49 reseñas 5 estrellas</span>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="section">
+  <p class="s-label">Preguntas frecuentes</p>
+  <h2 class="s-title">Lo que necesitas saber</h2>
+  <div class="faq">
+    <div class="faq-item"><button class="faq-q" onclick="faq(this)">¿Qué significa cooperación voluntaria?<svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-a">Significa que no hay un precio fijo de entrada. Reservas tu lugar con $50 (que incluye tu primera bebida) y al final del evento cooperas con lo que consideres justo por la música.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="faq(this)">¿Y si no puedo asistir después de reservar?<svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-a">Tu reserva es válida para el siguiente evento. Avísanos con 24 horas de anticipación y te transferimos sin preguntas. No hay penalización.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="faq(this)">¿Cómo llego a Teokaye?<svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-a">Av. 6 Ote. 402A, San Miguel, San Pedro Cholula. A 5 minutos de la Pirámide de Cholula a pie. Al confirmar tu reserva te mandamos el link de Google Maps por WhatsApp.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="faq(this)">¿Puedo ir con amigos?<svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-a">Sí, pero cada persona necesita su propia reserva. El cupo es de 30 lugares y se llena rápido.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="faq(this)">¿Cuándo inicia el evento exactamente?<svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button><div class="faq-a">El evento inicia a las 8PM. Te recomendamos llegar 10-15 minutos antes para elegir tu lugar y ambientarte.</div></div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<div class="bottom-cta">
+  <div class="bottom-inner">
+    <div class="bottom-spots">
+      <svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4"/></svg>
+      <span>Quedan <span id="bottom-spots">—</span> lugares</span>
+    </div>
+    <h2 class="bottom-title">¿Vienes el sábado 28 de marzo?</h2>
+    <p class="bottom-sub">Reserva $50 · Incluye primera bebida · Coop. voluntaria</p>
+    <a href="#reservar" class="btn-bottom">
+      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+      Reservar lugar — $50 MXN
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">Teokaye</div>
+  <div class="foot-tag">El sagrado arte de compartir</div>
+  <div class="foot-links">
+    <a href="https://maps.app.goo.gl/gvuAMBRcdyj26nLp6" class="foot-link" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Av. 6 Ote. 402A, Cholula</a>
+    <a href="https://wa.me/522213628681" class="foot-link" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 2.003C6.479 2.003 2 6.482 2 12.006c0 1.771.463 3.485 1.341 4.997L2 22l5.218-1.319A10.016 10.016 0 0012.004 22C17.525 22 22 17.523 22 11.997c0-5.519-4.475-9.994-9.996-9.994zm0 18.327a8.31 8.31 0 01-4.248-1.163l-.305-.181-3.098.782.812-3.002-.199-.308A8.29 8.29 0 013.7 12.007c0-4.583 3.724-8.308 8.304-8.308 4.581 0 8.305 3.725 8.305 8.308 0 4.583-3.724 8.323-8.305 8.323z"/></svg>+52 221 362 8681</a>
+    <a href="https://instagram.com/teokaye.mx" class="foot-link" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>@teokaye.mx</a>
+  </div>
+</footer>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sb-left">
+    <span class="sb-artist">Siglo Vacío</span>
+    <span class="sb-price">$50 MXN · Incluye bebida</span>
+    <span class="sb-spots">Quedan <span id="sb-spots">—</span> lugares</span>
+  </div>
+  <a href="#reservar" class="sb-btn">
+    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+    Reservar
+  </a>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// CONFIGURACIÓN DEL EVENTO
+// ══════════════════════════════════════════
+const EVENT = {
+  artist:        "Siglo Vacío",
+  countdownTo:   "2026-03-28T20:00:00",
+  spotsTotal:    30,
+  spotsLeft:     25,
+};
+// ══════════════════════════════════════════
+
+// Spots
+function updateSpots() {
+  const pct = Math.max(5, Math.round((EVENT.spotsLeft / EVENT.spotsTotal) * 100));
+  document.getElementById('spots-fill').style.width = pct + '%';
+  ['hero-spots','bar-spots','bottom-spots','sb-spots'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = EVENT.spotsLeft;
+  });
+}
+updateSpots();
+
+// Countdown
+function tick() {
+  const diff = new Date(EVENT.countdownTo) - new Date();
+  if (diff <= 0) {
+    ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => document.getElementById(id).textContent = '00');
+    document.getElementById('bar-countdown').textContent = '¡Hoy!';
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('cd-days').textContent  = pad(d);
+  document.getElementById('cd-hours').textContent = pad(h);
+  document.getElementById('cd-mins').textContent  = pad(m);
+  document.getElementById('cd-secs').textContent  = pad(s);
+  document.getElementById('bar-countdown').textContent = d > 0 ? `${d}d ${pad(h)}h` : `${pad(h)}:${pad(m)}:${pad(s)}`;
+}
+tick();
+setInterval(tick, 1000);
+
+// Sticky bar
+const hero = document.querySelector('.hero');
+const sb   = document.getElementById('sticky-bar');
+new IntersectionObserver(e => sb.classList.toggle('visible', !e[0].isIntersecting), {threshold:0.1}).observe(hero);
+
+// FAQ
+function faq(btn) {
+  const a = btn.nextElementSibling;
+  const open = a.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(x => x.classList.remove('open'));
+  document.querySelectorAll('.faq-q').forEach(x => x.classList.remove('open'));
+  if (!open) { a.classList.add('open'); btn.classList.add('open'); }
+}
+
+// Form submit
+function handleSubmit() {
+  const name  = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  if (!name)  { alert('Por favor ingresa tu nombre.'); return; }
+  if (!phone) { alert('Por favor ingresa tu WhatsApp.'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:var(--sand);animation:spin .8s linear infinite"><path d="M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8z"/></svg> Procesando...';
+
+  setTimeout(() => {
+    document.getElementById('form-wrap').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+    if (EVENT.spotsLeft > 0) { EVENT.spotsLeft--; updateSpots(); }
+    const msg = encodeURIComponent(`Hola, quiero reservar mi lugar para Siglo Vacío el sábado 28 de marzo. Mi nombre es ${name}.`);
+    setTimeout(() => { window.open(`https://wa.me/522213628681?text=${msg}`, '_blank'); }, 1500);
+  }, 1500);
+}
+</script>
+</body>
+</html>
