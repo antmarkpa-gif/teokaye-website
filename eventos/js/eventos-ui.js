@@ -362,9 +362,6 @@ const EventosUI = {
   renderTicketsStep(body, footer) {
     const user = EventosAuth.getUser();
     const spots = EventosReserva.getAvailableSpots();
-    const isCover = EventosReserva.isCoverEvent();
-    const price = isCover ? EventosReserva.getCoverPrice() : EventosReserva.getDepositPrice();
-    const total = price * this.numBoletos;
     const maxBoletos = Math.min(5, spots);
 
     body.innerHTML = `
@@ -380,6 +377,10 @@ const EventosUI = {
           <button class="user-logout" onclick="EventosUI.logout()">Salir</button>
         </div>
 
+        <p style="text-align: center; font-size: 15px; color: var(--muted); margin-bottom: 8px;">
+          ¿Cuántos lugares quieres reservar?
+        </p>
+
         <div class="ticket-selector">
           <button class="ticket-btn" onclick="EventosUI.changeTickets(-1)" ${this.numBoletos <= 1 ? 'disabled' : ''}>
             ${this.icons.minus}
@@ -390,23 +391,9 @@ const EventosUI = {
           </button>
         </div>
 
-        <div class="ticket-summary">
-          <div class="summary-row">
-            <span>${this.numBoletos} ${this.numBoletos === 1 ? 'lugar' : 'lugares'}</span>
-            <span>$${price} c/u</span>
-          </div>
-          ${isCover ? `
-            <div class="summary-row">
-              <span><strong>Total a pagar</strong></span>
-              <span><strong>$${total} MXN</strong></span>
-            </div>
-          ` : `
-            <div class="summary-row">
-              <span><strong>Depósito</strong></span>
-              <span><strong>$${total} MXN</strong></span>
-            </div>
-          `}
-        </div>
+        <p style="text-align: center; font-size: 14px; color: var(--deep); font-weight: 500;">
+          ${this.numBoletos} ${this.numBoletos === 1 ? 'lugar' : 'lugares'}
+        </p>
 
         ${spots <= 5 ? `
           <div class="spots-warning">
@@ -481,38 +468,40 @@ const EventosUI = {
 
     } else {
       // Coop voluntaria - 3 payment options
+      const lugaresText = this.numBoletos === 1 ? '1 lugar' : `${this.numBoletos} lugares`;
+
       body.innerHTML = `
         <div class="step-content active">
-          <p style="font-size: 14px; color: var(--muted); margin-bottom: 16px;">
-            Elige cómo quieres reservar tu${this.numBoletos > 1 ? 's' : ''} lugar${this.numBoletos > 1 ? 'es' : ''}:
+          <p style="font-size: 14px; color: var(--muted); margin-bottom: 16px; text-align: center;">
+            Reservando <strong>${lugaresText}</strong>. Elige cómo quieres reservar:
           </p>
 
           <div class="payment-options">
             <div class="payment-option recommended ${this.tipoPago === 'deposito_50' ? 'selected' : ''}" onclick="EventosUI.selectPayment('deposito_50')">
               <div class="payment-radio"></div>
               <div class="payment-details">
-                <div class="payment-title">Depósito $50</div>
-                <div class="payment-desc">Lugar garantizado + bebida del menú de $50</div>
+                <div class="payment-title">Con depósito de $50</div>
+                <div class="payment-desc">Lugar garantizado + bebida del menú de $50 incluida</div>
               </div>
-              <div class="payment-price">$${total50}</div>
+              <div class="payment-price">${this.numBoletos > 1 ? `$${total50}` : '$50'}</div>
             </div>
 
             <div class="payment-option ${this.tipoPago === 'deposito_100' ? 'selected' : ''}" onclick="EventosUI.selectPayment('deposito_100')">
               <div class="payment-radio"></div>
               <div class="payment-details">
-                <div class="payment-title">Depósito $100</div>
-                <div class="payment-desc">Lugar garantizado + bebida del menú de $100</div>
+                <div class="payment-title">Con depósito de $100</div>
+                <div class="payment-desc">Lugar garantizado + bebida del menú de $100 incluida</div>
               </div>
-              <div class="payment-price">$${total100}</div>
+              <div class="payment-price">${this.numBoletos > 1 ? `$${total100}` : '$100'}</div>
             </div>
 
             <div class="payment-option ${this.tipoPago === 'sin_pago' ? 'selected' : ''}" onclick="EventosUI.selectPayment('sin_pago')">
               <div class="payment-radio"></div>
               <div class="payment-details">
-                <div class="payment-title">Sin pago</div>
+                <div class="payment-title">Sin depósito</div>
                 <div class="payment-desc">Lugar sujeto a disponibilidad el día del evento</div>
               </div>
-              <div class="payment-price">$0</div>
+              <div class="payment-price">Gratis</div>
             </div>
           </div>
         </div>
