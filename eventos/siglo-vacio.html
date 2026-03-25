@@ -7,6 +7,7 @@
 <meta name="description" content="Siglo Vacío en concierto íntimo. Sábado 28 de Marzo, 8PM en Teokaye, Cholula. Solo 30 lugares. Cooperación voluntaria.">
 <link rel="icon" type="image/svg+xml" href="/simbolo.svg">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/eventos/css/eventos-modal.css">
 <style>
 :root{
   --deep:#461D14;--terra:#B8826B;--sand:#E6E0D6;
@@ -218,6 +219,52 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
   border-radius:16px;
   margin-top:20px;
   box-shadow:0 8px 32px rgba(70,29,20,0.15);
+}
+
+/* ── GALERÍA COMIDA/BEBIDA ── */
+.gallery-section{
+  background:var(--card);
+  padding:52px 24px;
+}
+.gallery-inner{
+  max-width:620px;
+  margin:0 auto;
+}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:20px;
+}
+.gallery-item{
+  position:relative;
+  aspect-ratio:1;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 4px 16px rgba(70,29,20,0.1);
+}
+.gallery-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .3s ease;
+}
+.gallery-item:hover img{
+  transform:scale(1.05);
+}
+.gallery-label{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:24px 12px 10px;
+  background:linear-gradient(to top,rgba(30,27,24,0.8),transparent);
+  font-size:12px;
+  font-weight:500;
+  color:var(--sand);
+}
+@media(min-width:500px){
+  .gallery-grid{gap:16px;}
 }
 
 /* ── SECTIONS ── */
@@ -439,10 +486,10 @@ footer{background:#100D0B;padding:28px 24px 100px;text-align:center;}
       <span class="spots-text">Quedan <span class="spots-num" id="hero-spots">—</span> de 30 lugares</span>
     </div>
     <div class="hero-cta-wrap">
-      <a href="#reservar" class="btn-hero">
+      <button class="btn-hero" onclick="EventosUI.open()">
         <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
-        Reservar lugar — $50 MXN
-      </a>
+        Reservar lugar — desde $50 MXN
+      </button>
       <p class="hero-guarantee"><strong>Cooperación voluntaria.</strong> Tu reserva de $50 incluye tu primera bebida gratis.</p>
     </div>
   </div>
@@ -520,6 +567,33 @@ footer{background:#100D0B;padding:28px 24px 100px;text-align:center;}
   </div>
 </div>
 
+<!-- GALERÍA COMIDA Y BEBIDA -->
+<div class="gallery-section">
+  <div class="gallery-inner">
+    <p class="s-label">Mientras disfrutas</p>
+    <h2 class="s-title">Café, coctelería y comida</h2>
+    <p class="s-body">En Teokaye hay café, mezcal artesanal, coctelería de autor y snacks para compartir.</p>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="/eventos/galeria-1.png" alt="Teokayita - Coctel de la casa" loading="lazy">
+        <span class="gallery-label">Teokayita</span>
+      </div>
+      <div class="gallery-item">
+        <img src="/eventos/galeria-2.png" alt="Café latte con arte" loading="lazy">
+        <span class="gallery-label">Café Latte</span>
+      </div>
+      <div class="gallery-item">
+        <img src="/eventos/galeria-3.png" alt="Coctelería artesanal" loading="lazy">
+        <span class="gallery-label">Rusa</span>
+      </div>
+      <div class="gallery-item">
+        <img src="/eventos/galeria-4.jpg" alt="Chips de camote" loading="lazy">
+        <span class="gallery-label">Chips de camote</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="divider"></div>
 
 <!-- SOCIAL PROOF -->
@@ -565,32 +639,20 @@ footer{background:#100D0B;padding:28px 24px 100px;text-align:center;}
         <div class="pi-item"><div class="pi-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="pi-text"><strong>Confirmación por WhatsApp</strong> con todos los detalles</div></div>
       </div>
 
-      <!-- FORM -->
-      <div class="form-wrap" id="form-wrap">
-        <h3>Tus datos para la reserva</h3>
-        <div class="form-group">
-          <label class="form-label" for="f-name">Nombre completo</label>
-          <input class="form-input" type="text" id="f-name" placeholder="Tu nombre" autocomplete="name">
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="f-phone">WhatsApp</label>
-          <input class="form-input" type="tel" id="f-phone" placeholder="222 123 4567" autocomplete="tel">
-        </div>
-        <button class="btn-submit" id="submit-btn" onclick="handleSubmit()">
+      <!-- RESERVAR BUTTON -->
+      <div class="form-wrap">
+        <h3>Reserva tu lugar</h3>
+        <p style="font-size: 14px; color: var(--muted); margin-bottom: 16px; line-height: 1.6;">
+          Crea una cuenta o inicia sesión para reservar. Puedes reservar hasta 5 lugares por persona.
+        </p>
+        <button class="btn-submit" onclick="EventosUI.open()">
           <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
-          Pagar y reservar — $50 MXN
+          Reservar lugar — desde $50 MXN
         </button>
         <div class="form-guarantee">
           <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
           <p>Si no puedes asistir, tu reserva es válida para el siguiente evento. Sin preguntas ni penalizaciones.</p>
         </div>
-      </div>
-
-      <!-- SUCCESS -->
-      <div class="form-success" id="form-success">
-        <svg class="success-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L21 10l-9 9z"/></svg>
-        <div class="success-title">¡Redirigiendo al pago!</div>
-        <div class="success-body">Te estamos llevando a Mercado Pago para completar tu reserva de $50 MXN.<br><br>Después del pago recibirás confirmación por WhatsApp.</div>
       </div>
     </div>
   </div>
@@ -647,10 +709,10 @@ footer{background:#100D0B;padding:28px 24px 100px;text-align:center;}
     </div>
     <h2 class="bottom-title">¿Vienes el sábado 28 de marzo?</h2>
     <p class="bottom-sub">Reserva $50 · Incluye primera bebida · Coop. voluntaria</p>
-    <a href="#reservar" class="btn-bottom">
+    <button class="btn-bottom" onclick="EventosUI.open()">
       <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
       Reservar lugar — $50 MXN
-    </a>
+    </button>
   </div>
 </div>
 
@@ -672,38 +734,33 @@ footer{background:#100D0B;padding:28px 24px 100px;text-align:center;}
     <span class="sb-price">$50 MXN · Incluye bebida</span>
     <span class="sb-spots">Quedan <span id="sb-spots">—</span> lugares</span>
   </div>
-  <a href="#reservar" class="sb-btn">
+  <button class="sb-btn" onclick="EventosUI.open()">
     <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
     Reservar
-  </a>
+  </button>
 </div>
 
+<!-- Eventos Modules -->
+<script src="/eventos/js/eventos-config.js"></script>
+<script src="/eventos/js/eventos-auth.js"></script>
+<script src="/eventos/js/eventos-reserva.js"></script>
+<script src="/eventos/js/eventos-ui.js"></script>
 <script>
 // ══════════════════════════════════════════
 // CONFIGURACIÓN DEL EVENTO
 // ══════════════════════════════════════════
-const EVENT = {
-  artist:        "Siglo Vacío",
-  countdownTo:   "2026-03-28T20:00:00",
-  spotsTotal:    30,
-  spotsLeft:     25,
-};
+const EVENT_SLUG = 'siglo-vacio';
+const COUNTDOWN_TO = '2026-03-28T20:00:00';
 // ══════════════════════════════════════════
 
-// Spots
-function updateSpots() {
-  const pct = Math.max(5, Math.round((EVENT.spotsLeft / EVENT.spotsTotal) * 100));
-  document.getElementById('spots-fill').style.width = pct + '%';
-  ['hero-spots','bar-spots','bottom-spots','sb-spots'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = EVENT.spotsLeft;
-  });
-}
-updateSpots();
+// Initialize modal
+document.addEventListener('DOMContentLoaded', () => {
+  EventosUI.init(EVENT_SLUG);
+});
 
 // Countdown
 function tick() {
-  const diff = new Date(EVENT.countdownTo) - new Date();
+  const diff = new Date(COUNTDOWN_TO) - new Date();
   if (diff <= 0) {
     ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => document.getElementById(id).textContent = '00');
     document.getElementById('bar-countdown').textContent = '¡Hoy!';
@@ -735,63 +792,6 @@ function faq(btn) {
   document.querySelectorAll('.faq-a').forEach(x => x.classList.remove('open'));
   document.querySelectorAll('.faq-q').forEach(x => x.classList.remove('open'));
   if (!open) { a.classList.add('open'); btn.classList.add('open'); }
-}
-
-// Supabase config
-const SUPABASE_URL = 'https://xfllewbfqxsnkltybqiw.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmbGxld2JmcXhzbmtsdHlicWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MzgyMTYsImV4cCI6MjA4OTUxNDIxNn0.8DgRYmM7_pBQ3shLk0hRiAUf4FE8DSYCXgPbVJkThG4';
-
-// Link de Mercado Pago (CAMBIAR POR EL REAL)
-const MERCADO_PAGO_LINK = 'https://mpago.la/EJEMPLO_SIGLO_VACIO';
-
-// Form submit
-async function handleSubmit() {
-  const name  = document.getElementById('f-name').value.trim();
-  const phone = document.getElementById('f-phone').value.trim();
-  if (!name)  { alert('Por favor ingresa tu nombre.'); return; }
-  if (!phone) { alert('Por favor ingresa tu WhatsApp.'); return; }
-
-  const btn = document.getElementById('submit-btn');
-  btn.disabled = true;
-  btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:var(--sand);animation:spin .8s linear infinite"><path d="M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8z"/></svg> Procesando...';
-
-  try {
-    // Guardar en Supabase
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/reservas_eventos`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-      },
-      body: JSON.stringify({
-        evento: 'Siglo Vacío',
-        fecha_evento: '2026-03-28',
-        nombre: name,
-        telefono: phone,
-        monto: 50,
-        estado: 'pendiente'
-      })
-    });
-
-    if (!response.ok) throw new Error('Error al guardar');
-
-    // Mostrar éxito y redirigir
-    document.getElementById('form-wrap').style.display = 'none';
-    document.getElementById('form-success').style.display = 'block';
-    if (EVENT.spotsLeft > 0) { EVENT.spotsLeft--; updateSpots(); }
-
-    // Redirigir a Mercado Pago después de 2 segundos
-    setTimeout(() => {
-      window.location.href = MERCADO_PAGO_LINK;
-    }, 2000);
-
-  } catch (error) {
-    console.error('Error:', error);
-    alert('Hubo un error. Por favor intenta de nuevo.');
-    btn.disabled = false;
-    btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:var(--sand)"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg> Pagar y reservar — $50 MXN';
-  }
 }
 </script>
 </body>
