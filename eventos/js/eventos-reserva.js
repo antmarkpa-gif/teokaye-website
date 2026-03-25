@@ -45,7 +45,17 @@ const EventosReserva = {
     return this.currentEvento ? this.currentEvento.precio_deposito : 50;
   },
 
-  // Get Mercado Pago link
+  // Get Mercado Pago link for $50 option
+  getMercadoPagoLink50() {
+    return this.currentEvento ? this.currentEvento.mercadopago_link_50 : null;
+  },
+
+  // Get Mercado Pago link for $100 option
+  getMercadoPagoLink100() {
+    return this.currentEvento ? this.currentEvento.mercadopago_link_100 : null;
+  },
+
+  // Get Mercado Pago link (legacy/cover events)
   getMercadoPagoLink() {
     return this.currentEvento ? this.currentEvento.mercadopago_link : null;
   },
@@ -56,7 +66,12 @@ const EventosReserva = {
 
     if (tipoPago === 'completo' && this.currentEvento.tipo === 'cover') {
       return this.currentEvento.precio_cover * numBoletos;
+    } else if (tipoPago === 'deposito_50') {
+      return 50 * numBoletos;
+    } else if (tipoPago === 'deposito_100') {
+      return 100 * numBoletos;
     } else if (tipoPago === 'deposito') {
+      // Legacy support
       return this.currentEvento.precio_deposito * numBoletos;
     }
 
@@ -79,6 +94,9 @@ const EventosReserva = {
       throw new Error(`Solo quedan ${this.currentEvento.lugares_disponibles} lugares disponibles.`);
     }
 
+    // Determine estado based on payment type
+    const estado = tipoPago === 'sin_pago' ? 'pendiente' : 'pendiente_pago';
+
     // Create reservation
     const reserva = await EventosConfig.post('reservas_eventos', {
       usuario_id: user.id,
@@ -90,7 +108,7 @@ const EventosReserva = {
       num_boletos: numBoletos,
       monto: this.calculateTotal(numBoletos, tipoPago),
       tipo_pago: tipoPago,
-      estado: tipoPago === 'sin_pago' ? 'pendiente' : 'pendiente_pago'
+      estado: estado
     });
 
     // Decrement available spots
@@ -138,6 +156,71 @@ const EventosReserva = {
     const boletosStr = numBoletos === 1 ? '1 lugar' : `${numBoletos} lugares`;
 
     return `Hola, acabo de pagar mi reserva para ${this.currentEvento.artista} (${boletosStr}) el ${fechaStr}. Mi nombre es ${user.nombre}.`;
+  },
+
+  // Check if current user has a reservation for this event
+  async checkUserReservation() {
+    const user = EventosAuth.getUser();
+    if (!user || !this.currentEvento) return null;
+
+    const reservas = await EventosConfig.get(
+      'reservas_eventos',
+      `usuario_id=eq.${user.id}&evento_id=eq.${this.currentEvento.id}&estado=neq.cancelada&select=*`
+    );
+
+    return reservas && reservas.length > 0 ? reservas[0] : null;
+  },
+
+  // Get user's reservations
+  async getUserReservations() {
+    const user = EventosAuth.getUser();
+    if (!user) return [];
+
+    const reservas = await EventosConfig.get(
+      'reservas_eventos',
+      `usuario_id=eq.${user.id}&select=*&order=created_at.desc`
+    );
+
+    return reservas || [];
+  },
+
+  // Cancel a reservation
+  async cancelReservation(reservaId) {
+    const user = EventosAuth.getUser();
+    if (!user) {
+      throw new Error('Debes iniciar sesión primero.');
+    }
+
+    // Get reservation to check ownership and get boletos count
+    const reservas = await EventosConfig.get(
+      'reservas_eventos',
+      `id=eq.${reservaId}&usuario_id=eq.${user.id}&select=*`
+    );
+
+    if (!reservas || reservas.length === 0) {
+      throw new Error('Reserva no encontrada.');
+    }
+
+    const reserva = reservas[0];
+
+    // Update reservation status
+    await EventosConfig.patch(
+      'reservas_eventos',
+      `id=eq.${reservaId}`,
+      { estado: 'cancelada' }
+    );
+
+    // Restore available spots
+    if (this.currentEvento && reserva.evento_id === this.currentEvento.id) {
+      await EventosConfig.patch(
+        'eventos',
+        `id=eq.${this.currentEvento.id}`,
+        { lugares_disponibles: this.currentEvento.lugares_disponibles + reserva.num_boletos }
+      );
+      this.currentEvento.lugares_disponibles += reserva.num_boletos;
+    }
+
+    return true;
   }
 };
 

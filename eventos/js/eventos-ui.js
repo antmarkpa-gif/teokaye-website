@@ -10,6 +10,8 @@ const EventosUI = {
   numBoletos: 1,
   tipoPago: null,
   eventSlug: null,
+  existingReservation: null,
+  showProfile: false,
 
   // SVG Icons
   icons: {
@@ -41,6 +43,71 @@ const EventosUI = {
 
     // Update spots display on page
     this.updatePageSpots();
+
+    // Check for existing reservation if logged in
+    if (EventosAuth.isLoggedIn()) {
+      await this.checkExistingReservation();
+    }
+  },
+
+  // Check if user has existing reservation
+  async checkExistingReservation() {
+    try {
+      this.existingReservation = await EventosReserva.checkUserReservation();
+      if (this.existingReservation) {
+        this.updatePageForExistingReservation();
+      }
+    } catch (error) {
+      console.error('Error checking reservation:', error);
+    }
+  },
+
+  // Update page to show existing reservation state
+  updatePageForExistingReservation() {
+    if (!this.existingReservation) return;
+
+    const user = EventosAuth.getUser();
+    const res = this.existingReservation;
+    const boletosStr = res.num_boletos === 1 ? '1 lugar' : `${res.num_boletos} lugares`;
+
+    // Update hero CTA
+    const heroCta = document.querySelector('.hero-cta-wrap');
+    if (heroCta) {
+      heroCta.innerHTML = `
+        <div class="reserved-state" style="background: rgba(46, 125, 82, 0.15); border: 1px solid rgba(46, 125, 82, 0.3); border-radius: 12px; padding: 16px; text-align: center;">
+          <p style="color: #2E7D52; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#2E7D52"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Ya tienes ${boletosStr} reservado${res.num_boletos > 1 ? 's' : ''}
+          </p>
+          <p style="font-size: 13px; color: rgba(230,224,214,0.7);">Reservado como ${user.nombre}</p>
+          <button onclick="EventosUI.openProfile()" style="margin-top: 12px; background: transparent; border: 1px solid rgba(46, 125, 82, 0.5); color: #2E7D52; padding: 10px 20px; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 500; cursor: pointer;">
+            Ver mi reserva
+          </button>
+        </div>
+      `;
+    }
+
+    // Update sticky bar
+    const sbBtn = document.querySelector('.sb-btn');
+    if (sbBtn) {
+      sbBtn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="var(--sand)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Reservado`;
+      sbBtn.onclick = () => EventosUI.openProfile();
+    }
+
+    // Update bottom CTA
+    const bottomBtn = document.querySelector('.btn-bottom');
+    if (bottomBtn) {
+      bottomBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="var(--sand)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Ya tienes tu lugar reservado`;
+      bottomBtn.onclick = () => EventosUI.openProfile();
+    }
+  },
+
+  // Open profile view
+  openProfile() {
+    this.showProfile = true;
+    this.modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    this.renderProfileView();
   },
 
   // Create modal HTML
@@ -87,7 +154,20 @@ const EventosUI = {
   },
 
   // Open modal
-  open() {
+  async open() {
+    this.showProfile = false;
+
+    // Check for existing reservation if logged in
+    if (EventosAuth.isLoggedIn()) {
+      await this.checkExistingReservation();
+
+      // If user has existing reservation, show profile instead
+      if (this.existingReservation) {
+        this.openProfile();
+        return;
+      }
+    }
+
     this.currentStep = EventosAuth.isLoggedIn() ? 2 : 1;
     this.numBoletos = 1;
     this.tipoPago = null;
@@ -100,6 +180,13 @@ const EventosUI = {
   close() {
     this.modal.classList.remove('open');
     document.body.style.overflow = '';
+    this.showProfile = false;
+
+    // Reset header and steps visibility
+    const header = document.querySelector('.modal-title');
+    const stepsContainer = document.querySelector('.modal-steps');
+    if (header) header.textContent = 'Reservar lugar';
+    if (stepsContainer) stepsContainer.style.display = '';
   },
 
   // Render current step
@@ -358,9 +445,9 @@ const EventosUI = {
   renderPaymentStep(body, footer) {
     const isCover = EventosReserva.isCoverEvent();
     const coverPrice = EventosReserva.getCoverPrice();
-    const depositPrice = EventosReserva.getDepositPrice();
     const totalCover = coverPrice * this.numBoletos;
-    const totalDeposit = depositPrice * this.numBoletos;
+    const total50 = 50 * this.numBoletos;
+    const total100 = 100 * this.numBoletos;
 
     if (isCover) {
       // Cover event - only full payment
@@ -393,7 +480,7 @@ const EventosUI = {
       `;
 
     } else {
-      // Coop voluntaria - deposit or no payment
+      // Coop voluntaria - 3 payment options
       body.innerHTML = `
         <div class="step-content active">
           <p style="font-size: 14px; color: var(--muted); margin-bottom: 16px;">
@@ -401,19 +488,28 @@ const EventosUI = {
           </p>
 
           <div class="payment-options">
-            <div class="payment-option recommended ${this.tipoPago === 'deposito' ? 'selected' : ''}" onclick="EventosUI.selectPayment('deposito')">
+            <div class="payment-option recommended ${this.tipoPago === 'deposito_50' ? 'selected' : ''}" onclick="EventosUI.selectPayment('deposito_50')">
               <div class="payment-radio"></div>
               <div class="payment-details">
-                <div class="payment-title">Pagar depósito</div>
-                <div class="payment-desc">Lugar garantizado + primera bebida incluida</div>
+                <div class="payment-title">Depósito $50</div>
+                <div class="payment-desc">Lugar garantizado + bebida del menú de $50</div>
               </div>
-              <div class="payment-price">$${totalDeposit}</div>
+              <div class="payment-price">$${total50}</div>
+            </div>
+
+            <div class="payment-option ${this.tipoPago === 'deposito_100' ? 'selected' : ''}" onclick="EventosUI.selectPayment('deposito_100')">
+              <div class="payment-radio"></div>
+              <div class="payment-details">
+                <div class="payment-title">Depósito $100</div>
+                <div class="payment-desc">Lugar garantizado + bebida del menú de $100</div>
+              </div>
+              <div class="payment-price">$${total100}</div>
             </div>
 
             <div class="payment-option ${this.tipoPago === 'sin_pago' ? 'selected' : ''}" onclick="EventosUI.selectPayment('sin_pago')">
               <div class="payment-radio"></div>
               <div class="payment-details">
-                <div class="payment-title">Reservar sin pago</div>
+                <div class="payment-title">Sin pago</div>
                 <div class="payment-desc">Lugar sujeto a disponibilidad el día del evento</div>
               </div>
               <div class="payment-price">$0</div>
@@ -423,12 +519,24 @@ const EventosUI = {
       `;
 
       const canContinue = this.tipoPago !== null;
+      let btnText = 'Selecciona una opción';
+      let btnIcon = this.icons.arrow;
+
+      if (this.tipoPago === 'deposito_50') {
+        btnText = `Pagar $${total50} MXN`;
+        btnIcon = this.icons.card;
+      } else if (this.tipoPago === 'deposito_100') {
+        btnText = `Pagar $${total100} MXN`;
+        btnIcon = this.icons.card;
+      } else if (this.tipoPago === 'sin_pago') {
+        btnText = 'Reservar sin pago';
+        btnIcon = this.icons.whatsapp;
+      }
 
       footer.innerHTML = `
         <button class="modal-btn modal-btn-primary" onclick="EventosUI.processPayment()" ${!canContinue ? 'disabled' : ''}>
-          ${this.tipoPago === 'deposito' ? this.icons.card : this.icons.whatsapp}
-          ${this.tipoPago === 'deposito' ? `Pagar $${totalDeposit} MXN` :
-            this.tipoPago === 'sin_pago' ? 'Reservar por WhatsApp' : 'Selecciona una opción'}
+          ${btnIcon}
+          ${btnText}
         </button>
       `;
     }
@@ -438,6 +546,18 @@ const EventosUI = {
   selectPayment(tipo) {
     this.tipoPago = tipo;
     this.renderStep();
+  },
+
+  // Get appropriate MP link based on payment type
+  getMPLinkForPayment() {
+    if (this.tipoPago === 'deposito_50') {
+      return EventosReserva.getMercadoPagoLink50();
+    } else if (this.tipoPago === 'deposito_100') {
+      return EventosReserva.getMercadoPagoLink100();
+    } else if (this.tipoPago === 'completo') {
+      return EventosReserva.getMercadoPagoLink();
+    }
+    return null;
   },
 
   // Process payment / create reservation
@@ -459,7 +579,7 @@ const EventosUI = {
 
       // If paid option, redirect to Mercado Pago
       if (this.tipoPago !== 'sin_pago') {
-        const mpLink = EventosReserva.getMercadoPagoLink();
+        const mpLink = this.getMPLinkForPayment();
         if (mpLink) {
           setTimeout(() => {
             window.location.href = mpLink;
@@ -477,7 +597,7 @@ const EventosUI = {
   // Step 4: Success
   renderSuccessStep(body, footer) {
     const isPaid = this.tipoPago !== 'sin_pago';
-    const mpLink = EventosReserva.getMercadoPagoLink();
+    const mpLink = this.getMPLinkForPayment();
     const user = EventosAuth.getUser();
     const evento = EventosReserva.currentEvento;
 
@@ -541,6 +661,228 @@ const EventosUI = {
     // Update progress bar
     const fill = document.getElementById('spots-fill');
     if (fill) fill.style.width = pct + '%';
+  },
+
+  // Render profile view
+  renderProfileView() {
+    const body = document.getElementById('modal-body');
+    const footer = document.getElementById('modal-footer');
+    const header = document.querySelector('.modal-title');
+    const stepsContainer = document.querySelector('.modal-steps');
+
+    if (header) header.textContent = 'Mi reserva';
+    if (stepsContainer) stepsContainer.style.display = 'none';
+
+    const user = EventosAuth.getUser();
+    const res = this.existingReservation;
+    const evento = EventosReserva.currentEvento;
+
+    if (!res || !evento) {
+      body.innerHTML = `<p style="text-align: center; color: var(--muted);">No tienes reservaciones para este evento.</p>`;
+      footer.innerHTML = `
+        <button class="modal-btn modal-btn-secondary" onclick="EventosUI.close()">Cerrar</button>
+      `;
+      return;
+    }
+
+    const fecha = new Date(evento.fecha + 'T00:00:00');
+    const fechaStr = fecha.toLocaleDateString('es-MX', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long'
+    });
+
+    const boletosStr = res.num_boletos === 1 ? '1 lugar' : `${res.num_boletos} lugares`;
+
+    // Get payment status text
+    let estadoText = '';
+    let estadoClass = '';
+    if (res.estado === 'confirmada') {
+      estadoText = 'Confirmada';
+      estadoClass = 'confirmed';
+    } else if (res.estado === 'pendiente_pago') {
+      estadoText = 'Pendiente de pago';
+      estadoClass = 'pending';
+    } else if (res.estado === 'pendiente') {
+      estadoText = 'Pendiente confirmación';
+      estadoClass = 'pending';
+    } else if (res.estado === 'cancelada') {
+      estadoText = 'Cancelada';
+      estadoClass = 'cancelled';
+    }
+
+    // Get payment type text
+    let tipoText = '';
+    if (res.tipo_pago === 'deposito_50') {
+      tipoText = 'Depósito $50 (bebida menú $50)';
+    } else if (res.tipo_pago === 'deposito_100') {
+      tipoText = 'Depósito $100 (bebida menú $100)';
+    } else if (res.tipo_pago === 'sin_pago') {
+      tipoText = 'Sin pago (sujeto a disponibilidad)';
+    } else if (res.tipo_pago === 'completo') {
+      tipoText = 'Pago completo';
+    } else {
+      tipoText = 'Depósito';
+    }
+
+    body.innerHTML = `
+      <div class="profile-view">
+        <div class="user-info-bar" style="margin-bottom: 20px;">
+          <div class="user-info">
+            <div class="user-avatar">${EventosAuth.getInitials()}</div>
+            <div>
+              <div class="user-name">${user.nombre}</div>
+              <div class="user-phone">${EventosConfig.formatPhone(user.telefono)}</div>
+            </div>
+          </div>
+          <button class="user-logout" onclick="EventosUI.handleProfileLogout()">Salir</button>
+        </div>
+
+        <div class="reservation-card" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+            <div>
+              <h4 style="font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--deep); margin-bottom: 4px;">${evento.artista}</h4>
+              <p style="font-size: 14px; color: var(--muted);">${fechaStr}</p>
+            </div>
+            <span class="reservation-status status-${estadoClass}" style="
+              font-size: 11px;
+              font-weight: 600;
+              padding: 4px 10px;
+              border-radius: 99px;
+              background: ${estadoClass === 'confirmed' ? 'rgba(46,125,82,0.15)' : estadoClass === 'pending' ? 'rgba(184,130,107,0.2)' : 'rgba(155,41,38,0.15)'};
+              color: ${estadoClass === 'confirmed' ? '#2E7D52' : estadoClass === 'pending' ? 'var(--terra)' : '#9B2926'};
+            ">${estadoText}</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 14px;">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--muted);">Lugares</span>
+              <span style="color: var(--carbon); font-weight: 500;">${boletosStr}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--muted);">Tipo</span>
+              <span style="color: var(--carbon); font-weight: 500;">${tipoText}</span>
+            </div>
+            ${res.monto > 0 ? `
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--muted);">Monto</span>
+                <span style="color: var(--carbon); font-weight: 500;">$${res.monto} MXN</span>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+
+        ${res.estado === 'pendiente_pago' ? `
+          <div style="margin-top: 16px; padding: 14px; background: rgba(184,130,107,0.1); border-radius: 10px; border: 1px solid rgba(184,130,107,0.2);">
+            <p style="font-size: 13px; color: var(--terra); margin-bottom: 10px;">
+              <strong>Pago pendiente.</strong> Completa tu pago para garantizar tu lugar.
+            </p>
+            <a href="${this.getMPLinkForPayment() || '#'}" class="modal-btn modal-btn-primary" style="font-size: 14px; padding: 12px;">
+              ${this.icons.card}
+              Pagar ahora
+            </a>
+          </div>
+        ` : ''}
+
+        ${res.estado !== 'cancelada' ? `
+          <button onclick="EventosUI.confirmCancel()" style="
+            width: 100%;
+            margin-top: 20px;
+            background: transparent;
+            border: 1px solid rgba(155,41,38,0.3);
+            color: #9B2926;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            cursor: pointer;
+          ">
+            Cancelar reserva
+          </button>
+        ` : ''}
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="modal-btn modal-btn-secondary" onclick="EventosUI.close()" style="flex: 1;">
+        Cerrar
+      </button>
+    `;
+  },
+
+  // Confirm cancellation
+  confirmCancel() {
+    const body = document.getElementById('modal-body');
+    const footer = document.getElementById('modal-footer');
+
+    body.innerHTML = `
+      <div style="text-align: center; padding: 20px 0;">
+        <div style="width: 60px; height: 60px; margin: 0 auto 20px; background: rgba(155,41,38,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          ${this.icons.warning}
+        </div>
+        <h3 style="font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--deep); margin-bottom: 12px;">¿Cancelar reserva?</h3>
+        <p style="font-size: 14px; color: var(--muted); line-height: 1.6;">
+          Esta acción no se puede deshacer. Si pagaste un depósito, contacta a Teokaye para solicitar tu reembolso.
+        </p>
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="modal-btn modal-btn-secondary" onclick="EventosUI.renderProfileView()" style="flex: 1;">
+        Volver
+      </button>
+      <button class="modal-btn" onclick="EventosUI.cancelReservation()" style="flex: 1; background: #9B2926; color: white;">
+        Sí, cancelar
+      </button>
+    `;
+  },
+
+  // Cancel reservation
+  async cancelReservation() {
+    const footer = document.getElementById('modal-footer');
+    footer.innerHTML = `
+      <button class="modal-btn modal-btn-primary" disabled style="flex: 1;">
+        ${this.icons.spinner} Cancelando...
+      </button>
+    `;
+
+    try {
+      await EventosReserva.cancelReservation(this.existingReservation.id);
+      this.existingReservation = null;
+      this.updatePageSpots();
+
+      // Show success and reload page to reset state
+      const body = document.getElementById('modal-body');
+      body.innerHTML = `
+        <div style="text-align: center; padding: 20px 0;">
+          <div style="width: 60px; height: 60px; margin: 0 auto 20px; background: rgba(46,125,82,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+            ${this.icons.check}
+          </div>
+          <h3 style="font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--deep); margin-bottom: 12px;">Reserva cancelada</h3>
+          <p style="font-size: 14px; color: var(--muted); line-height: 1.6;">
+            Tu reserva ha sido cancelada. Esperamos verte pronto en Teokaye.
+          </p>
+        </div>
+      `;
+
+      footer.innerHTML = `
+        <button class="modal-btn modal-btn-primary" onclick="location.reload()" style="flex: 1;">
+          Cerrar
+        </button>
+      `;
+
+    } catch (error) {
+      alert(error.message);
+      this.renderProfileView();
+    }
+  },
+
+  // Handle logout from profile view
+  handleProfileLogout() {
+    EventosAuth.logout();
+    this.existingReservation = null;
+    this.showProfile = false;
+    location.reload();
   }
 };
 
