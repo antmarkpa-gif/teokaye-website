@@ -453,26 +453,17 @@ const EventosUI = {
       // Update page spots
       this.updatePageSpots();
 
-      if (this.tipoPago === 'sin_pago') {
-        // Go to success and open WhatsApp
-        this.currentStep = 4;
-        this.renderStep();
+      // Go to success step
+      this.currentStep = 4;
+      this.renderStep();
 
-        const msg = EventosReserva.getWhatsAppMessage(this.numBoletos);
-        setTimeout(() => {
-          window.open(EventosConfig.whatsappUrl(msg), '_blank');
-        }, 500);
-
-      } else {
-        // Redirect to Mercado Pago
-        this.currentStep = 4;
-        this.renderStep();
-
+      // If paid option, redirect to Mercado Pago
+      if (this.tipoPago !== 'sin_pago') {
         const mpLink = EventosReserva.getMercadoPagoLink();
         if (mpLink) {
           setTimeout(() => {
             window.location.href = mpLink;
-          }, 1500);
+          }, 2000);
         }
       }
 
@@ -487,6 +478,7 @@ const EventosUI = {
   renderSuccessStep(body, footer) {
     const isPaid = this.tipoPago !== 'sin_pago';
     const mpLink = EventosReserva.getMercadoPagoLink();
+    const user = EventosAuth.getUser();
 
     body.innerHTML = `
       <div class="step-content active">
@@ -495,34 +487,29 @@ const EventosUI = {
             ${this.icons.check}
           </div>
           <h3 class="success-title">
-            ${isPaid ? '¡Redirigiendo al pago!' : '¡Reserva creada!'}
+            ${isPaid ? '¡Redirigiendo al pago!' : '¡Reserva confirmada!'}
           </h3>
           <p class="success-text">
             ${isPaid ?
-              'Te estamos llevando a Mercado Pago para completar tu pago. Después recibirás confirmación por WhatsApp.' :
-              'Te abrimos WhatsApp para que confirmes tu reserva. Recuerda que el lugar no está garantizado hasta el día del evento.'}
+              'Te estamos llevando a Mercado Pago para completar tu pago.' :
+              'Tu lugar está reservado.'}
+            <br><br>
+            <strong>Te enviaremos un WhatsApp</strong> al ${EventosConfig.formatPhone(user.telefono)} con los detalles del evento y cómo llegar.
+            ${!isPaid ? '<br><br><span style="font-size: 12px; opacity: 0.7;">Nota: Tu lugar no está garantizado hasta confirmar asistencia el día del evento.</span>' : ''}
           </p>
         </div>
       </div>
     `;
 
-    const msg = isPaid ?
-      EventosReserva.getConfirmationMessage(this.numBoletos) :
-      EventosReserva.getWhatsAppMessage(this.numBoletos);
-
     footer.innerHTML = `
-      <a href="${EventosConfig.whatsappUrl(msg)}" target="_blank" class="modal-btn modal-btn-whatsapp">
-        ${this.icons.whatsapp}
-        ${isPaid ? 'Enviar comprobante por WhatsApp' : 'Abrir WhatsApp'}
-      </a>
       ${isPaid && mpLink ? `
-        <a href="${mpLink}" class="modal-btn modal-btn-primary" style="margin-top: 10px;">
+        <a href="${mpLink}" class="modal-btn modal-btn-primary">
           ${this.icons.card}
           Ir a Mercado Pago
         </a>
       ` : ''}
-      <button class="modal-btn modal-btn-secondary" onclick="EventosUI.close()">
-        Cerrar
+      <button class="modal-btn ${isPaid ? 'modal-btn-secondary' : 'modal-btn-primary'}" onclick="EventosUI.close()">
+        ${isPaid ? 'Cerrar' : 'Listo'}
       </button>
     `;
   },
