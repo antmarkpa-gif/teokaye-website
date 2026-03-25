@@ -847,7 +847,9 @@ const EventosUI = {
     `;
 
     try {
-      await EventosReserva.cancelReservation(this.existingReservation.id);
+      console.log('Attempting to cancel reservation:', this.existingReservation);
+      const numBoletos = this.existingReservation.num_boletos;
+      await EventosReserva.cancelReservation(this.existingReservation.id, numBoletos);
       this.existingReservation = null;
       this.updatePageSpots();
 

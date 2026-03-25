@@ -185,39 +185,31 @@ const EventosReserva = {
   },
 
   // Cancel a reservation
-  async cancelReservation(reservaId) {
+  async cancelReservation(reservaId, numBoletos) {
     const user = EventosAuth.getUser();
     if (!user) {
       throw new Error('Debes iniciar sesión primero.');
     }
 
-    // Get reservation to check ownership and get boletos count
-    const reservas = await EventosConfig.get(
-      'reservas_eventos',
-      `id=eq.${reservaId}&usuario_id=eq.${user.id}&select=*`
-    );
-
-    if (!reservas || reservas.length === 0) {
-      throw new Error('Reserva no encontrada.');
-    }
-
-    const reserva = reservas[0];
+    console.log('Cancelling reservation:', reservaId);
 
     // Update reservation status
-    await EventosConfig.patch(
+    const result = await EventosConfig.patch(
       'reservas_eventos',
       `id=eq.${reservaId}`,
       { estado: 'cancelada' }
     );
 
+    console.log('Patch result:', result);
+
     // Restore available spots
-    if (this.currentEvento && reserva.evento_id === this.currentEvento.id) {
+    if (this.currentEvento && numBoletos) {
       await EventosConfig.patch(
         'eventos',
         `id=eq.${this.currentEvento.id}`,
-        { lugares_disponibles: this.currentEvento.lugares_disponibles + reserva.num_boletos }
+        { lugares_disponibles: this.currentEvento.lugares_disponibles + numBoletos }
       );
-      this.currentEvento.lugares_disponibles += reserva.num_boletos;
+      this.currentEvento.lugares_disponibles += numBoletos;
     }
 
     return true;
