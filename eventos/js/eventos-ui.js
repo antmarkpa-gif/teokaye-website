@@ -479,6 +479,11 @@ const EventosUI = {
     const isPaid = this.tipoPago !== 'sin_pago';
     const mpLink = EventosReserva.getMercadoPagoLink();
     const user = EventosAuth.getUser();
+    const evento = EventosReserva.currentEvento;
+
+    // Build WhatsApp confirmation message
+    const boletosStr = this.numBoletos === 1 ? '1 lugar' : `${this.numBoletos} lugares`;
+    const waMessage = `Hola, soy ${user.nombre}. Acabo de reservar ${boletosStr} para ${evento.artista}. Mi número es ${EventosConfig.formatPhone(user.telefono)}.`;
 
     body.innerHTML = `
       <div class="step-content active">
@@ -487,30 +492,31 @@ const EventosUI = {
             ${this.icons.check}
           </div>
           <h3 class="success-title">
-            ${isPaid ? '¡Redirigiendo al pago!' : '¡Reserva confirmada!'}
+            ${isPaid ? '¡Casi listo!' : '¡Un paso más!'}
           </h3>
           <p class="success-text">
-            ${isPaid ?
-              'Te estamos llevando a Mercado Pago para completar tu pago.' :
-              'Tu lugar está reservado.'}
+            ${isPaid ? 'Tu pago está pendiente.' : 'Tu reserva está registrada.'}
             <br><br>
-            <strong>Te enviaremos un WhatsApp</strong> al ${EventosConfig.formatPhone(user.telefono)} con los detalles del evento y cómo llegar.
-            ${!isPaid ? '<br><br><span style="font-size: 12px; opacity: 0.7;">Nota: Tu lugar no está garantizado hasta confirmar asistencia el día del evento.</span>' : ''}
+            <strong>Envíanos un WhatsApp para confirmar tu lugar:</strong>
           </p>
         </div>
       </div>
     `;
 
     footer.innerHTML = `
+      <a href="${EventosConfig.whatsappUrl(waMessage)}" target="_blank" class="modal-btn modal-btn-whatsapp" style="font-size: 17px; padding: 18px;">
+        ${this.icons.whatsapp}
+        Confirmar por WhatsApp
+      </a>
       ${isPaid && mpLink ? `
-        <a href="${mpLink}" class="modal-btn modal-btn-primary">
+        <a href="${mpLink}" class="modal-btn modal-btn-primary" style="margin-top: 10px;">
           ${this.icons.card}
-          Ir a Mercado Pago
+          Pagar en Mercado Pago
         </a>
       ` : ''}
-      <button class="modal-btn ${isPaid ? 'modal-btn-secondary' : 'modal-btn-primary'}" onclick="EventosUI.close()">
-        ${isPaid ? 'Cerrar' : 'Listo'}
-      </button>
+      <p style="font-size: 12px; color: var(--muted); text-align: center; margin-top: 16px; line-height: 1.5;">
+        Al enviarnos WhatsApp confirmas tu asistencia y te mandamos los detalles del evento.
+      </p>
     `;
   },
 
