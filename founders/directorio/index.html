@@ -451,6 +451,10 @@
     }
 
     /* Founder Card - New Design */
+    .founder-card-link{
+      display:block;
+    }
+
     .founder-card{
       background:var(--white);
       border-radius:16px;
@@ -460,6 +464,12 @@
       flex-direction:column;
       animation:fadeInUp 0.4s ease forwards;
       opacity:0;
+      transition:transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .founder-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 8px 24px rgba(70,29,20,0.12);
     }
 
     @keyframes fadeInUp{
@@ -686,7 +696,10 @@
             <span id="founderCount">0</span> founders visibles
           </div>
         </div>
-        <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;align-items:flex-end;">
+          <a href="/founders/app/" style="font-size:0.85rem;color:var(--accent-dark);text-decoration:none;padding:0.4rem 0.75rem;background:var(--terra-light);border-radius:6px;font-weight:500;">Mi Perfil</a>
+          <button class="btn-logout" id="btnLogout">Cerrar sesion</button>
+        </div>
       </div>
     </header>
 
@@ -885,21 +898,27 @@
     // Create founder card
     function createFounderCard(founder, index) {
       const evento = founder.evento || 'Founders Meetup #1 — Marzo 2026';
+      const profileUrl = `/founders/perfil/?s=${founder.slug || founder.id}`;
 
       return `
-        <article class="founder-card" style="animation-delay: ${index * 0.08}s">
-          <div class="card-avatar">${getInitial(founder.nombre)}</div>
-          <h3 class="card-name">${founder.nombre}</h3>
-          <p class="card-city">${founder.ciudad}</p>
-          <div class="card-separator"></div>
-          <span class="card-section-label">Proyecto</span>
-          <p class="card-project">${founder.proyecto}</p>
-          <p class="card-desc">${founder.descripcion_proyecto}</p>
-          <div class="card-events">
-            <span class="card-events-label">Asistencias</span>
-            <p class="card-event-item">· ${evento}</p>
-          </div>
-        </article>
+        <a href="${profileUrl}" class="founder-card-link" style="text-decoration:none;">
+          <article class="founder-card" style="animation-delay: ${index * 0.08}s">
+            <div class="card-avatar">${getInitial(founder.nombre)}</div>
+            <h3 class="card-name">${founder.nombre}</h3>
+            <p class="card-city">${founder.ciudad}</p>
+            <div class="card-separator"></div>
+            <span class="card-section-label">Proyecto</span>
+            <p class="card-project">${founder.proyecto}</p>
+            <p class="card-desc">${founder.descripcion_proyecto}</p>
+            <div class="card-events">
+              <span class="card-events-label">Asistencias</span>
+              <p class="card-event-item">· ${evento}</p>
+            </div>
+            <div style="margin-top:auto;padding-top:0.75rem;text-align:center;">
+              <span style="font-size:0.85rem;color:var(--accent);font-weight:500;">Ver perfil →</span>
+            </div>
+          </article>
+        </a>
       `;
     }
 
@@ -947,7 +966,7 @@
       try {
         const { data, error } = await db
           .from('founders_meetup')
-          .select('nombre, ciudad, proyecto, descripcion_proyecto, etapa, evento')
+          .select('id, slug, nombre, ciudad, proyecto, descripcion_proyecto, etapa, evento')
           .eq('visible_en_directorio', true)
           .order('created_at', { ascending: false });
 

@@ -1,0 +1,27 @@
+{
+  "name": "Founders Teokaye",
+  "short_name": "Founders",
+  "description": "Tu tarjeta digital de founder en la comunidad Teokaye",
+  "start_url": "/founders/app/",
+  "scope": "/founders/",
+  "display": "standalone",
+  "background_color": "#E6E0D6",
+  "theme_color": "#461D14",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/founders/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/founders/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "social"],
+  "lang": "es-MX"
+}

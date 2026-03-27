@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Mi Perfil | Founders Teokaye</title>
+  <meta name="description" content="Tu tarjeta digital de founder - Comunidad Teokaye">
+  <link rel="icon" type="image/svg+xml" href="/simbolo.svg">
+  <link rel="apple-touch-icon" href="/founders/icon-192.png">
+  <link rel="manifest" href="/founders/manifest.json">
+  <meta name="theme-color" content="#461D14">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/founders/css/founders-app.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <span class="app-brand">Teokaye<span>x</span>Founders</span>
+    <button class="btn-logout" id="btnLogout">Salir</button>
+  </header>
+
+  <!-- Login Screen -->
+  <div class="app-content" id="loginScreen" style="display:none;">
+    <div class="edit-section" style="max-width:400px;margin:2rem auto;">
+      <h2 class="edit-section-title" style="text-align:center;">Acceso a tu perfil</h2>
+      <p style="text-align:center;color:rgba(30,27,24,0.6);margin-bottom:1.5rem;">
+        Ingresa con los datos que registraste en el evento
+      </p>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginTelefono">Telefono</label>
+          <input type="tel" id="loginTelefono" placeholder="222 123 4567" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPin">PIN de 4 digitos</label>
+          <input type="number" id="loginPin" placeholder="1234" min="1000" max="9999" required>
+        </div>
+        <button type="submit" class="btn-save" id="btnLogin">Entrar</button>
+        <p id="loginError" style="color:#8B3A3A;text-align:center;margin-top:1rem;display:none;">
+          Datos incorrectos. Verifica tu telefono y PIN.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div class="app-content" id="appContent" style="display:none;">
+    <!-- Profile Tab -->
+    <div id="tabProfile" class="tab-content">
+      <div class="profile-card" style="max-width:400px;margin:0 auto;">
+        <div class="profile-avatar" id="avatar">A</div>
+        <h1 class="profile-name" id="name">Nombre</h1>
+        <p class="profile-city" id="city">Ciudad</p>
+
+        <div class="qr-container">
+          <div id="qrCode"></div>
+        </div>
+
+        <div class="profile-actions">
+          <button class="btn-action btn-primary" onclick="downloadMyContact()">
+            <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+            Descargar mi contacto
+          </button>
+          <button class="btn-action btn-secondary" onclick="shareMyProfile()">
+            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            Compartir mi perfil
+          </button>
+        </div>
+
+        <div id="projectsSection">
+          <h3 class="section-title">Mis proyectos</h3>
+          <div class="projects-list" id="projectsList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Directory Tab -->
+    <div id="tabDirectory" class="tab-content" style="display:none;">
+      <div style="max-width:600px;margin:0 auto;">
+        <h2 style="font-family:'Cormorant Infant',serif;font-size:1.5rem;margin-bottom:1rem;">Directorio</h2>
+        <div class="form-group" style="margin-bottom:1.5rem;">
+          <input type="text" id="searchFounders" placeholder="Buscar por nombre o proyecto...">
+        </div>
+        <div id="foundersGrid"></div>
+      </div>
+    </div>
+
+    <!-- Edit Tab -->
+    <div id="tabEdit" class="tab-content" style="display:none;">
+      <div style="max-width:500px;margin:0 auto;">
+        <!-- Basic Info -->
+        <div class="edit-section">
+          <h2 class="edit-section-title">Informacion basica</h2>
+          <div class="form-group">
+            <label for="editNombre">Nombre completo</label>
+            <input type="text" id="editNombre">
+          </div>
+          <div class="form-group">
+            <label for="editCiudad">Ciudad</label>
+            <input type="text" id="editCiudad">
+          </div>
+          <div class="form-group">
+            <label for="editEmail">Email (opcional)</label>
+            <input type="email" id="editEmail" placeholder="tu@email.com">
+          </div>
+          <div class="form-group">
+            <label for="editLinkedin">LinkedIn (opcional)</label>
+            <input type="url" id="editLinkedin" placeholder="https://linkedin.com/in/tu-perfil">
+          </div>
+        </div>
+
+        <!-- Privacy -->
+        <div class="edit-section">
+          <h2 class="edit-section-title">Privacidad</h2>
+          <div class="toggle-row">
+            <span class="toggle-label">Mostrar mi telefono publicamente</span>
+            <div class="toggle-switch" id="togglePhone"></div>
+          </div>
+          <p class="toggle-hint">Si esta activo, cualquiera que vea tu perfil podra ver tu numero.</p>
+
+          <div class="toggle-row" style="margin-top:1rem;">
+            <span class="toggle-label">Aparecer en el directorio</span>
+            <div class="toggle-switch" id="toggleVisible"></div>
+          </div>
+          <p class="toggle-hint">Si esta activo, otros founders pueden encontrarte en el directorio.</p>
+        </div>
+
+        <!-- Projects -->
+        <div class="edit-section">
+          <h2 class="edit-section-title">Mis proyectos</h2>
+          <div id="editProjectsList"></div>
+          <button class="btn-add-project" onclick="addProject()">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Agregar proyecto
+          </button>
+        </div>
+
+        <button class="btn-save" onclick="saveChanges()">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav" id="bottomNav" style="display:none;">
+    <a href="#" class="nav-item active" data-tab="profile">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      Mi Perfil
+    </a>
+    <a href="#" class="nav-item" data-tab="directory">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      Directorio
+    </a>
+    <a href="#" class="nav-item" data-tab="edit">
+      <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+      Editar
+    </a>
+  </nav>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="/founders/js/founders-config.js"></script>
+  <script src="/founders/js/founders-qr.js"></script>
+  <script src="/founders/js/founders-vcard.js"></script>
+
+  <script>
+    // ══════════════════════════════════════════════════════════════════════════
+    // STATE
+    // ══════════════════════════════════════════════════════════════════════════
+
+    let currentUser = null;
+    let currentProjects = [];
+    let allFounders = [];
+    let currentTab = 'profile';
+
+    const etapaIcons = {
+      'idea': '\u{1F4A1}',
+      'construccion': '\u{1F6A7}',
+      'ingresos': '\u{1F4B0}',
+      'escalando': '\u{1F680}'
+    };
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // INIT
+    // ══════════════════════════════════════════════════════════════════════════
+
+    document.addEventListener('DOMContentLoaded', async function() {
+      // Register service worker
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/founders/sw.js');
+      }
+
+      // Check for existing session
+      const userId = FoundersConfig.getCurrentUserId();
+      if (userId) {
+        await loadUser(userId);
+      } else {
+        showLogin();
+      }
+
+      // Setup event listeners
+      setupEventListeners();
+    });
+
+    function setupEventListeners() {
+      // Login form
+      document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+      // Logout
+      document.getElementById('btnLogout').addEventListener('click', logout);
+
+      // Tab navigation
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          switchTab(item.dataset.tab);
+        });
+      });
+
+      // Toggle switches
+      document.getElementById('togglePhone').addEventListener('click', function() {
+        this.classList.toggle('active');
+      });
+      document.getElementById('toggleVisible').addEventListener('click', function() {
+        this.classList.toggle('active');
+      });
+
+      // Search
+      document.getElementById('searchFounders').addEventListener('input', (e) => {
+        renderFounders(e.target.value);
+      });
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // AUTH
+    // ══════════════════════════════════════════════════════════════════════════
+
+    function showLogin() {
+      document.getElementById('loginScreen').style.display = 'block';
+      document.getElementById('appContent').style.display = 'none';
+      document.getElementById('bottomNav').style.display = 'none';
+      document.querySelector('.app-header').style.display = 'none';
+    }
+
+    function showApp() {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('appContent').style.display = 'block';
+      document.getElementById('bottomNav').style.display = 'flex';
+      document.querySelector('.app-header').style.display = 'flex';
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const telefono = document.getElementById('loginTelefono').value.trim();
+      const pin = parseInt(document.getElementById('loginPin').value);
+
+      if (!telefono || !pin) return;
+
+      document.getElementById('btnLogin').disabled = true;
+      document.getElementById('loginError').style.display = 'none';
+
+      try {
+        const data = await FoundersConfig.get('founders_meetup', `telefono=eq.${telefono}&pin=eq.${pin}&select=*`);
+
+        if (!data || data.length === 0) {
+          document.getElementById('loginError').style.display = 'block';
+          document.getElementById('btnLogin').disabled = false;
+          return;
+        }
+
+        currentUser = data[0];
+        FoundersConfig.setCurrentUserId(currentUser.id);
+        await loadUserData();
+        showApp();
+        renderProfile();
+
+      } catch (err) {
+        console.error('Login error:', err);
+        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('btnLogin').disabled = false;
+      }
+    }
+
+    async function loadUser(userId) {
+      try {
+        currentUser = await FoundersConfig.getFounderById(userId);
+        if (currentUser) {
+          await loadUserData();
+          showApp();
+          renderProfile();
+        } else {
+          FoundersConfig.clearCurrentUser();
+          showLogin();
+        }
+      } catch (err) {
+        console.error('Load user error:', err);
+        showLogin();
+      }
+    }
+
+    async function loadUserData() {
+      currentProjects = await FoundersConfig.getFounderProjects(currentUser.id);
+
+      // Fallback to legacy project
+      if (currentProjects.length === 0 && currentUser.proyecto) {
+        currentProjects = [{
+          id: 'legacy',
+          nombre: currentUser.proyecto,
+          descripcion: currentUser.descripcion_proyecto,
+          etapa: currentUser.etapa
+        }];
+      }
+    }
+
+    function logout() {
+      FoundersConfig.clearCurrentUser();
+      currentUser = null;
+      currentProjects = [];
+      document.getElementById('loginForm').reset();
+      showLogin();
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // TABS
+    // ══════════════════════════════════════════════════════════════════════════
+
+    function switchTab(tab) {
+      currentTab = tab;
+
+      // Update nav
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.tab === tab);
+      });
+
+      // Show/hide tabs
+      document.getElementById('tabProfile').style.display = tab === 'profile' ? 'block' : 'none';
+      document.getElementById('tabDirectory').style.display = tab === 'directory' ? 'block' : 'none';
+      document.getElementById('tabEdit').style.display = tab === 'edit' ? 'block' : 'none';
+
+      // Load data for tab
+      if (tab === 'directory') loadDirectory();
+      if (tab === 'edit') renderEditForm();
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // PROFILE TAB
+    // ══════════════════════════════════════════════════════════════════════════
+
+    function renderProfile() {
+      // Avatar
+      const avatarEl = document.getElementById('avatar');
+      if (currentUser.foto_url) {
+        avatarEl.innerHTML = `<img src="${currentUser.foto_url}" alt="${currentUser.nombre}">`;
+      } else {
+        avatarEl.textContent = currentUser.nombre.charAt(0).toUpperCase();
+      }
+
+      // Name & City
+      document.getElementById('name').textContent = currentUser.nombre;
+      document.getElementById('city').textContent = currentUser.ciudad || 'Mexico';
+
+      // QR Code
+      FoundersQR.generateProfileQR('qrCode', currentUser, { size: 180 });
+
+      // Projects
+      renderMyProjects();
+    }
+
+    function renderMyProjects() {
+      const container = document.getElementById('projectsList');
+
+      if (currentProjects.length === 0) {
+        container.innerHTML = '<p style="color:rgba(30,27,24,0.5);text-align:center;padding:1rem;">No tienes proyectos registrados</p>';
+        return;
+      }
+
+      container.innerHTML = currentProjects.map(project => `
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-name">${project.nombre}</span>
+            <span class="project-icon">${etapaIcons[project.etapa] || '\u{1F4BC}'}</span>
+          </div>
+          ${project.descripcion ? `<p class="project-desc">${project.descripcion}</p>` : ''}
+          ${project.etapa ? `<span class="badge ${project.etapa}">${FoundersConfig.getEtapaLabel(project.etapa)}</span>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function downloadMyContact() {
+      FoundersVCard.download(currentUser, currentProjects);
+      showToast('Contacto descargado', 'success');
+    }
+
+    async function shareMyProfile() {
+      const url = FoundersConfig.getProfileUrl(currentUser);
+      const title = `${currentUser.nombre} | Founders Teokaye`;
+
+      if (navigator.share) {
+        try {
+          await navigator.share({ title, url });
+        } catch (err) {
+          copyToClipboard(url);
+        }
+      } else {
+        copyToClipboard(url);
+      }
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Link copiado', 'success');
+      });
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // DIRECTORY TAB
+    // ══════════════════════════════════════════════════════════════════════════
+
+    async function loadDirectory() {
+      const container = document.getElementById('foundersGrid');
+      container.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+      try {
+        const data = await FoundersConfig.get('founders_meetup', 'visible_en_directorio=eq.true&select=id,nombre,ciudad,proyecto,slug');
+        allFounders = data || [];
+        renderFounders();
+      } catch (err) {
+        console.error('Error loading directory:', err);
+        container.innerHTML = '<p style="color:#8B3A3A;text-align:center;">Error al cargar el directorio</p>';
+      }
+    }
+
+    function renderFounders(search = '') {
+      const container = document.getElementById('foundersGrid');
+      let filtered = allFounders;
+
+      if (search) {
+        const q = search.toLowerCase();
+        filtered = allFounders.filter(f =>
+          f.nombre.toLowerCase().includes(q) ||
+          (f.proyecto && f.proyecto.toLowerCase().includes(q))
+        );
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<p style="color:rgba(30,27,24,0.5);text-align:center;padding:2rem;">No se encontraron founders</p>';
+        return;
+      }
+
+      container.innerHTML = filtered.map(founder => `
+        <a href="/founders/perfil/?s=${founder.slug || founder.id}" style="text-decoration:none;display:block;margin-bottom:0.75rem;">
+          <div class="project-card" style="display:flex;align-items:center;gap:1rem;">
+            <div style="width:48px;height:48px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Infant',serif;font-size:1.25rem;font-weight:600;color:var(--white);">
+              ${founder.nombre.charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <p style="font-weight:600;color:var(--text);">${founder.nombre}</p>
+              <p style="font-size:0.85rem;color:var(--accent);">${founder.proyecto || founder.ciudad}</p>
+            </div>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // EDIT TAB
+    // ══════════════════════════════════════════════════════════════════════════
+
+    function renderEditForm() {
+      // Basic info
+      document.getElementById('editNombre').value = currentUser.nombre || '';
+      document.getElementById('editCiudad').value = currentUser.ciudad || '';
+      document.getElementById('editEmail').value = currentUser.email || '';
+      document.getElementById('editLinkedin').value = currentUser.linkedin || '';
+
+      // Toggles
+      document.getElementById('togglePhone').classList.toggle('active', currentUser.telefono_publico);
+      document.getElementById('toggleVisible').classList.toggle('active', currentUser.visible_en_directorio);
+
+      // Projects
+      renderEditProjects();
+    }
+
+    function renderEditProjects() {
+      const container = document.getElementById('editProjectsList');
+
+      container.innerHTML = currentProjects.map((project, index) => `
+        <div class="project-edit-card" data-index="${index}">
+          <div class="project-edit-header">
+            <span style="font-weight:600;">Proyecto ${index + 1}</span>
+            <button class="btn-delete-project" onclick="deleteProject(${index})">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="form-group">
+            <label>Nombre del proyecto</label>
+            <input type="text" value="${project.nombre || ''}" onchange="updateProject(${index}, 'nombre', this.value)">
+          </div>
+          <div class="form-group">
+            <label>Descripcion</label>
+            <textarea onchange="updateProject(${index}, 'descripcion', this.value)">${project.descripcion || ''}</textarea>
+          </div>
+          <div class="form-group">
+            <label>Etapa</label>
+            <select onchange="updateProject(${index}, 'etapa', this.value)">
+              <option value="idea" ${project.etapa === 'idea' ? 'selected' : ''}>Idea</option>
+              <option value="construccion" ${project.etapa === 'construccion' ? 'selected' : ''}>En construccion</option>
+              <option value="ingresos" ${project.etapa === 'ingresos' ? 'selected' : ''}>Generando ingresos</option>
+              <option value="escalando" ${project.etapa === 'escalando' ? 'selected' : ''}>Escalando</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>URL (opcional)</label>
+            <input type="url" value="${project.url || ''}" placeholder="https://..." onchange="updateProject(${index}, 'url', this.value)">
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addProject() {
+      currentProjects.push({
+        nombre: '',
+        descripcion: '',
+        etapa: 'idea',
+        url: '',
+        isNew: true
+      });
+      renderEditProjects();
+    }
+
+    function updateProject(index, field, value) {
+      currentProjects[index][field] = value;
+      currentProjects[index].isDirty = true;
+    }
+
+    function deleteProject(index) {
+      if (currentProjects.length === 1) {
+        showToast('Debes tener al menos un proyecto', 'error');
+        return;
+      }
+      currentProjects.splice(index, 1);
+      renderEditProjects();
+    }
+
+    async function saveChanges() {
+      const btn = document.querySelector('.btn-save');
+      btn.disabled = true;
+      btn.textContent = 'Guardando...';
+
+      try {
+        // Update user info
+        const userData = {
+          nombre: document.getElementById('editNombre').value.trim(),
+          ciudad: document.getElementById('editCiudad').value.trim(),
+          email: document.getElementById('editEmail').value.trim() || null,
+          linkedin: document.getElementById('editLinkedin').value.trim() || null,
+          telefono_publico: document.getElementById('togglePhone').classList.contains('active'),
+          visible_en_directorio: document.getElementById('toggleVisible').classList.contains('active')
+        };
+
+        await FoundersConfig.patch('founders_meetup', `id=eq.${currentUser.id}`, userData);
+
+        // Update local state
+        Object.assign(currentUser, userData);
+
+        // Handle projects (simplified - just update first one for legacy support)
+        if (currentProjects.length > 0 && currentProjects[0].id === 'legacy') {
+          await FoundersConfig.patch('founders_meetup', `id=eq.${currentUser.id}`, {
+            proyecto: currentProjects[0].nombre,
+            descripcion_proyecto: currentProjects[0].descripcion,
+            etapa: currentProjects[0].etapa
+          });
+        }
+
+        // Refresh profile
+        renderProfile();
+        showToast('Cambios guardados', 'success');
+
+      } catch (err) {
+        console.error('Save error:', err);
+        showToast('Error al guardar', 'error');
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Guardar cambios';
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // TOAST
+    // ══════════════════════════════════════════════════════════════════════════
+
+    function showToast(message, type = '') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast ${type} visible`;
+
+      setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
