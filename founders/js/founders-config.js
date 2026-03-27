@@ -125,6 +125,25 @@ const FoundersConfig = {
     return clean;
   },
 
+  // Normalize phone to 10 digits (removes country code and non-digits)
+  normalizePhone(phone) {
+    if (!phone) return '';
+    let clean = phone.replace(/\D/g, '');
+    // Remove country code if present
+    if (clean.startsWith('52') && clean.length === 12) {
+      clean = clean.slice(2);
+    }
+    if (clean.startsWith('1') && clean.length === 11) {
+      clean = clean.slice(1);
+    }
+    return clean;
+  },
+
+  // Compare two phone numbers (normalized)
+  phonesMatch(phone1, phone2) {
+    return this.normalizePhone(phone1) === this.normalizePhone(phone2);
+  },
+
   // Get profile URL
   getProfileUrl(founder) {
     const slug = founder.slug || founder.id;

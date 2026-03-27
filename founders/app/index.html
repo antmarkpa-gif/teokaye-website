@@ -104,12 +104,37 @@
             <input type="text" id="editCiudad">
           </div>
           <div class="form-group">
+            <label for="editBio">Bio corta (opcional)</label>
+            <textarea id="editBio" placeholder="Ej: Fundador de startups, apasionado por la tecnologia..." style="min-height:60px;"></textarea>
+          </div>
+          <div class="form-group">
             <label for="editEmail">Email (opcional)</label>
             <input type="email" id="editEmail" placeholder="tu@email.com">
           </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="edit-section">
+          <h2 class="edit-section-title">Redes sociales</h2>
           <div class="form-group">
-            <label for="editLinkedin">LinkedIn (opcional)</label>
-            <input type="url" id="editLinkedin" placeholder="https://linkedin.com/in/tu-perfil">
+            <label for="editInstagram">Instagram</label>
+            <input type="text" id="editInstagram" placeholder="@tu_usuario">
+          </div>
+          <div class="form-group">
+            <label for="editTwitter">X / Twitter</label>
+            <input type="text" id="editTwitter" placeholder="@tu_usuario">
+          </div>
+          <div class="form-group">
+            <label for="editTiktok">TikTok</label>
+            <input type="text" id="editTiktok" placeholder="@tu_usuario">
+          </div>
+          <div class="form-group">
+            <label for="editLinkedin">LinkedIn</label>
+            <input type="text" id="editLinkedin" placeholder="tu-perfil o URL completa">
+          </div>
+          <div class="form-group">
+            <label for="editWebsite">Sitio web</label>
+            <input type="url" id="editWebsite" placeholder="https://tusitio.com">
           </div>
         </div>
 
@@ -120,7 +145,13 @@
             <span class="toggle-label">Mostrar mi telefono publicamente</span>
             <div class="toggle-switch" id="togglePhone"></div>
           </div>
-          <p class="toggle-hint">Si esta activo, cualquiera que vea tu perfil podra ver tu numero.</p>
+          <p class="toggle-hint">Si esta activo, cualquiera podra ver tu numero y contactarte.</p>
+
+          <div class="toggle-row" style="margin-top:1rem;">
+            <span class="toggle-label">Requerir permiso para contacto</span>
+            <div class="toggle-switch" id="togglePermiso"></div>
+          </div>
+          <p class="toggle-hint">Si esta activo, otros deben solicitar tu permiso antes de ver tu contacto.</p>
 
           <div class="toggle-row" style="margin-top:1rem;">
             <span class="toggle-label">Aparecer en el directorio</span>
@@ -227,6 +258,9 @@
       document.getElementById('togglePhone').addEventListener('click', function() {
         this.classList.toggle('active');
       });
+      document.getElementById('togglePermiso').addEventListener('click', function() {
+        this.classList.toggle('active');
+      });
       document.getElementById('toggleVisible').addEventListener('click', function() {
         this.classList.toggle('active');
       });
@@ -257,16 +291,20 @@
 
     async function handleLogin(e) {
       e.preventDefault();
-      const telefono = document.getElementById('loginTelefono').value.trim();
+      const telefonoInput = document.getElementById('loginTelefono').value.trim();
       const pin = parseInt(document.getElementById('loginPin').value);
 
-      if (!telefono || !pin) return;
+      if (!telefonoInput || !pin) return;
 
       document.getElementById('btnLogin').disabled = true;
       document.getElementById('loginError').style.display = 'none';
 
+      // Normalize phone for comparison
+      const telefonoNorm = FoundersConfig.normalizePhone(telefonoInput);
+
       try {
-        const data = await FoundersConfig.get('founders_meetup', `telefono=eq.${telefono}&pin=eq.${pin}&select=*`);
+        // Search by PIN first, then compare normalized phones
+        const data = await FoundersConfig.get('founders_meetup', `pin=eq.${pin}&select=*`);
 
         if (!data || data.length === 0) {
           document.getElementById('loginError').style.display = 'block';
@@ -274,7 +312,16 @@
           return;
         }
 
-        currentUser = data[0];
+        // Find user with matching normalized phone
+        const user = data.find(u => FoundersConfig.normalizePhone(u.telefono) === telefonoNorm);
+
+        if (!user) {
+          document.getElementById('loginError').style.display = 'block';
+          document.getElementById('btnLogin').disabled = false;
+          return;
+        }
+
+        currentUser = user;
         FoundersConfig.setCurrentUserId(currentUser.id);
         await loadUserData();
         showApp();
@@ -476,11 +523,19 @@
       // Basic info
       document.getElementById('editNombre').value = currentUser.nombre || '';
       document.getElementById('editCiudad').value = currentUser.ciudad || '';
+      document.getElementById('editBio').value = currentUser.bio || '';
       document.getElementById('editEmail').value = currentUser.email || '';
+
+      // Social links
+      document.getElementById('editInstagram').value = currentUser.instagram || '';
+      document.getElementById('editTwitter').value = currentUser.twitter || '';
+      document.getElementById('editTiktok').value = currentUser.tiktok || '';
       document.getElementById('editLinkedin').value = currentUser.linkedin || '';
+      document.getElementById('editWebsite').value = currentUser.website || '';
 
       // Toggles
       document.getElementById('togglePhone').classList.toggle('active', currentUser.telefono_publico);
+      document.getElementById('togglePermiso').classList.toggle('active', currentUser.requiere_permiso);
       document.getElementById('toggleVisible').classList.toggle('active', currentUser.visible_en_directorio);
 
       // Projects
@@ -561,9 +616,15 @@
         const userData = {
           nombre: document.getElementById('editNombre').value.trim(),
           ciudad: document.getElementById('editCiudad').value.trim(),
+          bio: document.getElementById('editBio').value.trim() || null,
           email: document.getElementById('editEmail').value.trim() || null,
+          instagram: document.getElementById('editInstagram').value.trim() || null,
+          twitter: document.getElementById('editTwitter').value.trim() || null,
+          tiktok: document.getElementById('editTiktok').value.trim() || null,
           linkedin: document.getElementById('editLinkedin').value.trim() || null,
+          website: document.getElementById('editWebsite').value.trim() || null,
           telefono_publico: document.getElementById('togglePhone').classList.contains('active'),
+          requiere_permiso: document.getElementById('togglePermiso').classList.contains('active'),
           visible_en_directorio: document.getElementById('toggleVisible').classList.contains('active')
         };
 

@@ -797,10 +797,10 @@
       e.preventDefault();
       loginError.classList.remove('visible');
 
-      const telefono = document.getElementById('loginTelefono').value.trim();
+      const telefonoInput = document.getElementById('loginTelefono').value.trim();
       const pin = parseInt(document.getElementById('loginPin').value);
 
-      if (!telefono || !pin || pin < 1000 || pin > 9999) {
+      if (!telefonoInput || !pin || pin < 1000 || pin > 9999) {
         loginError.textContent = 'Por favor ingresa datos válidos';
         loginError.classList.add('visible');
         return;
@@ -808,13 +808,24 @@
 
       document.getElementById('btnLogin').disabled = true;
 
-      // Try to find user by phone
-      const { data, error } = await db
+      // Normalize phone for comparison
+      const normalizePhone = (phone) => {
+        if (!phone) return '';
+        let clean = phone.replace(/\D/g, '');
+        if (clean.startsWith('52') && clean.length === 12) clean = clean.slice(2);
+        if (clean.startsWith('1') && clean.length === 11) clean = clean.slice(1);
+        return clean;
+      };
+
+      const telefonoNorm = normalizePhone(telefonoInput);
+
+      // Search by PIN first, then compare normalized phones
+      const { data: users, error } = await db
         .from('founders_meetup')
         .select('*')
-        .eq('telefono', telefono)
-        .eq('pin', pin)
-        .single();
+        .eq('pin', pin);
+
+      const data = users ? users.find(u => normalizePhone(u.telefono) === telefonoNorm) : null;
 
       if (error || !data) {
         loginError.textContent = 'Datos incorrectos. ¿Ya te registraste en el evento?';
