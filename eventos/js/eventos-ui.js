@@ -801,8 +801,6 @@ const EventosUI = {
 
   // Confirm cancellation
   confirmCancel() {
-    console.log('confirmCancel called');
-    alert('¿Confirmar cancelación?');
     const body = document.getElementById('modal-body');
     const footer = document.getElementById('modal-footer');
 
@@ -830,9 +828,6 @@ const EventosUI = {
 
   // Cancel reservation
   async cancelReservation() {
-    console.log('cancelReservation called');
-    alert('Iniciando cancelación...');
-
     const footer = document.getElementById('modal-footer');
     footer.innerHTML = `
       <button class="modal-btn modal-btn-primary" disabled style="flex: 1;">
@@ -841,11 +836,8 @@ const EventosUI = {
     `;
 
     try {
-      console.log('Attempting to cancel reservation:', this.existingReservation);
       const numBoletos = this.existingReservation.num_boletos;
-      const result = await EventosReserva.cancelReservation(this.existingReservation.id, numBoletos);
-      console.log('Cancel result:', result);
-      alert('Cancelación exitosa');
+      await EventosReserva.cancelReservation(this.existingReservation.id, numBoletos);
       this.existingReservation = null;
       this.updatePageSpots();
 

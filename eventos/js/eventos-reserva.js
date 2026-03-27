@@ -191,16 +191,12 @@ const EventosReserva = {
       throw new Error('Debes iniciar sesión primero.');
     }
 
-    console.log('Cancelling reservation:', reservaId);
-
     // Update reservation status
-    const result = await EventosConfig.patch(
+    await EventosConfig.patch(
       'reservas_eventos',
       `id=eq.${reservaId}`,
       { estado: 'cancelada' }
     );
-
-    console.log('Patch result:', result);
 
     // Restore available spots
     if (this.currentEvento && numBoletos) {
