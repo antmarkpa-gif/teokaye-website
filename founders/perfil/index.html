@@ -177,7 +177,7 @@
         // WhatsApp button
         const waBtn = document.getElementById('btnWhatsApp');
         waBtn.style.display = 'flex';
-        waBtn.href = `https://wa.me/52${currentFounder.telefono.replace(/\D/g, '')}`;
+        waBtn.href = `https://wa.me/${FoundersConfig.formatPhoneWhatsApp(currentFounder.telefono)}`;
       }
 
       // Projects

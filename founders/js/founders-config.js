@@ -101,10 +101,28 @@ const FoundersConfig = {
   formatPhone(phone) {
     if (!phone) return '';
     const clean = phone.replace(/\D/g, '');
-    if (clean.length === 10) {
-      return `${clean.slice(0, 3)} ${clean.slice(3, 6)} ${clean.slice(6)}`;
+    // Remove 52 prefix if present
+    const digits = clean.startsWith('52') && clean.length > 10 ? clean.slice(2) : clean;
+    if (digits.length === 10) {
+      return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6)}`;
     }
     return phone;
+  },
+
+  // Format phone for WhatsApp (returns full number with country code)
+  formatPhoneWhatsApp(phone) {
+    if (!phone) return '';
+    const clean = phone.replace(/\D/g, '');
+    // If already has 52 prefix and is 12 digits, use as-is
+    if (clean.startsWith('52') && clean.length === 12) {
+      return clean;
+    }
+    // If 10 digits, add 52 prefix
+    if (clean.length === 10) {
+      return `52${clean}`;
+    }
+    // Otherwise return cleaned number
+    return clean;
   },
 
   // Get profile URL

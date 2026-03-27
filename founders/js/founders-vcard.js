@@ -14,8 +14,8 @@ const FoundersVCard = {
 
     // Phone (if public)
     if (founder.telefono_publico && founder.telefono) {
-      const phone = founder.telefono.replace(/\D/g, '');
-      lines.push(`TEL;TYPE=CELL:+52${phone}`);
+      const phone = FoundersConfig.formatPhoneWhatsApp(founder.telefono);
+      lines.push(`TEL;TYPE=CELL:+${phone}`);
     }
 
     // Email

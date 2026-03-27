@@ -572,13 +572,46 @@
         // Update local state
         Object.assign(currentUser, userData);
 
-        // Handle projects (simplified - just update first one for legacy support)
-        if (currentProjects.length > 0 && currentProjects[0].id === 'legacy') {
-          await FoundersConfig.patch('founders_meetup', `id=eq.${currentUser.id}`, {
-            proyecto: currentProjects[0].nombre,
-            descripcion_proyecto: currentProjects[0].descripcion,
-            etapa: currentProjects[0].etapa
-          });
+        // Handle projects
+        for (let i = 0; i < currentProjects.length; i++) {
+          const project = currentProjects[i];
+
+          // Skip empty projects
+          if (!project.nombre || !project.nombre.trim()) continue;
+
+          if (project.id === 'legacy') {
+            // Update legacy project in founders_meetup
+            await FoundersConfig.patch('founders_meetup', `id=eq.${currentUser.id}`, {
+              proyecto: project.nombre,
+              descripcion_proyecto: project.descripcion,
+              etapa: project.etapa
+            });
+          } else if (project.isNew) {
+            // Insert new project
+            const result = await FoundersConfig.post('founders_proyectos', {
+              founder_id: currentUser.id,
+              nombre: project.nombre,
+              descripcion: project.descripcion || null,
+              etapa: project.etapa || 'idea',
+              url: project.url || null,
+              orden: i
+            });
+            // Update local project with new ID
+            if (result && result[0]) {
+              project.id = result[0].id;
+              delete project.isNew;
+            }
+          } else if (project.isDirty && project.id) {
+            // Update existing project
+            await FoundersConfig.patch('founders_proyectos', `id=eq.${project.id}`, {
+              nombre: project.nombre,
+              descripcion: project.descripcion || null,
+              etapa: project.etapa,
+              url: project.url || null,
+              orden: i
+            });
+            delete project.isDirty;
+          }
         }
 
         // Refresh profile
