@@ -121,6 +121,10 @@
             <input type="text" id="editInstagram" placeholder="@tu_usuario">
           </div>
           <div class="form-group">
+            <label for="editFacebook">Facebook</label>
+            <input type="text" id="editFacebook" placeholder="tu.pagina o URL">
+          </div>
+          <div class="form-group">
             <label for="editTwitter">X / Twitter</label>
             <input type="text" id="editTwitter" placeholder="@tu_usuario">
           </div>
@@ -131,6 +135,10 @@
           <div class="form-group">
             <label for="editLinkedin">LinkedIn</label>
             <input type="text" id="editLinkedin" placeholder="tu-perfil o URL completa">
+          </div>
+          <div class="form-group">
+            <label for="editYoutube">YouTube</label>
+            <input type="text" id="editYoutube" placeholder="@canal o URL">
           </div>
           <div class="form-group">
             <label for="editWebsite">Sitio web</label>
@@ -528,9 +536,11 @@
 
       // Social links
       document.getElementById('editInstagram').value = currentUser.instagram || '';
+      document.getElementById('editFacebook').value = currentUser.facebook || '';
       document.getElementById('editTwitter').value = currentUser.twitter || '';
       document.getElementById('editTiktok').value = currentUser.tiktok || '';
       document.getElementById('editLinkedin').value = currentUser.linkedin || '';
+      document.getElementById('editYoutube').value = currentUser.youtube || '';
       document.getElementById('editWebsite').value = currentUser.website || '';
 
       // Toggles
@@ -619,9 +629,11 @@
           bio: document.getElementById('editBio').value.trim() || null,
           email: document.getElementById('editEmail').value.trim() || null,
           instagram: document.getElementById('editInstagram').value.trim() || null,
+          facebook: document.getElementById('editFacebook').value.trim() || null,
           twitter: document.getElementById('editTwitter').value.trim() || null,
           tiktok: document.getElementById('editTiktok').value.trim() || null,
           linkedin: document.getElementById('editLinkedin').value.trim() || null,
+          youtube: document.getElementById('editYoutube').value.trim() || null,
           website: document.getElementById('editWebsite').value.trim() || null,
           telefono_publico: document.getElementById('togglePhone').classList.contains('active'),
           requiere_permiso: document.getElementById('togglePermiso').classList.contains('active'),
