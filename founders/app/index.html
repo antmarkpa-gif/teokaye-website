@@ -141,7 +141,7 @@
             <input type="text" id="editYoutube" placeholder="@canal o URL">
           </div>
           <div class="form-group">
-            <label for="editWebsite">Sitio web</label>
+            <label for="editWebsite">Web personal</label>
             <input type="url" id="editWebsite" placeholder="https://tusitio.com">
           </div>
         </div>
@@ -149,23 +149,30 @@
         <!-- Privacy -->
         <div class="edit-section">
           <h2 class="edit-section-title">Privacidad</h2>
+
           <div class="toggle-row">
-            <span class="toggle-label">Mostrar mi telefono publicamente</span>
-            <div class="toggle-switch" id="togglePhone"></div>
+            <div>
+              <span class="toggle-label">Contacto privado</span>
+              <p class="toggle-hint" style="margin-top:0.25rem;">Deben solicitar permiso para ver tu numero, enviarte WhatsApp, y agregarte a contactos.</p>
+            </div>
+            <div class="toggle-switch" id="toggleContactoPrivado"></div>
           </div>
-          <p class="toggle-hint">Si esta activo, cualquiera podra ver tu numero y contactarte.</p>
 
-          <div class="toggle-row" style="margin-top:1rem;">
-            <span class="toggle-label">Requerir permiso para contacto</span>
-            <div class="toggle-switch" id="togglePermiso"></div>
+          <div class="toggle-row" style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--gray-light);">
+            <div>
+              <span class="toggle-label">Redes sociales privadas</span>
+              <p class="toggle-hint" style="margin-top:0.25rem;">Deben solicitar permiso para ver tus redes sociales y links.</p>
+            </div>
+            <div class="toggle-switch" id="toggleRedesPrivadas"></div>
           </div>
-          <p class="toggle-hint">Si esta activo, otros deben solicitar tu permiso antes de ver tu contacto.</p>
 
-          <div class="toggle-row" style="margin-top:1rem;">
-            <span class="toggle-label">Aparecer en el directorio</span>
+          <div class="toggle-row" style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--gray-light);">
+            <div>
+              <span class="toggle-label">Aparecer en directorio</span>
+              <p class="toggle-hint" style="margin-top:0.25rem;">Otros founders pueden encontrarte en el directorio.</p>
+            </div>
             <div class="toggle-switch" id="toggleVisible"></div>
           </div>
-          <p class="toggle-hint">Si esta activo, otros founders pueden encontrarte en el directorio.</p>
         </div>
 
         <!-- Projects -->
@@ -263,10 +270,10 @@
       });
 
       // Toggle switches
-      document.getElementById('togglePhone').addEventListener('click', function() {
+      document.getElementById('toggleContactoPrivado').addEventListener('click', function() {
         this.classList.toggle('active');
       });
-      document.getElementById('togglePermiso').addEventListener('click', function() {
+      document.getElementById('toggleRedesPrivadas').addEventListener('click', function() {
         this.classList.toggle('active');
       });
       document.getElementById('toggleVisible').addEventListener('click', function() {
@@ -544,8 +551,8 @@
       document.getElementById('editWebsite').value = currentUser.website || '';
 
       // Toggles
-      document.getElementById('togglePhone').classList.toggle('active', currentUser.telefono_publico);
-      document.getElementById('togglePermiso').classList.toggle('active', currentUser.requiere_permiso);
+      document.getElementById('toggleContactoPrivado').classList.toggle('active', currentUser.contacto_privado);
+      document.getElementById('toggleRedesPrivadas').classList.toggle('active', currentUser.redes_privadas);
       document.getElementById('toggleVisible').classList.toggle('active', currentUser.visible_en_directorio);
 
       // Projects
@@ -635,8 +642,8 @@
           linkedin: document.getElementById('editLinkedin').value.trim() || null,
           youtube: document.getElementById('editYoutube').value.trim() || null,
           website: document.getElementById('editWebsite').value.trim() || null,
-          telefono_publico: document.getElementById('togglePhone').classList.contains('active'),
-          requiere_permiso: document.getElementById('togglePermiso').classList.contains('active'),
+          contacto_privado: document.getElementById('toggleContactoPrivado').classList.contains('active'),
+          redes_privadas: document.getElementById('toggleRedesPrivadas').classList.contains('active'),
           visible_en_directorio: document.getElementById('toggleVisible').classList.contains('active')
         };
 
