@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservas - Founders Meetup Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #E6E0D6;
+      --text: #1E1B18;
+      --text-light: #4A4540;
+      --accent: #B8826B;
+      --accent-dark: #461D14;
+      --white: #FFFCF8;
+      --gray-light: #F0EDE8;
+      --green-success: #4A7C59;
+      --red: #DC2626;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--accent-dark);
+      margin-bottom: 4px;
+    }
+
+    .logo span {
+      color: var(--accent);
+      font-weight: 400;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    /* Login */
+    .login-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 400px;
+      margin: 60px auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    .login-title {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      font-family: inherit;
+      font-size: 1rem;
+      color: var(--text);
+      background: var(--gray-light);
+      border: 2px solid transparent;
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: var(--white);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      background: var(--accent-dark);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--text);
+    }
+
+    .error {
+      background: #FEE2E2;
+      color: #991B1B;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    /* Dashboard */
+    .dashboard {
+      display: none;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .stat-number {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--accent-dark);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+    }
+
+    /* Event Info */
+    .event-info {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .event-title {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .event-date {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* Table */
+    .table-container {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .table-header {
+      padding: 16px 20px;
+      background: var(--gray-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .table-title {
+      font-weight: 600;
+    }
+
+    .refresh-btn {
+      padding: 8px 16px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent-dark);
+      background: var(--white);
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .refresh-btn:hover {
+      background: var(--accent);
+      color: var(--white);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 14px 20px;
+      text-align: left;
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    th {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+      background: var(--gray-light);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(184,130,107,0.05);
+    }
+
+    .lugares-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .phone-link {
+      color: var(--accent-dark);
+      text-decoration: none;
+    }
+
+    .phone-link:hover {
+      text-decoration: underline;
+    }
+
+    .fecha-reserva {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .empty-state {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--text-light);
+    }
+
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      fill: var(--accent);
+      opacity: 0.5;
+      margin-bottom: 16px;
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 40px;
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--gray-light);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      th, td {
+        padding: 12px 14px;
+        font-size: 0.9rem;
+      }
+
+      .hide-mobile {
+        display: none;
+      }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">Teokaye <span>Founders</span></div>
+      <p class="subtitle">Panel de Reservas</p>
+    </header>
+
+    <!-- Login -->
+    <div class="login-card" id="loginCard">
+      <h1 class="login-title">Acceso Admin</h1>
+      <div class="error" id="loginError">PIN incorrecto</div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label">PIN de acceso</label>
+          <input type="password" id="pinInput" class="form-input" placeholder="****" maxlength="4" pattern="[0-9]{4}" required>
+        </div>
+        <button type="submit" class="btn">Entrar</button>
+      </form>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="totalReservas">0</div>
+          <div class="stat-label">Reservas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="totalLugares">0</div>
+          <div class="stat-label">Lugares</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="totalPersonas">0</div>
+          <div class="stat-label">Personas</div>
+        </div>
+      </div>
+
+      <!-- Event Info -->
+      <div class="event-info">
+        <div>
+          <div class="event-title" id="eventoTitulo">Founders Meetup</div>
+          <div class="event-date" id="eventoFecha">Cargando...</div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-container">
+        <div class="table-header">
+          <span class="table-title">Reservas</span>
+          <button class="refresh-btn" onclick="loadReservas()">Actualizar</button>
+        </div>
+
+        <div class="loading" id="loadingState">
+          <div class="spinner"></div>
+        </div>
+
+        <div class="empty-state hidden" id="emptyState">
+          <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
+          <p>No hay reservas todavía</p>
+        </div>
+
+        <table id="reservasTable" class="hidden">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>WhatsApp</th>
+              <th>Lugares</th>
+              <th class="hide-mobile">Fecha</th>
+            </tr>
+          </thead>
+          <tbody id="reservasBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/founders-config.js"></script>
+  <script>
+    // Admin PIN (simple, puedes cambiarlo)
+    const ADMIN_PIN = '2835';
+
+    // State
+    let currentEvent = null;
+
+    // DOM
+    const loginCard = document.getElementById('loginCard');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+    const pinInput = document.getElementById('pinInput');
+    const dashboard = document.getElementById('dashboard');
+    const loadingState = document.getElementById('loadingState');
+    const emptyState = document.getElementById('emptyState');
+    const reservasTable = document.getElementById('reservasTable');
+    const reservasBody = document.getElementById('reservasBody');
+
+    // Check if already logged in
+    if (sessionStorage.getItem('admin_auth') === 'true') {
+      showDashboard();
+    }
+
+    // Login
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const pin = pinInput.value;
+
+      if (pin === ADMIN_PIN) {
+        sessionStorage.setItem('admin_auth', 'true');
+        showDashboard();
+      } else {
+        loginError.style.display = 'block';
+        pinInput.value = '';
+        pinInput.focus();
+      }
+    });
+
+    function showDashboard() {
+      loginCard.style.display = 'none';
+      dashboard.style.display = 'block';
+      loadEvent();
+    }
+
+    // Load event
+    async function loadEvent() {
+      try {
+        const events = await FoundersConfig.get('founders_eventos', 'activo=eq.true&order=fecha.asc&limit=1');
+
+        if (events && events.length > 0) {
+          currentEvent = events[0];
+          document.getElementById('eventoTitulo').textContent = currentEvent.titulo;
+          document.getElementById('eventoFecha').textContent = formatDate(currentEvent.fecha) + ' - ' + formatTime(currentEvent.hora);
+          loadReservas();
+        }
+      } catch (error) {
+        console.error('Error loading event:', error);
+      }
+    }
+
+    // Load reservas
+    async function loadReservas() {
+      if (!currentEvent) return;
+
+      loadingState.classList.remove('hidden');
+      emptyState.classList.add('hidden');
+      reservasTable.classList.add('hidden');
+
+      try {
+        const reservas = await FoundersConfig.get('founders_reservas', `evento_id=eq.${currentEvent.id}&order=created_at.desc`);
+
+        if (!reservas || reservas.length === 0) {
+          loadingState.classList.add('hidden');
+          emptyState.classList.remove('hidden');
+          updateStats(0, 0);
+          return;
+        }
+
+        // Update stats
+        const totalLugares = reservas.reduce((sum, r) => sum + (r.num_lugares || 1), 0);
+        updateStats(reservas.length, totalLugares);
+
+        // Render table
+        renderTable(reservas);
+
+        loadingState.classList.add('hidden');
+        reservasTable.classList.remove('hidden');
+      } catch (error) {
+        console.error('Error loading reservas:', error);
+        loadingState.classList.add('hidden');
+      }
+    }
+
+    function updateStats(reservas, lugares) {
+      document.getElementById('totalReservas').textContent = reservas;
+      document.getElementById('totalLugares').textContent = lugares;
+      document.getElementById('totalPersonas').textContent = lugares;
+    }
+
+    function renderTable(reservas) {
+      reservasBody.innerHTML = reservas.map(r => `
+        <tr>
+          <td><strong>${escapeHtml(r.nombre)}</strong></td>
+          <td>
+            <a href="https://wa.me/52${r.telefono}" target="_blank" class="phone-link">
+              ${formatPhone(r.telefono)}
+            </a>
+          </td>
+          <td><span class="lugares-badge">${r.num_lugares || 1}</span></td>
+          <td class="fecha-reserva hide-mobile">${formatDateTime(r.created_at)}</td>
+        </tr>
+      `).join('');
+    }
+
+    // Helpers
+    function formatDate(dateStr) {
+      const date = new Date(dateStr + 'T12:00:00');
+      const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+      const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+      return `${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]}`;
+    }
+
+    function formatTime(timeStr) {
+      const [hours, minutes] = timeStr.split(':');
+      const h = parseInt(hours);
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const hour12 = h > 12 ? h - 12 : (h === 0 ? 12 : h);
+      return `${hour12}:${minutes} ${ampm}`;
+    }
+
+    function formatDateTime(dateStr) {
+      const date = new Date(dateStr);
+      return `${date.getDate()}/${date.getMonth()+1} ${date.getHours()}:${String(date.getMinutes()).padStart(2,'0')}`;
+    }
+
+    function formatPhone(phone) {
+      if (!phone) return '';
+      const clean = phone.replace(/\D/g, '');
+      if (clean.length === 10) {
+        return `${clean.slice(0,3)} ${clean.slice(3,6)} ${clean.slice(6)}`;
+      }
+      return phone;
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>
