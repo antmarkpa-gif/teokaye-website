@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Founders Meetup - Teokaye</title>
+  <meta name="description" content="Reserva tu lugar en el próximo Founders Meetup. Un espacio para conocer y conversar entre personas construyendo algo.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Founders Meetup - Teokaye">
+  <meta property="og:description" content="Un espacio para conocer y conversar entre personas construyendo algo. Sin costo, sin consumo mínimo.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://teokaye.mx/founders/evento/">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico">
+
+  <style>
+    :root {
+      --bg: #E6E0D6;
+      --text: #1E1B18;
+      --accent: #B8826B;
+      --accent-dark: #461D14;
+      --white: #FFFCF8;
+      --gray-light: #F0EDE8;
+      --terra-light: rgba(184,130,107,0.15);
+      --green-success: #4A7C59;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .logo {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--accent-dark);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .logo-sub {
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* Event Card */
+    .event-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 32px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .event-badge {
+      display: inline-block;
+      background: var(--terra-light);
+      color: var(--accent-dark);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .event-title {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .event-tagline {
+      font-size: 1rem;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .event-details {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .event-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .event-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .event-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--accent);
+    }
+
+    .detail-content {
+      flex: 1;
+    }
+
+    .detail-label {
+      font-size: 0.75rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+
+    .detail-value {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* Description */
+    .event-description {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--gray-light);
+    }
+
+    .event-description p {
+      font-size: 0.95rem;
+      color: var(--text);
+      opacity: 0.85;
+    }
+
+    .highlight {
+      color: var(--accent-dark);
+      font-weight: 500;
+    }
+
+    /* Form Card */
+    .form-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 28px 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .form-title {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      font-family: inherit;
+      font-size: 1rem;
+      color: var(--text);
+      background: var(--gray-light);
+      border: 2px solid transparent;
+      border-radius: 12px;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: var(--white);
+    }
+
+    .form-input::placeholder {
+      color: var(--text);
+      opacity: 0.4;
+    }
+
+    /* Lugares selector */
+    .lugares-selector {
+      display: flex;
+      gap: 8px;
+    }
+
+    .lugar-btn {
+      flex: 1;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--gray-light);
+      border: 2px solid transparent;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lugar-btn:hover {
+      background: var(--terra-light);
+    }
+
+    .lugar-btn.active {
+      background: var(--accent);
+      color: var(--white);
+      border-color: var(--accent);
+    }
+
+    /* Submit button */
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      background: var(--accent-dark);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 8px;
+    }
+
+    .btn-submit:hover {
+      background: var(--text);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Success State */
+    .success-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 40px 24px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      display: none;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(74, 124, 89, 0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .success-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: var(--green-success);
+    }
+
+    .success-title {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1.75rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .success-message {
+      font-size: 1rem;
+      color: var(--text);
+      opacity: 0.8;
+      margin-bottom: 24px;
+    }
+
+    .success-details {
+      background: var(--gray-light);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .success-detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+    }
+
+    .success-detail-row:not(:last-child) {
+      border-bottom: 1px solid var(--bg);
+    }
+
+    .success-detail-label {
+      font-size: 0.85rem;
+      color: var(--accent);
+    }
+
+    .success-detail-value {
+      font-weight: 500;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      background: #25D366;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-whatsapp:hover {
+      background: #128C7E;
+    }
+
+    .btn-whatsapp svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--gray-light);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Error */
+    .error-message {
+      background: #FEE2E2;
+      color: #991B1B;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    /* No event */
+    .no-event {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .no-event-title {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+
+    .no-event-message {
+      color: var(--accent);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 32px;
+      padding-top: 24px;
+    }
+
+    .footer-text {
+      font-size: 0.8rem;
+      color: var(--accent);
+    }
+
+    .footer-link {
+      color: var(--accent-dark);
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Hide states */
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">Teokaye</div>
+      <div class="logo-sub">Founders</div>
+    </header>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="loading">
+      <div class="spinner"></div>
+      <p>Cargando evento...</p>
+    </div>
+
+    <!-- No Event State -->
+    <div id="noEventState" class="no-event hidden">
+      <h2 class="no-event-title">Sin eventos programados</h2>
+      <p class="no-event-message">Por el momento no hay eventos activos. Sigue nuestras redes para enterarte del próximo.</p>
+    </div>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="hidden">
+      <!-- Event Card -->
+      <div class="event-card">
+        <span class="event-badge">Evento gratuito</span>
+        <h1 class="event-title" id="eventoTitulo">Founders Meetup</h1>
+        <p class="event-tagline">Un espacio para quienes construyen algo</p>
+
+        <div class="event-details">
+          <div class="event-detail">
+            <div class="event-icon">
+              <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
+            </div>
+            <div class="detail-content">
+              <div class="detail-label">Fecha</div>
+              <div class="detail-value" id="eventoFecha">Miércoles, 1 de abril 2026</div>
+            </div>
+          </div>
+
+          <div class="event-detail">
+            <div class="event-icon">
+              <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+            </div>
+            <div class="detail-content">
+              <div class="detail-label">Hora</div>
+              <div class="detail-value" id="eventoHora">6:00 PM</div>
+            </div>
+          </div>
+
+          <div class="event-detail">
+            <div class="event-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <div class="detail-content">
+              <div class="detail-label">Lugar</div>
+              <div class="detail-value" id="eventoLugar">Teokaye, San Pedro Cholula</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-description">
+          <p id="eventoDescripcion">Un espacio para conocer y conversar entre personas construyendo algo. <span class="highlight">Sin costo, sin consumo mínimo.</span> Una iniciativa para fomentar la creación de una comunidad local de emprendedores.</p>
+        </div>
+      </div>
+
+      <!-- Reservation Form -->
+      <div class="form-card" id="formCard">
+        <h2 class="form-title">Reserva tu lugar</h2>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <form id="reservaForm">
+          <div class="form-group">
+            <label class="form-label" for="nombre">Tu nombre</label>
+            <input type="text" id="nombre" name="nombre" class="form-input" placeholder="Nombre completo" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="telefono">WhatsApp</label>
+            <input type="tel" id="telefono" name="telefono" class="form-input" placeholder="10 dígitos" required pattern="[0-9]{10}" maxlength="10">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Lugares a reservar</label>
+            <div class="lugares-selector">
+              <button type="button" class="lugar-btn active" data-lugares="1">1</button>
+              <button type="button" class="lugar-btn" data-lugares="2">2</button>
+              <button type="button" class="lugar-btn" data-lugares="3">3</button>
+              <button type="button" class="lugar-btn" data-lugares="4">4</button>
+              <button type="button" class="lugar-btn" data-lugares="5">5+</button>
+            </div>
+            <input type="hidden" id="numLugares" name="num_lugares" value="1">
+          </div>
+
+          <button type="submit" class="btn-submit" id="submitBtn">Reservar lugar</button>
+        </form>
+      </div>
+
+      <!-- Success State -->
+      <div class="success-card" id="successCard">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <h2 class="success-title">Lugar reservado</h2>
+        <p class="success-message">Te esperamos el día del evento. Puedes llegar desde las 5:30 PM.</p>
+
+        <div class="success-details">
+          <div class="success-detail-row">
+            <span class="success-detail-label">Nombre</span>
+            <span class="success-detail-value" id="confirmNombre"></span>
+          </div>
+          <div class="success-detail-row">
+            <span class="success-detail-label">Lugares</span>
+            <span class="success-detail-value" id="confirmLugares"></span>
+          </div>
+          <div class="success-detail-row">
+            <span class="success-detail-label">Fecha</span>
+            <span class="success-detail-value" id="confirmFecha"></span>
+          </div>
+        </div>
+
+        <a href="#" class="btn-whatsapp" id="whatsappBtn" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Confirmar por WhatsApp
+        </a>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p class="footer-text">
+        <a href="https://teokaye.mx" class="footer-link">teokaye.mx</a> · Av. 6 Ote. 402A, Cholula
+      </p>
+    </footer>
+  </div>
+
+  <script src="../js/founders-config.js"></script>
+  <script>
+    // State
+    let currentEvent = null;
+    let selectedLugares = 1;
+
+    // DOM Elements
+    const loadingState = document.getElementById('loadingState');
+    const noEventState = document.getElementById('noEventState');
+    const mainContent = document.getElementById('mainContent');
+    const formCard = document.getElementById('formCard');
+    const successCard = document.getElementById('successCard');
+    const reservaForm = document.getElementById('reservaForm');
+    const errorMessage = document.getElementById('errorMessage');
+    const submitBtn = document.getElementById('submitBtn');
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', init);
+
+    async function init() {
+      await loadActiveEvent();
+      setupLugaresSelector();
+      setupForm();
+    }
+
+    // Load active event
+    async function loadActiveEvent() {
+      try {
+        const events = await FoundersConfig.get('founders_eventos', 'activo=eq.true&order=fecha.asc&limit=1');
+
+        if (!events || events.length === 0) {
+          showNoEvent();
+          return;
+        }
+
+        currentEvent = events[0];
+        displayEvent(currentEvent);
+        showMainContent();
+      } catch (error) {
+        console.error('Error loading event:', error);
+        showNoEvent();
+      }
+    }
+
+    // Display event info
+    function displayEvent(event) {
+      document.getElementById('eventoTitulo').textContent = event.titulo;
+      document.getElementById('eventoFecha').textContent = formatDate(event.fecha);
+      document.getElementById('eventoHora').textContent = formatTime(event.hora);
+      document.getElementById('eventoLugar').textContent = event.lugar || 'Teokaye, San Pedro Cholula';
+
+      if (event.descripcion) {
+        document.getElementById('eventoDescripcion').innerHTML = event.descripcion;
+      }
+    }
+
+    // Format date
+    function formatDate(dateStr) {
+      const date = new Date(dateStr + 'T12:00:00');
+      const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+      const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+      return `${days[date.getDay()]}, ${date.getDate()} de ${months[date.getMonth()]} ${date.getFullYear()}`;
+    }
+
+    // Format time
+    function formatTime(timeStr) {
+      const [hours, minutes] = timeStr.split(':');
+      const h = parseInt(hours);
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const hour12 = h > 12 ? h - 12 : (h === 0 ? 12 : h);
+      return `${hour12}:${minutes} ${ampm}`;
+    }
+
+    // Setup lugares selector
+    function setupLugaresSelector() {
+      const buttons = document.querySelectorAll('.lugar-btn');
+      const hiddenInput = document.getElementById('numLugares');
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedLugares = parseInt(btn.dataset.lugares);
+          hiddenInput.value = selectedLugares;
+        });
+      });
+    }
+
+    // Setup form
+    function setupForm() {
+      const telefonoInput = document.getElementById('telefono');
+
+      // Only allow numbers in phone field
+      telefonoInput.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10);
+      });
+
+      reservaForm.addEventListener('submit', handleSubmit);
+    }
+
+    // Handle form submit
+    async function handleSubmit(e) {
+      e.preventDefault();
+
+      const nombre = document.getElementById('nombre').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+
+      // Validate
+      if (!nombre || !telefono) {
+        showError('Por favor completa todos los campos');
+        return;
+      }
+
+      if (telefono.length !== 10) {
+        showError('El teléfono debe tener 10 dígitos');
+        return;
+      }
+
+      // Disable button
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Reservando...';
+      hideError();
+
+      try {
+        // Create reservation
+        const reserva = {
+          evento_id: currentEvent.id,
+          nombre: nombre,
+          telefono: telefono,
+          num_lugares: selectedLugares
+        };
+
+        await FoundersConfig.post('founders_reservas', reserva);
+
+        // Show success
+        showSuccess(nombre, selectedLugares, telefono);
+      } catch (error) {
+        console.error('Error creating reservation:', error);
+        showError('Hubo un error al reservar. Por favor intenta de nuevo.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Reservar lugar';
+      }
+    }
+
+    // Show success state
+    function showSuccess(nombre, lugares, telefono) {
+      document.getElementById('confirmNombre').textContent = nombre;
+      document.getElementById('confirmLugares').textContent = lugares === 1 ? '1 persona' : `${lugares} personas`;
+      document.getElementById('confirmFecha').textContent = formatDate(currentEvent.fecha);
+
+      // WhatsApp link
+      const message = `Hola, reservé ${lugares} lugar${lugares > 1 ? 'es' : ''} para el Founders Meetup del ${formatDate(currentEvent.fecha)}. Mi nombre es ${nombre}.`;
+      const whatsappUrl = `https://wa.me/522213628681?text=${encodeURIComponent(message)}`;
+      document.getElementById('whatsappBtn').href = whatsappUrl;
+
+      formCard.classList.add('hidden');
+      successCard.style.display = 'block';
+    }
+
+    // Show/hide states
+    function showMainContent() {
+      loadingState.classList.add('hidden');
+      noEventState.classList.add('hidden');
+      mainContent.classList.remove('hidden');
+    }
+
+    function showNoEvent() {
+      loadingState.classList.add('hidden');
+      mainContent.classList.add('hidden');
+      noEventState.classList.remove('hidden');
+    }
+
+    function showError(msg) {
+      errorMessage.textContent = msg;
+      errorMessage.style.display = 'block';
+    }
+
+    function hideError() {
+      errorMessage.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
