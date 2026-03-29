@@ -904,6 +904,91 @@
       margin-right: 4px;
     }
 
+    /* Commitment box */
+    .commitment-box {
+      background: linear-gradient(135deg, #FEF3E7 0%, #FDE8D7 100%);
+      border: 2px solid var(--accent);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 20px;
+      margin-top: 8px;
+    }
+
+    .commitment-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent-dark);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+
+    .commitment-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .commitment-label input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .commitment-checkbox {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      background: var(--white);
+      border: 2px solid var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      margin-top: 2px;
+    }
+
+    .commitment-checkbox::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='%23fff' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") center/contain no-repeat;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.2s;
+    }
+
+    .commitment-label input[type="checkbox"]:checked + .commitment-checkbox {
+      background: var(--accent-dark);
+      border-color: var(--accent-dark);
+    }
+
+    .commitment-label input[type="checkbox"]:checked + .commitment-checkbox::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .commitment-label:hover .commitment-checkbox {
+      border-color: var(--accent-dark);
+      box-shadow: 0 0 0 3px var(--terra-light);
+    }
+
+    .commitment-text {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .commitment-text strong {
+      color: var(--accent-dark);
+    }
+
     /* Error message */
     .error-message {
       background: #FEE2E2;
@@ -1495,6 +1580,21 @@
               <input type="hidden" id="numLugares" name="num_lugares" value="1">
             </div>
 
+            <!-- Commitment checkbox -->
+            <div class="commitment-box">
+              <div class="commitment-header">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                <span>Lugares limitados</span>
+              </div>
+              <label class="commitment-label">
+                <input type="checkbox" id="confirmoAsistencia" required>
+                <span class="commitment-checkbox"></span>
+                <span class="commitment-text">
+                  <strong>Confirmo que voy a asistir.</strong> Entiendo que al reservar y no presentarme, le quito el lugar a alguien que sí hubiera podido ir.
+                </span>
+              </label>
+            </div>
+
             <button type="submit" class="btn-submit" id="submitBtn">Reservar mi lugar</button>
 
             <p class="form-note">
@@ -1791,6 +1891,12 @@
 
       if (telefono.length !== 10) {
         showError('El teléfono debe tener 10 dígitos');
+        return;
+      }
+
+      const confirmoAsistencia = document.getElementById('confirmoAsistencia').checked;
+      if (!confirmoAsistencia) {
+        showError('Por favor confirma que vas a asistir al evento');
         return;
       }
 
