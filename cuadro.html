@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cuadro Monumental · Xurabe — Chaquira e Hilo sobre Cera · Galería Teokaye</title>
-<meta name="description" content="Cuadro de 1.5m × 1m creado con chaquira e hilo sobre cera. 15 meses de trabajo, 4 artistas. Pieza única. Disponible en Galería Teokaye, San Pedro Cholula.">
+<title>El Centro del Universo · Xurabe — Chaquira e Hilo sobre Cera · Galería Teokaye</title>
+<meta name="description" content="El Centro del Universo. Cuadro de 1.5m × 1m con simbología de la Cosmovisión Nayeri. Técnica: Chaquira e hilo sobre cera. Más de 4,500 horas de trabajo. Pieza única por Xurabe.">
 <link rel="icon" type="image/png" href="favicon.png">
 
 <!-- META PIXEL -->
@@ -76,13 +76,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
   font-size:clamp(14px,2.5vw,17px);color:rgba(230,224,214,0.75);
   max-width:560px;margin-bottom:32px;position:relative;line-height:1.7;
 }
-.hero-video-wrap{
-  width:100%;max-width:640px;margin:0 auto 32px;position:relative;
+.hero-img-wrap{
+  width:100%;max-width:700px;margin:0 auto 32px;position:relative;
   border-radius:8px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.6);
   background:#1E1B18;
 }
-.hero-video-wrap video{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;}
-.hero-video-wrap img{width:100%;display:block;border-radius:8px;}
+.hero-img-wrap img{width:100%;display:block;border-radius:8px;}
 .hero-price{
   font-family:'DM Serif Display',serif;font-size:clamp(22px,4.5vw,32px);
   color:white;margin-bottom:8px;position:relative;
@@ -113,10 +112,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
 /* SECTIONS */
 .section{padding:64px 24px;max-width:800px;margin:0 auto;}
 .section-alt{background:var(--card);}
-.section-dark{background:linear-gradient(135deg,var(--deep),#6B2A1F);color:var(--sand);}
-.section-dark .sec-eyebrow{color:var(--terra);}
-.section-dark .sec-title{color:white;}
-.section-dark .sec-body{color:rgba(230,224,214,0.8);}
 
 /* SECTION TITLES */
 .sec-eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--terra);margin-bottom:8px;}
@@ -132,67 +127,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
 .spec-val{font-family:'DM Serif Display',serif;font-size:22px;color:var(--deep);}
 .spec-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:3px;}
 
-/* PROCESO */
-.proceso-steps{display:flex;flex-direction:column;gap:0;}
-.paso{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--border);}
-.paso:last-child{border-bottom:none;}
-.section-dark .paso{border-color:rgba(230,224,214,0.15);}
-.paso-num{
-  width:32px;height:32px;border-radius:50%;background:var(--deep);color:var(--sand);
-  font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;margin-top:2px;
-}
-.section-dark .paso-num{background:var(--terra);color:var(--deep);}
-.paso-content h4{font-size:15px;font-weight:600;margin-bottom:4px;color:var(--deep);}
-.section-dark .paso-content h4{color:white;}
-.paso-content p{font-size:14px;color:var(--muted);line-height:1.6;}
-.section-dark .paso-content p{color:rgba(230,224,214,0.7);}
-
-/* LECTURA / SIMBOLOS */
-.simbolos-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:24px;}
-.simbolo-item{
+/* INFO CARDS */
+.info-cards{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:24px;}
+.info-card{
   background:var(--card);border:1px solid var(--border);border-radius:10px;
-  padding:20px;display:flex;gap:16px;align-items:flex-start;
+  padding:20px;
 }
-.simbolo-icon{
-  width:48px;height:48px;border-radius:50%;background:var(--sand);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  font-size:20px;
-}
-.simbolo-content h4{font-size:15px;font-weight:600;color:var(--deep);margin-bottom:4px;}
-.simbolo-content p{font-size:13px;color:var(--muted);line-height:1.6;}
-
-/* ARTISTA */
-.artista-card{
-  display:flex;gap:20px;align-items:flex-start;
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:24px;margin-bottom:24px;
-}
-.artista-avatar{
-  width:80px;height:80px;border-radius:50%;background:var(--sand);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;
-}
-.artista-avatar img{width:100%;height:100%;object-fit:cover;}
-.artista-info h3{font-size:18px;font-weight:600;color:var(--deep);margin-bottom:6px;}
-.artista-info p{font-size:14px;color:var(--muted);line-height:1.6;}
-.artista-quote{
-  font-style:italic;font-size:16px;color:var(--deep);
-  border-left:3px solid var(--terra);padding-left:16px;margin-top:20px;line-height:1.7;
-}
-
-/* VIDEO SECTION */
-.video-section{background:var(--carbon);padding:64px 24px;}
-.video-wrap{max-width:800px;margin:0 auto;border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.5);}
-.video-wrap video{width:100%;display:block;}
-.video-caption{text-align:center;color:rgba(230,224,214,0.6);font-size:14px;margin-top:16px;font-style:italic;max-width:600px;margin-left:auto;margin-right:auto;}
-
-/* PARA QUIEN */
-.para-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
-.para-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;}
-.para-card h4{font-size:14px;font-weight:600;color:var(--deep);margin-bottom:10px;}
-.para-card ul{list-style:none;font-size:13px;color:var(--muted);}
-.para-card li{padding:5px 0;padding-left:20px;position:relative;}
-.para-card li::before{content:'•';position:absolute;left:0;color:var(--terra);}
+.info-card h4{font-size:14px;font-weight:600;color:var(--deep);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.info-card p{font-size:13px;color:var(--muted);line-height:1.6;}
 
 /* PRECIO */
 .precio-box{
@@ -254,28 +196,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
 .footer{background:var(--carbon);color:rgba(230,224,214,0.55);text-align:center;padding:28px 24px;font-size:12px;line-height:1.8;}
 .footer a{color:var(--terra);text-decoration:none;}
 
-/* HIGHLIGHT BOX */
-.highlight-box{
-  background:linear-gradient(135deg,var(--deep),#6B2A1F);
-  border-radius:14px;padding:28px;color:var(--sand);margin-bottom:24px;
-}
-.highlight-box h3{font-family:'DM Serif Display',serif;font-size:22px;color:white;margin-bottom:12px;}
-.highlight-box p{font-size:14px;line-height:1.7;opacity:.85;}
-.highlight-box ul{list-style:none;margin-top:16px;}
-.highlight-box li{padding:6px 0;font-size:14px;display:flex;align-items:center;gap:8px;}
-.highlight-box li svg{width:16px;height:16px;fill:var(--terra);flex-shrink:0;}
-
 @media(max-width:600px){
   .specs-grid{grid-template-columns:1fr 1fr;}
-  .para-grid{grid-template-columns:1fr;}
-  .artista-card{flex-direction:column;text-align:center;}
-  .artista-avatar{margin:0 auto;}
-  .artista-quote{text-align:left;}
   .hero-ctas{flex-direction:column;width:100%;padding:0 20px;}
   .hero-cta,.hero-cta-secondary{width:100%;justify-content:center;}
   .sticky-bar-txt strong{font-size:13px;}
-  .simbolo-item{flex-direction:column;text-align:center;}
-  .simbolo-icon{margin:0 auto;}
 }
 </style>
 </head>
@@ -285,43 +210,42 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
 
 <!-- BANNER -->
 <div class="urgency">
-  <strong>Pieza única</strong> · 1.5m × 1m · 15 meses de trabajo · Disponible en Galería Teokaye
+  <strong>Pieza única</strong> · Disponible en Galería Teokaye
 </div>
 
 <!-- HERO -->
 <section class="hero">
-  <p class="hero-eyebrow">Galería Teokaye · Arte de Nayarit</p>
-  <h1>Un año de trabajo. <em>Siglos</em> de tradición.</h1>
-  <p class="hero-sub">Cuadro de 1.5m × 1m creado con dos técnicas ancestrales: chaquira e hilo sobre cera. Cuatro artistas, 10 horas diarias durante 15 meses.</p>
+  <p class="hero-eyebrow">Xurabe · Galería Teokaye</p>
+  <h1><em>El Centro del Universo</em></h1>
+  <p class="hero-sub">Cuadro con simbología de la Cosmovisión Nayeri (Cora) de la sierra del Nayar, al noroeste del estado de Nayarit.</p>
 
-  <div class="hero-video-wrap">
-    <img src="images/cuadro-monumental-huichol.webp" alt="Cuadro Monumental Huichol - Arte de chaquira e hilo sobre cera" style="width:100%;display:block;">
+  <div class="hero-img-wrap">
+    <img src="images/cuadro-monumental-huichol.webp" alt="El Centro del Universo - Cuadro de chaquira e hilo sobre cera por Xurabe">
   </div>
 
-  <div class="hero-price">A partir de $180,000 MXN</div>
-  <div class="hero-price-sub">≈ $9,000 USD · Precio final según ubicación</div>
+  <div class="hero-price">$255,200 MXN</div>
+  <div class="hero-price-sub">IVA incluido · Envío gratis</div>
 
   <div class="hero-ctas">
-    <a href="https://wa.me/521221362861?text=Hola%2C%20me%20interesa%20el%20cuadro%20monumental%20de%20Xurabe%20%281.5m%20%C3%97%201m%29.%20%C2%BFEst%C3%A1%20disponible%3F" class="hero-cta" onclick="fbq('track','InitiateCheckout')">
+    <a href="https://wa.me/521221362861?text=Hola%2C%20me%20interesa%20el%20cuadro%20%22El%20Centro%20del%20Universo%22%20de%20Xurabe.%20%C2%BFEst%C3%A1%20disponible%3F" class="hero-cta" onclick="fbq('track','InitiateCheckout')">
       <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       Me interesa
     </a>
-    <a href="https://wa.me/521221362861?text=Hola%2C%20quiero%20agendar%20una%20visita%20para%20ver%20el%20cuadro%20monumental%20de%20Xurabe." class="hero-cta-secondary">Ver en galería</a>
+    <a href="https://wa.me/521221362861?text=Hola%2C%20quiero%20agendar%20una%20visita%20para%20ver%20%22El%20Centro%20del%20Universo%22%20de%20Xurabe." class="hero-cta-secondary">Ver en galería</a>
   </div>
 
   <div class="hero-trust">
     <span class="hero-trust-item">✦ 1.5m × 1m</span>
     <span class="hero-trust-item">✦ Certificado de autenticidad</span>
-    <span class="hero-trust-item">✦ Envío internacional</span>
+    <span class="hero-trust-item">✦ Envío gratis</span>
   </div>
 </section>
 
 <!-- LA OBRA -->
 <div class="divider"></div>
 <section class="section">
-  <p class="sec-eyebrow">La obra</p>
-  <h2 class="sec-title">Dos técnicas. 4,500 horas de trabajo.</h2>
-  <p class="sec-body">Este cuadro combina dos técnicas ancestrales de Nayarit: el enchaquirado (chaquira sobre cera) y el trabajo con hilo sobre cera. Ambas técnicas requieren presionar cada elemento milímetro a milímetro sobre una base de cera de abeja. No hay corrección posible — cada cuenta y cada hilo son permanentes.</p>
+  <p class="sec-eyebrow">Especificaciones</p>
+  <h2 class="sec-title">Ficha técnica</h2>
 
   <div class="specs-grid">
     <div class="spec-item">
@@ -329,211 +253,81 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
       <div class="spec-lbl">Dimensiones</div>
     </div>
     <div class="spec-item">
-      <div class="spec-val">15 meses</div>
-      <div class="spec-lbl">Tiempo de creación</div>
+      <div class="spec-val">+4,500 hrs</div>
+      <div class="spec-lbl">Horas de trabajo</div>
     </div>
     <div class="spec-item">
-      <div class="spec-val">4 artistas</div>
-      <div class="spec-lbl">Trabajo colectivo</div>
+      <div class="spec-val">Xurabe</div>
+      <div class="spec-lbl">Autor</div>
     </div>
     <div class="spec-item">
-      <div class="spec-val">4,500 hrs</div>
-      <div class="spec-lbl">Horas totales</div>
+      <div class="spec-val">Mixta</div>
+      <div class="spec-lbl">Técnica</div>
     </div>
   </div>
 
-  <div class="highlight-box">
-    <h3>Técnica mixta excepcional</h3>
-    <p>La combinación de chaquira e hilo sobre cera en una misma pieza es poco común. La mayoría de artistas dominan una u otra técnica — este cuadro requirió el conocimiento de ambas.</p>
-  </div>
+  <p class="sec-body"><strong>Técnica:</strong> Chaquira sobre cera e Hilo sobre cera<br><br>Este cuadro combina dos técnicas ancestrales: el enchaquirado (chaquira sobre cera) y el trabajo con hilo sobre cera. 10 horas diarias durante 15 meses.</p>
 </section>
 
-<!-- EL PROCESO -->
-<section class="section section-dark">
-  <p class="sec-eyebrow">El proceso</p>
-  <h2 class="sec-title">Cómo se creó esta pieza</h2>
-
-  <div class="proceso-steps">
-    <div class="paso">
-      <div class="paso-num">1</div>
-      <div class="paso-content">
-        <h4>Preparación de la base</h4>
-        <p>Una tabla de madera de 1.5m se prepara con cera de abeja templada. Esta cera es el "lienzo" sobre el cual se trabajará durante más de un año.</p>
-      </div>
-    </div>
-    <div class="paso">
-      <div class="paso-num">2</div>
-      <div class="paso-content">
-        <h4>Diseño de la composición</h4>
-        <p>Los elementos se construyen directamente sobre la cera, siguiendo la visión compartida entre las cuatro artistas. No hay boceto previo.</p>
-      </div>
-    </div>
-    <div class="paso">
-      <div class="paso-num">3</div>
-      <div class="paso-content">
-        <h4>Trabajo con chaquira</h4>
-        <p>Miles de cuentas de chaquira (2mm cada una) se presionan con los dedos sobre la cera. Cada cuenta es permanente. No hay margen de error.</p>
-      </div>
-    </div>
-    <div class="paso">
-      <div class="paso-num">4</div>
-      <div class="paso-content">
-        <h4>Trabajo con hilo</h4>
-        <p>Metros de hilo de colores se presionan formando patrones geométricos y orgánicos. Esta técnica requiere presión constante y precisión milimétrica.</p>
-      </div>
-    </div>
-    <div class="paso">
-      <div class="paso-num">5</div>
-      <div class="paso-content">
-        <h4>15 meses de dedicación</h4>
-        <p>10 horas diarias. 4 personas. Un año y tres meses. El resultado: esta pieza monumental.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ELEMENTOS VISUALES -->
-<div class="divider"></div>
-<section class="section">
-  <p class="sec-eyebrow">Elementos visuales</p>
-  <h2 class="sec-title">Lo que contiene esta pieza</h2>
-  <p class="sec-body">Cada figura y color en este cuadro tiene un significado dentro de las tradiciones artísticas de Nayarit. El comprador recibe documentación detallada explicando cada elemento.</p>
-
-  <div class="simbolos-grid">
-    <div class="simbolo-item">
-      <div class="simbolo-icon">☀️</div>
-      <div class="simbolo-content">
-        <h4>El Sol (centro)</h4>
-        <p>Representa el centro del universo y la fuerza vital. Posición central en la composición.</p>
-      </div>
-    </div>
-    <div class="simbolo-item">
-      <div class="simbolo-icon">🦌</div>
-      <div class="simbolo-content">
-        <h4>El Venado</h4>
-        <p>Considerado guía espiritual. Es el hermano mayor que muestra el camino.</p>
-      </div>
-    </div>
-    <div class="simbolo-item">
-      <div class="simbolo-icon">🌽</div>
-      <div class="simbolo-content">
-        <h4>Plantas de Maíz</h4>
-        <p>Simbolizan la humanidad y la conexión con lo terrenal.</p>
-      </div>
-    </div>
-    <div class="simbolo-item">
-      <div class="simbolo-icon">🦅</div>
-      <div class="simbolo-content">
-        <h4>El Águila</h4>
-        <p>Guardián del conocimiento. Protege el territorio y vigila desde lo alto.</p>
-      </div>
-    </div>
-  </div>
-
-  <p style="font-size:13px;color:var(--muted);font-style:italic;">* El comprador recibe guía completa con la explicación de todos los elementos de la pieza.</p>
-</section>
-
-<!-- VIDEO DE LA ARTISTA -->
-<section class="video-section">
-  <p class="sec-eyebrow" style="text-align:center;color:var(--terra);">Escucha a la artista</p>
-  <h2 class="sec-title" style="text-align:center;color:white;margin-bottom:32px;">Xurabe explica esta pieza</h2>
-  <div class="video-wrap">
-    <video controls poster="images/xurabe.png">
-      <source src="videos/xurabe-cuadro.mp4" type="video/mp4">
-    </video>
-  </div>
-  <p class="video-caption">"Este cuadro tiene una dimensión de metro y medio por un metro. Se elaboró en un tiempo de un año y tres meses, con un horario de diez horas diarias de trabajo entre cuatro personas."</p>
-</section>
-
-<!-- LA ARTISTA -->
-<div class="divider"></div>
-<section class="section">
-  <p class="sec-eyebrow">La artista</p>
-  <h2 class="sec-title">Paula García Serrano · Xurabe</h2>
-
-  <div class="artista-card">
-    <div class="artista-avatar">
-      <img src="images/xurabe.png" alt="Paula García Serrano - Xurabe">
-    </div>
-    <div class="artista-info">
-      <h3>Paula García Serrano</h3>
-      <p>Paula nació en el sur de Nayarit. Aprendió las técnicas de chaquira e hilo sobre cera desde niña — primero como tradición familiar, después como expresión artística.</p>
-      <p style="margin-top:8px;">Este cuadro fue creado en colaboración con tres artistas más, siguiendo el modelo tradicional de trabajo colectivo.</p>
-      <p style="margin-top:8px;">Actualmente trabaja desde San Pedro Cholula, Puebla, donde enseña estas técnicas y crea piezas para colecciones privadas.</p>
-    </div>
-  </div>
-
-  <p class="artista-quote">"Estas técnicas nacieron para agradecer. Cuando las traemos al arte, no pierden ese sentido — siguen siendo una forma de dar gracias por lo que tenemos."</p>
-</section>
-
-<!-- PARA QUIÉN -->
+<!-- INCLUYE -->
 <div class="divider"></div>
 <section class="section section-alt">
-  <p class="sec-eyebrow">Para quién es</p>
-  <h2 class="sec-title">¿Es esta pieza para ti?</h2>
+  <p class="sec-eyebrow">Incluye</p>
+  <h2 class="sec-title">Con tu compra recibes</h2>
 
-  <div class="para-grid">
-    <div class="para-card">
-      <h4>Coleccionistas de:</h4>
-      <ul>
-        <li>Arte mexicano monumental</li>
-        <li>Obras con narrativa cultural</li>
-        <li>Piezas statement de gran formato</li>
-        <li>Arte contemporáneo con raíces tradicionales</li>
-      </ul>
+  <div class="info-cards">
+    <div class="info-card">
+      <h4>📜 Certificado de autenticidad</h4>
+      <p>Firmado por Xurabe, con explicación de la simbología de la pieza.</p>
     </div>
-    <div class="para-card">
-      <h4>Espacios ideales:</h4>
-      <ul>
-        <li>Salas principales (pared focal)</li>
-        <li>Oficinas corporativas</li>
-        <li>Hoteles boutique de lujo</li>
-        <li>Galerías y museos privados</li>
-      </ul>
+    <div class="info-card">
+      <h4>📦 Embalaje y envío</h4>
+      <p>Incluye embalaje especializado y envío internacional (hasta $20,000 MXN de costo cubierto).</p>
+    </div>
+    <div class="info-card">
+      <h4>🧾 Factura</h4>
+      <p>Si la requieres, emitimos factura fiscal.</p>
     </div>
   </div>
+</section>
 
-  <div class="highlight-box">
-    <h3>Por qué esta pieza es excepcional</h3>
-    <ul>
-      <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Formato monumental (1.5m × 1m)</li>
-      <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Doble técnica (chaquira + hilo)</li>
-      <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Trabajo colectivo (4 artistas)</li>
-      <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>4,500 horas documentadas</li>
-      <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Pieza única, no replicable</li>
-    </ul>
-  </div>
+<!-- CUIDADOS -->
+<div class="divider"></div>
+<section class="section">
+  <p class="sec-eyebrow">Cuidados</p>
+  <h2 class="sec-title">Recomendaciones</h2>
+  <p class="sec-body">No exponer directamente al sol o al polvo. No apto para temperaturas extremas de calor.</p>
 </section>
 
 <!-- PRECIO -->
 <div class="divider"></div>
 <section class="section" id="precio">
   <p class="sec-eyebrow">Adquiere esta pieza</p>
-  <h2 class="sec-title">Una sola oportunidad</h2>
+  <h2 class="sec-title">Pieza única</h2>
 
   <div class="precio-box">
     <div class="precio-label">Precio</div>
-    <div class="precio-val">$180,000 MXN</div>
-    <div class="precio-usd">≈ $9,000 USD</div>
-    <div class="precio-nota-small">Precio base. Puede variar según ubicación y envío.</div>
+    <div class="precio-val">$255,200 MXN</div>
+    <div class="precio-usd">≈ $12,760 USD</div>
+    <div class="precio-nota-small">IVA incluido · Envío gratis</div>
 
     <div class="precio-includes">
       <h4>Incluye:</h4>
       <ul>
-        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Certificado de autenticidad firmado por las 4 artistas</li>
-        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Documento explicativo del simbolismo</li>
-        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Empaque especializado para piezas monumentales</li>
-        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Coordinación de envío e instalación</li>
+        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Certificado de autenticidad firmado por Xurabe</li>
+        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Documento con explicación de la simbología</li>
+        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Embalaje especializado</li>
+        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Envío internacional incluido</li>
         <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Factura (si se requiere)</li>
       </ul>
     </div>
 
     <div class="precio-ctas">
-      <a href="https://wa.me/521221362861?text=Hola%2C%20me%20interesa%20adquirir%20el%20cuadro%20monumental%20de%20Xurabe%20%28%24180%2C000%20MXN%29.%20%C2%BFC%C3%B3mo%20es%20el%20proceso%3F" class="btn-wa" onclick="fbq('track','Purchase')">
+      <a href="https://wa.me/521221362861?text=Hola%2C%20me%20interesa%20adquirir%20%22El%20Centro%20del%20Universo%22%20de%20Xurabe.%20%C2%BFC%C3%B3mo%20es%20el%20proceso%3F" class="btn-wa" onclick="fbq('track','Purchase')">
         <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Consultar por WhatsApp
       </a>
-      <a href="https://wa.me/521221362861?text=Hola%2C%20quiero%20agendar%20una%20visita%20para%20ver%20el%20cuadro%20monumental%20de%20Xurabe%20en%20la%20galer%C3%ADa." class="btn-secondary">Agendar visita a galería</a>
+      <a href="https://wa.me/521221362861?text=Hola%2C%20quiero%20agendar%20una%20visita%20para%20ver%20%22El%20Centro%20del%20Universo%22%20en%20la%20galer%C3%ADa." class="btn-secondary">Agendar visita a galería</a>
     </div>
   </div>
 </section>
@@ -542,16 +336,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
 <div class="divider"></div>
 <section class="section">
   <p class="sec-eyebrow">Preguntas frecuentes</p>
-  <h2 class="sec-title">Todo lo que necesitas saber</h2>
+  <h2 class="sec-title">Información adicional</h2>
 
   <div id="faqs">
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">¿Puedo verla en persona? <span class="faq-icon">+</span></button>
       <div class="faq-a">Sí. Está en exhibición en Galería Teokaye, San Pedro Cholula, Puebla. Visítanos martes a sábado, 11am-9pm. Te recomendamos agendar cita para atención completa.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">¿Por qué el precio es "a partir de"? <span class="faq-icon">+</span></button>
-      <div class="faq-a">El precio base es $180,000 MXN. Si requieres envío internacional, instalación profesional o empaque especial para exportación, hay costos adicionales según ubicación.</div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">¿Puedo pagar en plazos? <span class="faq-icon">+</span></button>
@@ -562,14 +352,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
       <div class="faq-a">Aproximadamente 8-10kg. Se embala en caja de madera especializada con acolchado interno. Usamos DHL/FedEx con seguro completo.</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">¿Necesita mantenimiento? <span class="faq-icon">+</span></button>
-      <div class="faq-a">No. La chaquira y el hilo están firmemente adheridos a la cera. Solo evita exposición directa al sol por periodos prolongados.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">¿Pueden crear una pieza similar? <span class="faq-icon">+</span></button>
-      <div class="faq-a">No exactamente igual (esta es única), pero Xurabe acepta encargos personalizados. El tiempo de producción es 12-18 meses.</div>
-    </div>
-    <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">¿Incluye soporte para colgar? <span class="faq-icon">+</span></button>
       <div class="faq-a">Sí. La pieza viene con sistema de montaje incluido. Podemos coordinar instalación profesional en CDMX o Puebla.</div>
     </div>
@@ -578,9 +360,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
 
 <!-- FINAL CTA -->
 <div class="final-cta">
-  <h2>Esta pieza existe una sola vez</h2>
-  <p>15 meses de trabajo colectivo. 4,500 horas. Una sola pieza en el mundo. Cuando salga de la galería, no habrá otra igual.</p>
-  <a href="https://wa.me/521221362861?text=Hola%2C%20me%20interesa%20el%20cuadro%20monumental%20de%20Xurabe.%20Quiero%20m%C3%A1s%20informaci%C3%B3n." class="hero-cta" onclick="fbq('track','Contact')">
+  <h2>Pieza única</h2>
+  <p>Más de 4,500 horas de trabajo. Una sola pieza en el mundo.</p>
+  <a href="https://wa.me/521221362861?text=Hola%2C%20me%20interesa%20%22El%20Centro%20del%20Universo%22%20de%20Xurabe.%20Quiero%20m%C3%A1s%20informaci%C3%B3n." class="hero-cta" onclick="fbq('track','Contact')">
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     Iniciar conversación por WhatsApp
   </a>
@@ -589,10 +371,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
 <!-- STICKY BAR -->
 <div class="sticky-bar">
   <div class="sticky-bar-txt">
-    <strong>Cuadro Monumental · Xurabe</strong>
-    1.5m × 1m · Desde $180,000 MXN
+    <strong>El Centro del Universo · Xurabe</strong>
+    1.5m × 1m · $255,200 MXN
   </div>
-  <a href="https://wa.me/521221362861?text=Hola%2C%20me%20interesa%20el%20cuadro%20monumental%20de%20Xurabe.%20%C2%BFEst%C3%A1%20disponible%3F" class="sticky-cta" onclick="fbq('track','Lead')">
+  <a href="https://wa.me/521221362861?text=Hola%2C%20me%20interesa%20%22El%20Centro%20del%20Universo%22%20de%20Xurabe.%20%C2%BFEst%C3%A1%20disponible%3F" class="sticky-cta" onclick="fbq('track','Lead')">
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     Consultar
   </a>
