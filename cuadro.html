@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>El Centro del Universo · Xurabe — Chaquira e Hilo sobre Cera · Galería Teokaye</title>
-<meta name="description" content="El Centro del Universo. Cuadro de 1.5m × 1m con simbología de la Cosmovisión Nayeri. Técnica: Chaquira e hilo sobre cera. Más de 4,500 horas de trabajo. Pieza única por Xurabe.">
+<title>El Centro del Universo · Xurabe — Galería Teokaye</title>
+<meta name="description" content="El Centro del Universo. Cuadro de 150 × 100 cm. Chaquira e hilo sobre cera. Más de 4,500 horas de trabajo. Pieza única por Xurabe. Galería Teokaye.">
 <link rel="icon" type="image/png" href="favicon.png">
 
 <!-- META PIXEL -->
@@ -21,187 +21,80 @@ fbq('track', 'PageView');
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --deep:#461D14; --terra:#B8826B; --sand:#E6E0D6;
-  --bg:#F5F1EB; --card:#FDFBF8; --carbon:#1E1B18;
-  --muted:rgba(30,27,24,0.52); --border:rgba(70,29,20,0.10);
-  --green:#25D366; --amber:#B5720A;
+  --deep:#461D14;--terra:#B8826B;--sand:#E6E0D6;
+  --bg:#F5F1EB;--carbon:#1E1B18;
+  --muted:rgba(30,27,24,0.55);--border:rgba(70,29,20,0.12);
+  --green:#25D366;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);font-size:16px;line-height:1.6;}
 
-/* STICKY BAR */
-.sticky-bar{
+.page{max-width:680px;margin:0 auto;padding:0 20px 100px;}
+
+/* HERO */
+.hero{padding:32px 0 40px;text-align:center;}
+.hero-img{width:100%;border-radius:6px;margin-bottom:32px;box-shadow:0 20px 60px rgba(0,0,0,0.15);}
+.hero-eyebrow{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin-bottom:8px;}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(28px,6vw,42px);color:var(--deep);line-height:1.1;margin-bottom:24px;}
+.hero-price{font-family:'DM Serif Display',serif;font-size:28px;color:var(--deep);margin-bottom:6px;}
+.hero-price-note{font-size:13px;color:var(--muted);margin-bottom:28px;}
+.btn-wa{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--green);color:white;border:none;border-radius:8px;
+  padding:16px 32px;font-size:16px;font-weight:600;cursor:pointer;
+  font-family:'DM Sans',sans-serif;text-decoration:none;
+  transition:all .15s;box-shadow:0 4px 20px rgba(37,211,102,0.3);
+}
+.btn-wa:hover{background:#1FB85B;transform:translateY(-1px);}
+.btn-wa svg{width:20px;height:20px;fill:currentColor;}
+
+/* FICHA */
+.ficha{padding:32px 0;border-top:1px solid var(--border);}
+.ficha-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin-bottom:16px;}
+.ficha-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;}
+.ficha-item{font-size:14px;color:var(--muted);}
+.ficha-item strong{color:var(--carbon);display:block;font-weight:500;}
+.ficha-note{margin-top:20px;font-size:14px;color:var(--muted);font-style:italic;}
+
+/* INCLUYE */
+.incluye{padding:32px 0;border-top:1px solid var(--border);}
+.incluye-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin-bottom:16px;}
+.incluye-list{list-style:none;}
+.incluye-list li{padding:8px 0;font-size:14px;color:var(--muted);border-bottom:1px solid var(--border);}
+.incluye-list li:last-child{border-bottom:none;}
+
+/* CUIDADOS */
+.cuidados{padding:32px 0;border-top:1px solid var(--border);}
+.cuidados-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin-bottom:12px;}
+.cuidados p{font-size:14px;color:var(--muted);}
+
+/* GALERIA */
+.galeria{padding:32px 0;border-top:1px solid var(--border);text-align:center;}
+.galeria-name{font-family:'DM Serif Display',serif;font-size:20px;color:var(--deep);margin-bottom:8px;}
+.galeria-info{font-size:13px;color:var(--muted);line-height:1.8;}
+.galeria-info a{color:var(--terra);text-decoration:none;}
+
+/* STICKY */
+.sticky{
   position:fixed;bottom:0;left:0;right:0;z-index:999;
   background:var(--deep);padding:14px 20px;
   display:flex;align-items:center;justify-content:space-between;gap:12px;
   box-shadow:0 -4px 24px rgba(0,0,0,0.25);
 }
-.sticky-bar-txt{color:var(--sand);font-size:13px;line-height:1.3;}
-.sticky-bar-txt strong{display:block;font-size:15px;color:white;}
-.sticky-cta{
+.sticky-txt{color:var(--sand);font-size:13px;}
+.sticky-txt strong{color:white;}
+.sticky-btn{
   background:var(--green);color:white;border:none;border-radius:99px;
-  padding:12px 22px;font-size:14px;font-weight:600;cursor:pointer;
-  font-family:'DM Sans',sans-serif;white-space:nowrap;text-decoration:none;
-  display:inline-flex;align-items:center;gap:6px;flex-shrink:0;transition:all .15s;
+  padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;
+  font-family:'DM Sans',sans-serif;text-decoration:none;
+  display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
 }
-.sticky-cta:hover{background:#1FB85B;transform:translateY(-1px);}
-.sticky-cta svg{width:16px;height:16px;fill:currentColor;}
+.sticky-btn svg{width:16px;height:16px;fill:currentColor;}
 
-/* BANNER */
-.urgency{
-  background:var(--deep);color:var(--sand);
-  text-align:center;padding:10px 20px;font-size:13px;
-  letter-spacing:.04em;
-}
-.urgency strong{color:var(--terra);}
-
-/* HERO */
-.hero{
-  min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:60px 24px 80px;text-align:center;position:relative;
-  background:linear-gradient(180deg,var(--carbon) 0%,#2A1510 100%);
-  overflow:hidden;
-}
-.hero-eyebrow{
-  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--terra);margin-bottom:16px;position:relative;
-}
-.hero h1{
-  font-family:'DM Serif Display',serif;font-size:clamp(26px,5.5vw,48px);
-  color:white;line-height:1.15;margin-bottom:20px;position:relative;max-width:700px;
-}
-.hero h1 em{color:var(--terra);font-style:italic;}
-.hero-sub{
-  font-size:clamp(14px,2.5vw,17px);color:rgba(230,224,214,0.75);
-  max-width:560px;margin-bottom:32px;position:relative;line-height:1.7;
-}
-.hero-img-wrap{
-  width:100%;max-width:700px;margin:0 auto 32px;position:relative;
-  border-radius:8px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.6);
-  background:#1E1B18;
-}
-.hero-img-wrap img{width:100%;display:block;border-radius:8px;}
-.hero-price{
-  font-family:'DM Serif Display',serif;font-size:clamp(22px,4.5vw,32px);
-  color:white;margin-bottom:8px;position:relative;
-}
-.hero-price-sub{font-size:13px;color:rgba(230,224,214,0.5);margin-bottom:24px;position:relative;}
-.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;position:relative;}
-.hero-cta{
-  background:var(--green);color:white;border:none;border-radius:99px;
-  padding:16px 28px;font-size:15px;font-weight:600;cursor:pointer;
-  font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-flex;
-  align-items:center;gap:8px;transition:all .2s;box-shadow:0 8px 32px rgba(37,211,102,0.35);
-}
-.hero-cta:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(37,211,102,0.45);}
-.hero-cta svg{width:18px;height:18px;fill:currentColor;}
-.hero-cta-secondary{
-  background:transparent;color:white;border:1.5px solid rgba(255,255,255,0.3);
-  border-radius:99px;padding:14px 24px;font-size:14px;cursor:pointer;
-  font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;
-  transition:all .2s;
-}
-.hero-cta-secondary:hover{border-color:white;background:rgba(255,255,255,0.05);}
-.hero-trust{
-  display:flex;align-items:center;gap:16px;margin-top:24px;position:relative;
-  flex-wrap:wrap;justify-content:center;
-}
-.hero-trust-item{font-size:12px;color:rgba(230,224,214,0.5);display:flex;align-items:center;gap:5px;}
-
-/* SECTIONS */
-.section{padding:40px 24px;max-width:800px;margin:0 auto;}
-.section-compact{padding:24px 24px 40px;}
-
-/* SECTION TITLES */
-.sec-eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--terra);margin-bottom:8px;}
-.sec-title{font-family:'DM Serif Display',serif;font-size:clamp(24px,5vw,36px);color:var(--deep);margin-bottom:16px;line-height:1.2;}
-.sec-body{font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:24px;}
-
-/* SPECS */
-.specs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px;}
-.spec-item{
-  background:var(--card);border:1px solid var(--border);border-radius:10px;
-  padding:16px;text-align:center;
-}
-.spec-val{font-family:'DM Serif Display',serif;font-size:22px;color:var(--deep);}
-.spec-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:3px;}
-
-/* INFO LIST */
-.info-list{margin-bottom:16px;}
-.info-list li{padding:8px 0;font-size:14px;color:var(--muted);border-bottom:1px solid var(--border);display:flex;gap:8px;}
-.info-list li:last-child{border-bottom:none;}
-.info-list strong{color:var(--deep);min-width:140px;flex-shrink:0;}
-
-/* PRECIO */
-.precio-box{
-  background:var(--card);border:2px solid var(--deep);border-radius:14px;
-  padding:32px;text-align:center;margin-bottom:24px;
-}
-.precio-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
-.precio-val{font-family:'DM Serif Display',serif;font-size:38px;color:var(--deep);line-height:1;}
-.precio-usd{font-size:16px;color:var(--muted);margin-top:6px;}
-.precio-nota-small{font-size:12px;color:var(--muted);margin-top:8px;}
-.precio-includes{text-align:left;margin:24px 0;padding:20px;background:var(--bg);border-radius:8px;}
-.precio-includes h4{font-size:14px;font-weight:600;color:var(--deep);margin-bottom:12px;}
-.precio-includes ul{list-style:none;font-size:13px;color:var(--muted);}
-.precio-includes li{padding:5px 0;display:flex;align-items:center;gap:8px;}
-.precio-includes li svg{width:16px;height:16px;fill:var(--green);flex-shrink:0;}
-.precio-ctas{display:flex;flex-direction:column;gap:10px;margin-top:24px;}
-.btn-wa{
-  background:var(--green);color:white;border:none;border-radius:10px;
-  padding:16px;font-size:15px;font-weight:600;cursor:pointer;
-  font-family:'DM Sans',sans-serif;text-decoration:none;display:flex;
-  align-items:center;justify-content:center;gap:8px;transition:all .15s;
-}
-.btn-wa:hover{background:#1FB85B;transform:translateY(-1px);}
-.btn-wa svg{width:18px;height:18px;fill:currentColor;}
-.btn-secondary{
-  background:transparent;color:var(--deep);border:1.5px solid var(--border);
-  border-radius:10px;padding:14px;font-size:14px;cursor:pointer;
-  font-family:'DM Sans',sans-serif;text-decoration:none;display:block;
-  text-align:center;transition:all .15s;
-}
-.btn-secondary:hover{border-color:var(--terra);color:var(--terra);}
-
-/* DIVIDER */
-.divider{height:1px;background:var(--border);margin:0 24px;}
-
-/* FAQs */
-.faq-item{border-bottom:1px solid var(--border);padding:0;}
-.faq-q{
-  width:100%;background:none;border:none;cursor:pointer;
-  padding:18px 0;display:flex;justify-content:space-between;align-items:center;
-  font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;
-  color:var(--carbon);text-align:left;gap:12px;
-}
-.faq-q:hover{color:var(--deep);}
-.faq-icon{font-size:18px;color:var(--terra);flex-shrink:0;transition:transform .2s;}
-.faq-a{display:none;padding:0 0 18px;font-size:14px;color:var(--muted);line-height:1.7;}
-.faq-item.open .faq-icon{transform:rotate(45deg);}
-.faq-item.open .faq-a{display:block;}
-
-/* FINAL CTA */
-.final-cta{
-  background:linear-gradient(135deg,var(--deep),#6B2A1F);
-  padding:48px 24px;text-align:center;
-}
-.final-cta h2{font-family:'DM Serif Display',serif;font-size:clamp(24px,5vw,36px);color:white;margin-bottom:12px;}
-.final-cta p{font-size:15px;color:rgba(230,224,214,0.75);margin-bottom:28px;max-width:520px;margin-left:auto;margin-right:auto;}
-
-/* FOOTER */
-.footer{background:var(--carbon);color:rgba(230,224,214,0.55);text-align:center;padding:28px 24px;font-size:12px;line-height:1.8;}
-.footer a{color:var(--terra);text-decoration:none;}
-
-@media(min-width:601px){
-  .specs-grid{grid-template-columns:repeat(4,1fr);}
-}
-@media(max-width:600px){
-  .specs-grid{grid-template-columns:1fr 1fr;}
-  .hero-ctas{flex-direction:column;width:100%;padding:0 20px;}
-  .hero-cta,.hero-cta-secondary{width:100%;justify-content:center;}
-  .sticky-bar-txt strong{font-size:13px;}
-  .info-list strong{min-width:90px;}
+@media(max-width:500px){
+  .ficha-grid{grid-template-columns:1fr;}
+  .hero-price{font-size:24px;}
 }
 </style>
 </head>
@@ -209,183 +102,89 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
 
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=PIXEL_ID_AQUI&ev=PageView&noscript=1"/></noscript>
 
-<!-- BANNER -->
-<div class="urgency">
-  <strong>Pieza única</strong> · Disponible en Galería Teokaye
-</div>
+<div class="page">
 
-<!-- HERO -->
-<section class="hero">
-  <p class="hero-eyebrow">Xurabe · Galería Teokaye</p>
-  <h1><em>El Centro del Universo</em></h1>
-  <p class="hero-sub">Cuadro con simbología de la Cosmovisión Nayeri (Cora) de la sierra del Nayar, al noroeste del estado de Nayarit.</p>
+  <!-- HERO -->
+  <section class="hero">
+    <img src="images/cuadro-monumental-huichol.webp" alt="El Centro del Universo" class="hero-img">
 
-  <div class="hero-img-wrap">
-    <img src="images/cuadro-monumental-huichol.webp" alt="El Centro del Universo - Cuadro de chaquira e hilo sobre cera por Xurabe">
-  </div>
+    <p class="hero-eyebrow">Xurabe</p>
+    <h1>El Centro del Universo</h1>
 
-  <div class="hero-price">$255,200 MXN</div>
-  <div class="hero-price-sub">IVA incluido · Envío gratis</div>
+    <div class="hero-price">$255,200 MXN</div>
+    <p class="hero-price-note">IVA incluido · Envío gratis</p>
 
-  <div class="hero-ctas">
-    <a href="https://wa.me/521221362861?text=Hola%2C%20me%20interesa%20el%20cuadro%20%22El%20Centro%20del%20Universo%22%20de%20Xurabe.%20%C2%BFEst%C3%A1%20disponible%3F" class="hero-cta" onclick="fbq('track','InitiateCheckout')">
+    <a href="https://wa.me/521221362861?text=Hola%2C%20me%20interesa%20%22El%20Centro%20del%20Universo%22%20de%20Xurabe." class="btn-wa" onclick="fbq('track','Lead')">
       <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Me interesa
+      Consultar por WhatsApp
     </a>
-    <a href="https://wa.me/521221362861?text=Hola%2C%20quiero%20agendar%20una%20visita%20para%20ver%20%22El%20Centro%20del%20Universo%22%20de%20Xurabe." class="hero-cta-secondary">Ver en galería</a>
-  </div>
+  </section>
 
-  <div class="hero-trust">
-    <span class="hero-trust-item">1.5m × 1m</span>
-    <span class="hero-trust-item">Certificado de autenticidad</span>
-    <span class="hero-trust-item">Envío gratis</span>
-  </div>
-</section>
-
-<!-- LA OBRA -->
-<div class="divider"></div>
-<section class="section">
-  <p class="sec-eyebrow">Especificaciones</p>
-  <h2 class="sec-title">Ficha técnica</h2>
-
-  <div class="specs-grid">
-    <div class="spec-item">
-      <div class="spec-val">1.5m × 1m</div>
-      <div class="spec-lbl">Dimensiones</div>
+  <!-- FICHA TÉCNICA -->
+  <section class="ficha">
+    <p class="ficha-title">Ficha técnica</p>
+    <div class="ficha-grid">
+      <div class="ficha-item">
+        <strong>Técnica</strong>
+        Chaquira sobre cera · Hilo sobre cera
+      </div>
+      <div class="ficha-item">
+        <strong>Dimensiones</strong>
+        150 × 100 cm
+      </div>
+      <div class="ficha-item">
+        <strong>Tiempo de creación</strong>
+        +4,500 horas
+      </div>
+      <div class="ficha-item">
+        <strong>Autor</strong>
+        Xurabe
+      </div>
     </div>
-    <div class="spec-item">
-      <div class="spec-val">+4,500 hrs</div>
-      <div class="spec-lbl">Horas de trabajo</div>
-    </div>
-    <div class="spec-item">
-      <div class="spec-val">Xurabe</div>
-      <div class="spec-lbl">Autor</div>
-    </div>
-    <div class="spec-item">
-      <div class="spec-val">Mixta</div>
-      <div class="spec-lbl">Técnica</div>
-    </div>
-  </div>
+    <p class="ficha-note">Cosmovisión Nayeri (Cora) · Sierra del Nayar, Nayarit</p>
+  </section>
 
-  <p class="sec-body"><strong>Técnica:</strong> Chaquira sobre cera e Hilo sobre cera<br><br>Este cuadro combina dos técnicas ancestrales: el enchaquirado (chaquira sobre cera) y el trabajo con hilo sobre cera. 10 horas diarias durante 15 meses.</p>
-</section>
+  <!-- INCLUYE -->
+  <section class="incluye">
+    <p class="incluye-title">Incluye</p>
+    <ul class="incluye-list">
+      <li>Certificado de autenticidad firmado por Xurabe</li>
+      <li>Embalaje especializado</li>
+      <li>Envío internacional</li>
+      <li>Factura fiscal (si se requiere)</li>
+    </ul>
+  </section>
 
-<!-- INCLUYE Y CUIDADOS -->
-<div class="divider"></div>
-<section class="section section-compact">
-  <p class="sec-eyebrow">Incluye</p>
-  <h2 class="sec-title">Con tu compra</h2>
+  <!-- CUIDADOS -->
+  <section class="cuidados">
+    <p class="cuidados-title">Cuidados</p>
+    <p>No exponer al sol directo o polvo. Evitar temperaturas extremas.</p>
+  </section>
 
-  <ul class="info-list">
-    <li><strong>Certificado</strong> Firmado por Xurabe, con explicación de la simbología</li>
-    <li><strong>Envío</strong> Embalaje especializado y envío internacional incluido (hasta $20,000 MXN)</li>
-    <li><strong>Factura</strong> Emitimos factura fiscal si la requieres</li>
-    <li><strong>Cuidados</strong> No exponer al sol directo o polvo. Evitar temperaturas extremas</li>
-  </ul>
-</section>
+  <!-- GALERÍA -->
+  <section class="galeria">
+    <p class="galeria-name">Galería Teokaye</p>
+    <p class="galeria-info">
+      Av. 6 Ote. 402A, San Pedro Cholula, Puebla<br>
+      Martes a Sábado · 11:00am – 9:00pm<br>
+      <a href="https://wa.me/521221362861">+52 221 362 8681</a> · <a href="https://instagram.com/teokaye.mx">@teokaye.mx</a>
+    </p>
+  </section>
 
-<!-- PRECIO -->
-<div class="divider"></div>
-<section class="section" id="precio">
-  <p class="sec-eyebrow">Adquiere esta pieza</p>
-  <h2 class="sec-title">Pieza única</h2>
-
-  <div class="precio-box">
-    <div class="precio-label">Precio</div>
-    <div class="precio-val">$255,200 MXN</div>
-    <div class="precio-usd">≈ $12,760 USD</div>
-    <div class="precio-nota-small">IVA incluido · Envío gratis</div>
-
-    <div class="precio-includes">
-      <h4>Incluye:</h4>
-      <ul>
-        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Certificado de autenticidad firmado por Xurabe</li>
-        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Documento con explicación de la simbología</li>
-        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Embalaje especializado</li>
-        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Envío internacional incluido</li>
-        <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Factura (si se requiere)</li>
-      </ul>
-    </div>
-
-    <div class="precio-ctas">
-      <a href="https://wa.me/521221362861?text=Hola%2C%20me%20interesa%20adquirir%20%22El%20Centro%20del%20Universo%22%20de%20Xurabe.%20%C2%BFC%C3%B3mo%20es%20el%20proceso%3F" class="btn-wa" onclick="fbq('track','Purchase')">
-        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Consultar por WhatsApp
-      </a>
-      <a href="https://wa.me/521221362861?text=Hola%2C%20quiero%20agendar%20una%20visita%20para%20ver%20%22El%20Centro%20del%20Universo%22%20en%20la%20galer%C3%ADa." class="btn-secondary">Agendar visita a galería</a>
-    </div>
-  </div>
-</section>
-
-<!-- FAQs -->
-<div class="divider"></div>
-<section class="section">
-  <p class="sec-eyebrow">Preguntas frecuentes</p>
-  <h2 class="sec-title">Información adicional</h2>
-
-  <div id="faqs">
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">¿Puedo verla en persona? <span class="faq-icon">+</span></button>
-      <div class="faq-a">Sí. Está en exhibición en Galería Teokaye, San Pedro Cholula, Puebla. Visítanos martes a sábado, 11am-9pm. Te recomendamos agendar cita para atención completa.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">¿Puedo pagar en plazos? <span class="faq-icon">+</span></button>
-      <div class="faq-a">Sí. Aceptamos depósito inicial (30%) y el resto contra entrega. Para compradores internacionales, coordinamos esquema según país.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto pesa? ¿Cómo se envía? <span class="faq-icon">+</span></button>
-      <div class="faq-a">Aproximadamente 8-10kg. Se embala en caja de madera especializada con acolchado interno. Usamos DHL/FedEx con seguro completo.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">¿Incluye soporte para colgar? <span class="faq-icon">+</span></button>
-      <div class="faq-a">Sí. La pieza viene con sistema de montaje incluido. Podemos coordinar instalación profesional en CDMX o Puebla.</div>
-    </div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<div class="final-cta">
-  <h2>Pieza única</h2>
-  <p>Más de 4,500 horas de trabajo. Una sola pieza en el mundo.</p>
-  <a href="https://wa.me/521221362861?text=Hola%2C%20me%20interesa%20%22El%20Centro%20del%20Universo%22%20de%20Xurabe.%20Quiero%20m%C3%A1s%20informaci%C3%B3n." class="hero-cta" onclick="fbq('track','Contact')">
-    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    Iniciar conversación por WhatsApp
-  </a>
 </div>
 
 <!-- STICKY BAR -->
-<div class="sticky-bar">
-  <div class="sticky-bar-txt">
-    <strong>El Centro del Universo · Xurabe</strong>
-    1.5m × 1m · $255,200 MXN
+<div class="sticky">
+  <div class="sticky-txt">
+    <strong>$255,200 MXN</strong> · Envío gratis
   </div>
-  <a href="https://wa.me/521221362861?text=Hola%2C%20me%20interesa%20%22El%20Centro%20del%20Universo%22%20de%20Xurabe.%20%C2%BFEst%C3%A1%20disponible%3F" class="sticky-cta" onclick="fbq('track','Lead')">
+  <a href="https://wa.me/521221362861?text=Hola%2C%20me%20interesa%20%22El%20Centro%20del%20Universo%22%20de%20Xurabe." class="sticky-btn" onclick="fbq('track','Lead')">
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     Consultar
   </a>
 </div>
 
-<!-- FOOTER -->
-<footer class="footer" style="padding-bottom:80px;">
-  <p><strong style="color:var(--sand);">Galería Teokaye</strong></p>
-  <p>Av. 6 Ote. 402A, San Miguel, San Pedro Cholula, Puebla</p>
-  <p>Martes a Sábado · 11:00am – 9:00pm</p>
-  <p style="margin-top:8px;">
-    <a href="https://wa.me/521221362861">WhatsApp: +52 221 362 8681</a> ·
-    <a href="https://instagram.com/teokaye.mx">@teokaye.mx</a> ·
-    <a href="https://maps.app.goo.gl/gvuAMBRcdyj26nLp6">Cómo llegar</a>
-  </p>
-  <p style="margin-top:12px;font-size:11px;">© 2026 Galería Teokaye · Arte de Nayarit</p>
-</footer>
-
 <script>
-function toggleFaq(btn) {
-  const item = btn.parentElement;
-  const wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
-
 // Scroll tracking
 let tracked = {25:false,50:false,75:false,90:false};
 window.addEventListener('scroll', function() {
