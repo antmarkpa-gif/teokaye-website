@@ -18,83 +18,142 @@ fbq('init', 'PIXEL_ID_AQUI');
 fbq('track', 'PageView');
 </script>
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --deep:#461D14;--terra:#B8826B;--sand:#E6E0D6;
-  --bg:#F5F1EB;--carbon:#1E1B18;
-  --muted:rgba(30,27,24,0.55);--border:rgba(70,29,20,0.12);
+  --deep:#2C1810;--terra:#A67C5B;--sand:#E8E2D9;
+  --bg:#FAF8F5;--carbon:#1A1714;
+  --muted:#6B5D52;--border:rgba(44,24,16,0.1);
   --green:#25D366;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);font-size:16px;line-height:1.6;}
 
-.page{max-width:680px;margin:0 auto;padding:0 20px 100px;}
-
 /* HERO */
-.hero{padding:32px 0 40px;text-align:center;}
-.hero-img{width:100%;border-radius:6px;margin-bottom:32px;box-shadow:0 20px 60px rgba(0,0,0,0.15);}
-.hero-eyebrow{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin-bottom:8px;}
-.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(28px,6vw,42px);color:var(--deep);line-height:1.1;margin-bottom:24px;}
-.hero-price{font-family:'DM Serif Display',serif;font-size:28px;color:var(--deep);margin-bottom:6px;}
-.hero-price-note{font-size:13px;color:var(--muted);margin-bottom:28px;}
-.btn-wa{
-  display:inline-flex;align-items:center;gap:10px;
-  background:var(--green);color:white;border:none;border-radius:8px;
-  padding:16px 32px;font-size:16px;font-weight:600;cursor:pointer;
-  font-family:'DM Sans',sans-serif;text-decoration:none;
-  transition:all .15s;box-shadow:0 4px 20px rgba(37,211,102,0.3);
+.hero{
+  min-height:100vh;
+  background:linear-gradient(180deg,#1A1714 0%,#2C1810 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px 24px 80px;text-align:center;
 }
-.btn-wa:hover{background:#1FB85B;transform:translateY(-1px);}
+.hero-img-container{
+  width:100%;max-width:720px;margin-bottom:48px;position:relative;
+}
+.hero-img-container::before{
+  content:'';position:absolute;inset:-20px;
+  background:linear-gradient(135deg,rgba(166,124,91,0.15),transparent);
+  border-radius:12px;z-index:0;
+}
+.hero-img{
+  width:100%;display:block;border-radius:4px;position:relative;z-index:1;
+  box-shadow:0 40px 100px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.05);
+}
+.hero-eyebrow{
+  font-family:'DM Sans',sans-serif;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--terra);margin-bottom:12px;font-weight:500;
+}
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px,7vw,56px);font-weight:400;font-style:italic;
+  color:white;line-height:1.1;margin-bottom:32px;
+}
+.hero-price{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(24px,5vw,36px);font-weight:500;
+  color:white;margin-bottom:8px;letter-spacing:.02em;
+}
+.hero-price-note{
+  font-size:13px;color:rgba(232,226,217,0.6);margin-bottom:40px;
+  letter-spacing:.05em;
+}
+.btn-wa{
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--green);color:white;border:none;border-radius:6px;
+  padding:18px 40px;font-size:15px;font-weight:500;cursor:pointer;
+  font-family:'DM Sans',sans-serif;text-decoration:none;letter-spacing:.02em;
+  transition:all .2s;box-shadow:0 8px 32px rgba(37,211,102,0.35);
+}
+.btn-wa:hover{background:#1EB854;transform:translateY(-2px);box-shadow:0 12px 40px rgba(37,211,102,0.4);}
 .btn-wa svg{width:20px;height:20px;fill:currentColor;}
 
+/* CONTENT */
+.content{max-width:640px;margin:0 auto;padding:0 24px 120px;}
+
+/* SECTION */
+.section{padding:48px 0;border-bottom:1px solid var(--border);}
+.section:last-child{border-bottom:none;}
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--terra);margin-bottom:24px;font-weight:500;
+}
+
 /* FICHA */
-.ficha{padding:32px 0;border-top:1px solid var(--border);}
-.ficha-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin-bottom:16px;}
-.ficha-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;}
-.ficha-item{font-size:14px;color:var(--muted);}
-.ficha-item strong{color:var(--carbon);display:block;font-weight:500;}
-.ficha-note{margin-top:20px;font-size:14px;color:var(--muted);font-style:italic;}
+.ficha-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 40px;}
+.ficha-item label{
+  display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:6px;
+}
+.ficha-item span{font-size:15px;color:var(--carbon);}
+.ficha-note{
+  margin-top:28px;padding-top:20px;border-top:1px solid var(--border);
+  font-size:14px;color:var(--muted);font-style:italic;
+}
 
 /* INCLUYE */
-.incluye{padding:32px 0;border-top:1px solid var(--border);}
-.incluye-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin-bottom:16px;}
 .incluye-list{list-style:none;}
-.incluye-list li{padding:8px 0;font-size:14px;color:var(--muted);border-bottom:1px solid var(--border);}
+.incluye-list li{
+  padding:14px 0;font-size:15px;color:var(--carbon);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;
+}
 .incluye-list li:last-child{border-bottom:none;}
+.incluye-list li::before{
+  content:'';width:6px;height:6px;background:var(--terra);border-radius:50%;flex-shrink:0;
+}
 
 /* CUIDADOS */
-.cuidados{padding:32px 0;border-top:1px solid var(--border);}
-.cuidados-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin-bottom:12px;}
-.cuidados p{font-size:14px;color:var(--muted);}
+.cuidados p{font-size:15px;color:var(--muted);line-height:1.7;}
 
 /* GALERIA */
-.galeria{padding:32px 0;border-top:1px solid var(--border);text-align:center;}
-.galeria-name{font-family:'DM Serif Display',serif;font-size:20px;color:var(--deep);margin-bottom:8px;}
-.galeria-info{font-size:13px;color:var(--muted);line-height:1.8;}
-.galeria-info a{color:var(--terra);text-decoration:none;}
+.galeria{text-align:center;padding:56px 0 0;}
+.galeria-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:24px;color:var(--deep);margin-bottom:16px;font-weight:400;
+}
+.galeria-info{font-size:14px;color:var(--muted);line-height:2;}
+.galeria-info a{color:var(--terra);text-decoration:none;transition:color .15s;}
+.galeria-info a:hover{color:var(--deep);}
 
 /* STICKY */
 .sticky{
   position:fixed;bottom:0;left:0;right:0;z-index:999;
-  background:var(--deep);padding:14px 20px;
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-  box-shadow:0 -4px 24px rgba(0,0,0,0.25);
+  background:var(--deep);padding:16px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  box-shadow:0 -8px 32px rgba(0,0,0,0.3);
 }
-.sticky-txt{color:var(--sand);font-size:13px;}
-.sticky-txt strong{color:white;}
+.sticky-txt{color:rgba(232,226,217,0.7);font-size:14px;}
+.sticky-txt strong{color:white;font-weight:500;}
 .sticky-btn{
-  background:var(--green);color:white;border:none;border-radius:99px;
-  padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;
+  background:var(--green);color:white;border:none;border-radius:6px;
+  padding:14px 24px;font-size:14px;font-weight:500;cursor:pointer;
   font-family:'DM Sans',sans-serif;text-decoration:none;
-  display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
+  transition:all .15s;
 }
-.sticky-btn svg{width:16px;height:16px;fill:currentColor;}
+.sticky-btn:hover{background:#1EB854;}
+.sticky-btn svg{width:18px;height:18px;fill:currentColor;}
 
-@media(max-width:500px){
-  .ficha-grid{grid-template-columns:1fr;}
-  .hero-price{font-size:24px;}
+@media(max-width:600px){
+  .hero{padding:40px 20px 60px;min-height:auto;}
+  .hero-img-container{margin-bottom:36px;}
+  .hero-img-container::before{inset:-12px;}
+  .ficha-grid{grid-template-columns:1fr;gap:16px;}
+  .sticky{padding:14px 16px;}
+  .sticky-txt{font-size:13px;}
+  .sticky-btn{padding:12px 18px;font-size:13px;}
 }
 </style>
 </head>
@@ -102,51 +161,54 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
 
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=PIXEL_ID_AQUI&ev=PageView&noscript=1"/></noscript>
 
-<div class="page">
-
-  <!-- HERO -->
-  <section class="hero">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-img-container">
     <img src="images/cuadro-monumental-huichol.webp" alt="El Centro del Universo" class="hero-img">
+  </div>
 
-    <p class="hero-eyebrow">Xurabe</p>
-    <h1>El Centro del Universo</h1>
+  <p class="hero-eyebrow">Xurabe</p>
+  <h1>El Centro del Universo</h1>
 
-    <div class="hero-price">$255,200 MXN</div>
-    <p class="hero-price-note">IVA incluido · Envío gratis</p>
+  <div class="hero-price">$255,200 MXN</div>
+  <p class="hero-price-note">IVA incluido · Envío gratis</p>
 
-    <a href="https://wa.me/522213628681?text=Hola%2C%20me%20interesa%20%22El%20Centro%20del%20Universo%22%20de%20Xurabe." class="btn-wa" onclick="fbq('track','Lead')">
-      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Consultar por WhatsApp
-    </a>
-  </section>
+  <a href="https://wa.me/522213628681?text=Hola%2C%20me%20interesa%20%22El%20Centro%20del%20Universo%22%20de%20Xurabe." class="btn-wa" onclick="fbq('track','Lead')">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Consultar por WhatsApp
+  </a>
+</section>
+
+<!-- CONTENT -->
+<div class="content">
 
   <!-- FICHA TÉCNICA -->
-  <section class="ficha">
-    <p class="ficha-title">Ficha técnica</p>
+  <section class="section">
+    <p class="section-title">Ficha técnica</p>
     <div class="ficha-grid">
       <div class="ficha-item">
-        <strong>Técnica</strong>
-        Chaquira sobre cera · Hilo sobre cera
+        <label>Técnica</label>
+        <span>Chaquira sobre cera · Hilo sobre cera</span>
       </div>
       <div class="ficha-item">
-        <strong>Dimensiones</strong>
-        150 × 100 cm
+        <label>Dimensiones</label>
+        <span>150 × 100 cm</span>
       </div>
       <div class="ficha-item">
-        <strong>Tiempo de creación</strong>
-        +4,500 horas
+        <label>Tiempo de creación</label>
+        <span>+4,500 horas</span>
       </div>
       <div class="ficha-item">
-        <strong>Autor</strong>
-        Xurabe
+        <label>Autor</label>
+        <span>Xurabe</span>
       </div>
     </div>
     <p class="ficha-note">Cosmovisión Nayeri (Cora) · Sierra del Nayar, Nayarit</p>
   </section>
 
   <!-- INCLUYE -->
-  <section class="incluye">
-    <p class="incluye-title">Incluye</p>
+  <section class="section">
+    <p class="section-title">Incluye</p>
     <ul class="incluye-list">
       <li>Certificado de autenticidad firmado por Xurabe</li>
       <li>Embalaje especializado</li>
@@ -156,9 +218,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
   </section>
 
   <!-- CUIDADOS -->
-  <section class="cuidados">
-    <p class="cuidados-title">Cuidados</p>
-    <p>No exponer al sol directo o polvo. Evitar temperaturas extremas.</p>
+  <section class="section">
+    <p class="section-title">Cuidados</p>
+    <p class="cuidados">No exponer al sol directo o polvo. Evitar temperaturas extremas.</p>
   </section>
 
   <!-- GALERÍA -->
