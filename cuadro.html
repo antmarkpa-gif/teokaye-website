@@ -110,8 +110,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
 .hero-trust-item{font-size:12px;color:rgba(230,224,214,0.5);display:flex;align-items:center;gap:5px;}
 
 /* SECTIONS */
-.section{padding:64px 24px;max-width:800px;margin:0 auto;}
-.section-alt{background:var(--card);}
+.section{padding:40px 24px;max-width:800px;margin:0 auto;}
+.section-compact{padding:24px 24px 40px;}
 
 /* SECTION TITLES */
 .sec-eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--terra);margin-bottom:8px;}
@@ -127,14 +127,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
 .spec-val{font-family:'DM Serif Display',serif;font-size:22px;color:var(--deep);}
 .spec-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:3px;}
 
-/* INFO CARDS */
-.info-cards{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:24px;}
-.info-card{
-  background:var(--card);border:1px solid var(--border);border-radius:10px;
-  padding:20px;
-}
-.info-card h4{font-size:14px;font-weight:600;color:var(--deep);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
-.info-card p{font-size:13px;color:var(--muted);line-height:1.6;}
+/* INFO LIST */
+.info-list{margin-bottom:16px;}
+.info-list li{padding:8px 0;font-size:14px;color:var(--muted);border-bottom:1px solid var(--border);display:flex;gap:8px;}
+.info-list li:last-child{border-bottom:none;}
+.info-list strong{color:var(--deep);min-width:140px;flex-shrink:0;}
 
 /* PRECIO */
 .precio-box{
@@ -187,7 +184,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
 /* FINAL CTA */
 .final-cta{
   background:linear-gradient(135deg,var(--deep),#6B2A1F);
-  padding:64px 24px;text-align:center;
+  padding:48px 24px;text-align:center;
 }
 .final-cta h2{font-family:'DM Serif Display',serif;font-size:clamp(24px,5vw,36px);color:white;margin-bottom:12px;}
 .final-cta p{font-size:15px;color:rgba(230,224,214,0.75);margin-bottom:28px;max-width:520px;margin-left:auto;margin-right:auto;}
@@ -196,11 +193,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
 .footer{background:var(--carbon);color:rgba(230,224,214,0.55);text-align:center;padding:28px 24px;font-size:12px;line-height:1.8;}
 .footer a{color:var(--terra);text-decoration:none;}
 
+@media(min-width:601px){
+  .specs-grid{grid-template-columns:repeat(4,1fr);}
+}
 @media(max-width:600px){
   .specs-grid{grid-template-columns:1fr 1fr;}
   .hero-ctas{flex-direction:column;width:100%;padding:0 20px;}
   .hero-cta,.hero-cta-secondary{width:100%;justify-content:center;}
   .sticky-bar-txt strong{font-size:13px;}
+  .info-list strong{min-width:90px;}
 }
 </style>
 </head>
@@ -269,34 +270,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--carbon);f
   <p class="sec-body"><strong>Técnica:</strong> Chaquira sobre cera e Hilo sobre cera<br><br>Este cuadro combina dos técnicas ancestrales: el enchaquirado (chaquira sobre cera) y el trabajo con hilo sobre cera. 10 horas diarias durante 15 meses.</p>
 </section>
 
-<!-- INCLUYE -->
+<!-- INCLUYE Y CUIDADOS -->
 <div class="divider"></div>
-<section class="section section-alt">
+<section class="section section-compact">
   <p class="sec-eyebrow">Incluye</p>
-  <h2 class="sec-title">Con tu compra recibes</h2>
+  <h2 class="sec-title">Con tu compra</h2>
 
-  <div class="info-cards">
-    <div class="info-card">
-      <h4>Certificado de autenticidad</h4>
-      <p>Firmado por Xurabe, con explicación de la simbología de la pieza.</p>
-    </div>
-    <div class="info-card">
-      <h4>Embalaje y envío</h4>
-      <p>Incluye embalaje especializado y envío internacional (hasta $20,000 MXN de costo cubierto).</p>
-    </div>
-    <div class="info-card">
-      <h4>Factura</h4>
-      <p>Si la requieres, emitimos factura fiscal.</p>
-    </div>
-  </div>
-</section>
-
-<!-- CUIDADOS -->
-<div class="divider"></div>
-<section class="section">
-  <p class="sec-eyebrow">Cuidados</p>
-  <h2 class="sec-title">Recomendaciones</h2>
-  <p class="sec-body">No exponer directamente al sol o al polvo. No apto para temperaturas extremas de calor.</p>
+  <ul class="info-list">
+    <li><strong>Certificado</strong> Firmado por Xurabe, con explicación de la simbología</li>
+    <li><strong>Envío</strong> Embalaje especializado y envío internacional incluido (hasta $20,000 MXN)</li>
+    <li><strong>Factura</strong> Emitimos factura fiscal si la requieres</li>
+    <li><strong>Cuidados</strong> No exponer al sol directo o polvo. Evitar temperaturas extremas</li>
+  </ul>
 </section>
 
 <!-- PRECIO -->
