@@ -146,8 +146,10 @@ const FoundersConfig = {
 
   // Get profile URL
   getProfileUrl(founder) {
-    const slug = founder.slug || founder.id;
-    return `${this.BASE_URL}/perfil/?s=${slug}`;
+    if (founder.slug) {
+      return `${this.BASE_URL}/perfil/?s=${founder.slug}`;
+    }
+    return `${this.BASE_URL}/perfil/?id=${founder.id}`;
   },
 
   // Etapa labels
