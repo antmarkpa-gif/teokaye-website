@@ -553,6 +553,99 @@
       text-decoration:underline;
     }
 
+    /* Step Indicator */
+    .step-indicator{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:0;
+      margin-bottom:1.75rem;
+    }
+
+    .step-dot{
+      width:32px;
+      height:32px;
+      border-radius:50%;
+      background:var(--bg);
+      color:rgba(30,27,24,0.4);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:0.9rem;
+      font-weight:600;
+      transition:all 0.3s ease;
+    }
+
+    .step-dot.active{
+      background:var(--accent-dark);
+      color:var(--white);
+    }
+
+    .step-dot.completed{
+      background:var(--accent);
+      color:var(--white);
+    }
+
+    .step-line{
+      width:60px;
+      height:3px;
+      background:var(--bg);
+      margin:0 0.5rem;
+      transition:all 0.3s ease;
+    }
+
+    .step-line.active{
+      background:var(--accent);
+    }
+
+    .step-buttons{
+      display:flex;
+      gap:0.75rem;
+      margin-top:0.5rem;
+    }
+
+    .btn-back{
+      flex:1;
+      padding:1rem;
+      font-family:'Source Sans 3',sans-serif;
+      font-size:1rem;
+      font-weight:600;
+      color:var(--accent-dark);
+      background:var(--bg);
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      transition:all 0.25s ease;
+    }
+
+    .btn-back:hover{
+      background:rgba(184,130,107,0.2);
+    }
+
+    .step-buttons .btn-submit{
+      flex:2;
+    }
+
+    .btn-next{
+      width:100%;
+      padding:1rem 1.5rem;
+      font-family:'Source Sans 3',sans-serif;
+      font-size:1.05rem;
+      font-weight:600;
+      color:var(--white);
+      background:var(--accent-dark);
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      transition:all 0.25s ease;
+    }
+
+    .btn-next:hover{
+      background:var(--accent);
+      transform:translateY(-1px);
+      box-shadow:0 4px 16px rgba(184,130,107,0.3);
+    }
+
     /* Desktop */
     @media (min-width:640px){
       .hero-title{
@@ -650,89 +743,107 @@
 
       <!-- Form -->
       <div class="form-card" id="formCard">
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+          <div class="step-dot active" id="stepDot1">1</div>
+          <div class="step-line" id="stepLine"></div>
+          <div class="step-dot" id="stepDot2">2</div>
+        </div>
+
         <form id="registroForm">
-          <div class="form-group">
-            <label for="nombre">Nombre completo</label>
-            <input type="text" id="nombre" name="nombre" required>
+          <!-- PASO 1: Información personal y proyecto -->
+          <div id="formStep1">
+            <div class="form-group">
+              <label for="nombre">Nombre completo</label>
+              <input type="text" id="nombre" name="nombre" required>
+            </div>
+
+            <div class="form-group">
+              <label for="ciudad">Ciudad</label>
+              <select id="ciudad" name="ciudad" required>
+                <option value="" disabled selected>Selecciona tu ciudad</option>
+                <option value="San Pedro Cholula">San Pedro Cholula</option>
+                <option value="San Andrés Cholula">San Andrés Cholula</option>
+                <option value="Puebla">Puebla</option>
+                <option value="Cuautlancingo">Cuautlancingo</option>
+                <option value="Atlixco">Atlixco</option>
+                <option value="Huejotzingo">Huejotzingo</option>
+                <option value="San Martín Texmelucan">San Martín Texmelucan</option>
+                <option value="Amozoc">Amozoc</option>
+                <option value="Tecamachalco">Tecamachalco</option>
+                <option value="Tehuacán">Tehuacán</option>
+                <option value="Otra">Otra</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input type="tel" id="telefono" name="telefono" placeholder="+52 222 123 4567" required>
+            </div>
+
+            <div class="form-group">
+              <label for="proyecto">Nombre de tu proyecto o negocio</label>
+              <input type="text" id="proyecto" name="proyecto" required>
+            </div>
+
+            <div class="form-group">
+              <label for="descripcion">¿Qué hace tu proyecto en una oración?</label>
+              <textarea id="descripcion" name="descripcion" required></textarea>
+            </div>
+
+            <button type="button" class="btn-next" id="btnNext">Siguiente</button>
           </div>
 
-          <div class="form-group">
-            <label for="ciudad">Ciudad</label>
-            <select id="ciudad" name="ciudad" required>
-              <option value="" disabled selected>Selecciona tu ciudad</option>
-              <option value="San Pedro Cholula">San Pedro Cholula</option>
-              <option value="San Andrés Cholula">San Andrés Cholula</option>
-              <option value="Puebla">Puebla</option>
-              <option value="Cuautlancingo">Cuautlancingo</option>
-              <option value="Atlixco">Atlixco</option>
-              <option value="Huejotzingo">Huejotzingo</option>
-              <option value="San Martín Texmelucan">San Martín Texmelucan</option>
-              <option value="Amozoc">Amozoc</option>
-              <option value="Tecamachalco">Tecamachalco</option>
-              <option value="Tehuacán">Tehuacán</option>
-              <option value="Otra">Otra</option>
-            </select>
-          </div>
+          <!-- PASO 2: Detalles adicionales -->
+          <div id="formStep2" style="display:none;">
+            <div class="form-group">
+              <label for="etapa">Etapa actual</label>
+              <select id="etapa" name="etapa" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="idea">Todavía es una idea</option>
+                <option value="construccion">En construcción</option>
+                <option value="ingresos">Ya genera ingresos</option>
+                <option value="escalando">Escalando</option>
+              </select>
+            </div>
 
-          <div class="form-group">
-            <label for="telefono">Teléfono</label>
-            <input type="tel" id="telefono" name="telefono" placeholder="+52 222 123 4567" required>
-          </div>
+            <div class="form-group">
+              <label for="interes">¿Qué buscas en la comunidad?</label>
+              <select id="interes" name="interes" required>
+                <option value="" disabled selected>Selecciona tu interés principal</option>
+                <option value="networking">Hacer networking y conexiones</option>
+                <option value="inversion">Buscar inversión para mi proyecto</option>
+                <option value="invertir">Invertir en otros proyectos</option>
+                <option value="socio">Encontrar un cofundador o socio</option>
+                <option value="talento">Encontrar talento o colaboradores</option>
+                <option value="aprender">Aprender de otros founders</option>
+                <option value="servicios">Ofrecer mis servicios a founders</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
 
-          <div class="form-group">
-            <label for="proyecto">Nombre de tu proyecto o negocio</label>
-            <input type="text" id="proyecto" name="proyecto" required>
-          </div>
+            <div class="form-group">
+              <label for="pin">Elige un PIN de 4 dígitos
+                <span class="label-hint">Este PIN te servirá para iniciar sesión al directorio</span>
+              </label>
+              <input type="number" id="pin" name="pin" min="1000" max="9999" placeholder="1234" required>
+            </div>
 
-          <div class="form-group">
-            <label for="descripcion">¿Qué hace tu proyecto en una oración?</label>
-            <textarea id="descripcion" name="descripcion" required></textarea>
-          </div>
+            <div class="form-group checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="privacidad" name="privacidad" required>
+                <span class="checkbox-text">He leído y acepto la <a href="/founders/privacidad" target="_blank">política de privacidad</a></span>
+              </label>
+            </div>
 
-          <div class="form-group">
-            <label for="etapa">Etapa actual</label>
-            <select id="etapa" name="etapa" required>
-              <option value="" disabled selected>Selecciona una opción</option>
-              <option value="idea">Todavía es una idea</option>
-              <option value="construccion">En construcción</option>
-              <option value="ingresos">Ya genera ingresos</option>
-              <option value="escalando">Escalando</option>
-            </select>
+            <div class="step-buttons">
+              <button type="button" class="btn-back" id="btnBack">Atrás</button>
+              <button type="submit" class="btn-submit" id="btnSubmit">
+                <span class="btn-text">Entrar a la comunidad</span>
+                <span class="spinner"></span>
+              </button>
+            </div>
           </div>
-
-          <div class="form-group">
-            <label for="interes">¿Qué buscas en la comunidad?</label>
-            <select id="interes" name="interes" required>
-              <option value="" disabled selected>Selecciona tu interés principal</option>
-              <option value="networking">Hacer networking y conexiones</option>
-              <option value="inversion">Buscar inversión para mi proyecto</option>
-              <option value="invertir">Invertir en otros proyectos</option>
-              <option value="socio">Encontrar un cofundador o socio</option>
-              <option value="talento">Encontrar talento o colaboradores</option>
-              <option value="aprender">Aprender de otros founders</option>
-              <option value="servicios">Ofrecer mis servicios a founders</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="pin">Elige un PIN de 4 dígitos
-              <span class="label-hint">Este PIN te servirá para iniciar sesión al directorio</span>
-            </label>
-            <input type="number" id="pin" name="pin" min="1000" max="9999" placeholder="1234" required>
-          </div>
-
-          <div class="form-group checkbox-group">
-            <label class="checkbox-label">
-              <input type="checkbox" id="privacidad" name="privacidad" required>
-              <span class="checkbox-text">He leído y acepto la <a href="/founders/privacidad" target="_blank">política de privacidad</a></span>
-            </label>
-          </div>
-
-          <button type="submit" class="btn-submit" id="btnSubmit">
-            <span class="btn-text">Entrar a la comunidad</span>
-            <span class="spinner"></span>
-          </button>
 
           <div class="error-msg" id="errorMsg"></div>
         </form>
@@ -933,6 +1044,53 @@
         hideAllCards();
         requestLocation();
       });
+
+      // Step navigation
+      const formStep1 = document.getElementById('formStep1');
+      const formStep2 = document.getElementById('formStep2');
+      const stepDot1 = document.getElementById('stepDot1');
+      const stepDot2 = document.getElementById('stepDot2');
+      const stepLine = document.getElementById('stepLine');
+      const btnNext = document.getElementById('btnNext');
+      const btnBack = document.getElementById('btnBack');
+
+      function goToStep2() {
+        // Validate step 1 fields
+        const nombre = form.nombre.value.trim();
+        const ciudad = form.ciudad.value;
+        const telefono = form.telefono.value.trim();
+        const proyecto = form.proyecto.value.trim();
+        const descripcion = form.descripcion.value.trim();
+
+        if (!nombre || !ciudad || !telefono || !proyecto || !descripcion) {
+          errorMsg.textContent = 'Por favor completa todos los campos antes de continuar.';
+          errorMsg.classList.add('visible');
+          return;
+        }
+
+        errorMsg.classList.remove('visible');
+        formStep1.style.display = 'none';
+        formStep2.style.display = 'block';
+        stepDot1.classList.remove('active');
+        stepDot1.classList.add('completed');
+        stepDot2.classList.add('active');
+        stepLine.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function goToStep1() {
+        formStep1.style.display = 'block';
+        formStep2.style.display = 'none';
+        stepDot1.classList.add('active');
+        stepDot1.classList.remove('completed');
+        stepDot2.classList.remove('active');
+        stepLine.classList.remove('active');
+        errorMsg.classList.remove('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      btnNext.addEventListener('click', goToStep2);
+      btnBack.addEventListener('click', goToStep1);
 
       // Initial check: fetch config from Supabase
       try {
