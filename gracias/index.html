@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pago exitoso — Teokaye</title>
+<meta name="description" content="Tu pago fue exitoso. Pronto recibirás los detalles de tu evento por WhatsApp.">
+<link rel="icon" type="image/png" href="../favicon.png">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deep:#461D14;--terra:#B8826B;--sand:#E6E0D6;
+  --bg:#F5F1EB;--carbon:#1E1B18;
+  --muted:rgba(30,27,24,0.55);--border:rgba(70,29,20,0.12);
+  --green:#25D366;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--carbon);
+  font-size:16px;
+  line-height:1.6;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+
+.container{
+  max-width:480px;
+  text-align:center;
+}
+
+.icon{
+  width:80px;
+  height:80px;
+  margin:0 auto 28px;
+  background:var(--green);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 8px 32px rgba(37,211,102,0.25);
+  animation:pop .5s cubic-bezier(.34,1.56,.64,1);
+}
+.icon svg{
+  width:40px;
+  height:40px;
+  fill:white;
+}
+
+@keyframes pop{
+  0%{transform:scale(0);opacity:0;}
+  100%{transform:scale(1);opacity:1;}
+}
+
+h1{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(28px,7vw,36px);
+  color:var(--deep);
+  line-height:1.15;
+  margin-bottom:16px;
+}
+
+.message{
+  font-size:17px;
+  color:var(--muted);
+  margin-bottom:36px;
+  max-width:360px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  background:var(--deep);
+  color:var(--sand);
+  border:none;
+  border-radius:8px;
+  padding:16px 36px;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  font-family:'DM Sans',sans-serif;
+  text-decoration:none;
+  transition:all .2s ease;
+  box-shadow:0 4px 20px rgba(70,29,20,0.2);
+}
+.btn:hover{
+  background:var(--carbon);
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(70,29,20,0.25);
+}
+
+.help{
+  margin-top:48px;
+  font-size:14px;
+  color:var(--muted);
+}
+.help a{
+  color:var(--terra);
+  text-decoration:none;
+}
+.help a:hover{
+  text-decoration:underline;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="icon">
+    <svg viewBox="0 0 24 24">
+      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+    </svg>
+  </div>
+
+  <h1>Tu lugar esta confirmado!</h1>
+
+  <p class="message">
+    Tu pago fue exitoso. En unos momentos recibiras un WhatsApp con todos los detalles del evento.
+  </p>
+
+  <a href="https://teokaye.mx/menu" class="btn">
+    Ver menu
+  </a>
+
+  <p class="help">
+    Dudas? Escribenos al <a href="https://wa.me/522213628681">221 362 8681</a>
+  </p>
+</div>
+
+</body>
+</html>
