@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Check-in | Teokaye</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/favicon.ico">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+    }
+
+    /* States */
+    .state {
+      display: none;
+    }
+    .state.active {
+      display: block;
+    }
+
+    /* Loading */
+    .loading-state {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #e5e7eb;
+      border-top-color: #111;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Invalid */
+    .invalid-state {
+      background: #fef2f2;
+      border-radius: 16px;
+      padding: 48px 24px;
+      text-align: center;
+    }
+    .invalid-icon {
+      width: 64px;
+      height: 64px;
+      background: #fee2e2;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .invalid-icon svg {
+      width: 32px;
+      height: 32px;
+      color: #dc2626;
+    }
+    .invalid-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #991b1b;
+      margin-bottom: 8px;
+    }
+    .invalid-text {
+      font-size: 14px;
+      color: #b91c1c;
+    }
+
+    /* Card */
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* Badge HOY */
+    .badge-hoy {
+      display: inline-block;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 6px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    /* Nombre */
+    .nombre-asistente {
+      font-size: 28px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    /* Badge opcion */
+    .badge {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 8px;
+    }
+    .badge-cover {
+      background: #fef2f2;
+      color: #991b1b;
+    }
+    .badge-premium {
+      background: #f5f3ff;
+      color: #6d28d9;
+    }
+    .badge-basica {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+    .badge-gratis {
+      background: #f3f4f6;
+      color: #374151;
+    }
+    .badge-comunidad {
+      background: #f0fdf4;
+      color: #15803d;
+    }
+
+    /* Acompanantes */
+    .acompanantes {
+      font-size: 15px;
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: #e5e7eb;
+      margin: 20px 0;
+    }
+
+    /* Evento info */
+    .evento-nombre {
+      font-size: 16px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 4px;
+    }
+    .evento-artista {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+    .evento-fecha {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    /* Historial */
+    .historial-stats {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+    .badge-historial {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+    .badge-baja {
+      background: #fff7ed;
+      color: #c2410c;
+    }
+    .badge-frecuente {
+      background: #f0fdf4;
+      color: #15803d;
+    }
+    .badge-primera {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    /* Boton confirmar */
+    .btn-confirmar {
+      width: 100%;
+      height: 56px;
+      background: #111;
+      color: #fff;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-confirmar:hover {
+      background: #333;
+    }
+    .btn-confirmar:active {
+      transform: scale(0.98);
+    }
+    .btn-confirmar:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-confirmar .spinner-btn {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* Banner ya registrado */
+    .banner-ya-registrado {
+      background: #fef3c7;
+      color: #92400e;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .banner-ya-registrado svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Error banner */
+    .banner-error {
+      background: #fef2f2;
+      color: #dc2626;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-reintentar {
+      width: 100%;
+      height: 48px;
+      background: #fff;
+      color: #111;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 16px;
+    }
+
+    /* Confirmado fullscreen */
+    .confirmado-state {
+      position: fixed;
+      inset: 0;
+      background: #16a34a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+      padding: 24px;
+    }
+    .confirmado-check {
+      width: 80px;
+      height: 80px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .confirmado-check svg {
+      width: 48px;
+      height: 48px;
+    }
+    .confirmado-titulo {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .confirmado-nombre {
+      font-size: 20px;
+      font-weight: 500;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+    .confirmado-hora {
+      font-size: 14px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Loading -->
+    <div class="state loading-state active" id="loadingState">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Invalid -->
+    <div class="state invalid-state" id="invalidState">
+      <div class="invalid-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="15" y1="9" x2="9" y2="15"/>
+          <line x1="9" y1="9" x2="15" y2="15"/>
+        </svg>
+      </div>
+      <div class="invalid-title">QR no valido</div>
+      <div class="invalid-text">Este codigo no existe</div>
+    </div>
+
+    <!-- Ready / Ya registrado / Error -->
+    <div class="state" id="readyState">
+      <!-- Banner ya registrado (hidden by default) -->
+      <div class="banner-ya-registrado" id="bannerYaRegistrado" style="display: none;">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+        <span id="yaRegistradoText">Entrada ya registrada</span>
+      </div>
+
+      <!-- Banner error (hidden by default) -->
+      <div class="banner-error" id="bannerError" style="display: none;">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+        <span id="errorText">Error al confirmar</span>
+      </div>
+
+      <div class="card">
+        <!-- Badge HOY -->
+        <div class="badge-hoy" id="badgeHoy" style="display: none;">HOY</div>
+
+        <!-- Nombre -->
+        <div class="nombre-asistente" id="nombreAsistente"></div>
+
+        <!-- Badge opcion -->
+        <div class="badge" id="badgeOpcion"></div>
+
+        <!-- Acompanantes -->
+        <div class="acompanantes" id="acompanantes" style="display: none;"></div>
+
+        <div class="divider"></div>
+
+        <!-- Evento info -->
+        <div class="evento-nombre" id="eventoNombre"></div>
+        <div class="evento-artista" id="eventoArtista" style="display: none;"></div>
+        <div class="evento-fecha" id="eventoFecha"></div>
+
+        <div class="divider"></div>
+
+        <!-- Historial -->
+        <div class="historial-stats" id="historialStats"></div>
+        <div class="badge-historial" id="badgeHistorial"></div>
+
+        <!-- Boton confirmar -->
+        <button class="btn-confirmar" id="btnConfirmar">
+          Confirmar llegada
+        </button>
+
+        <!-- Boton reintentar (hidden by default) -->
+        <button class="btn-reintentar" id="btnReintentar" style="display: none;">
+          Reintentar
+        </button>
+      </div>
+    </div>
+
+    <!-- Confirmado fullscreen -->
+    <div class="state confirmado-state" id="confirmadoState">
+      <div class="confirmado-check">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <div class="confirmado-titulo">Bienvenido!</div>
+      <div class="confirmado-nombre" id="confirmadoNombre"></div>
+      <div class="confirmado-hora" id="confirmadoHora"></div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════════════════
+    // CONFIGURACION SUPABASE
+    // ═══════════════════════════════════════════════════════════════════════════
+    const SUPABASE_URL = 'https://xfllewbfqxsnkltybqiw.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmbGxld2JmcXhzbmtsdHlicWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MzgyMTYsImV4cCI6MjA4OTUxNDIxNn0.8DgRYmM7_pBQ3shLk0hRiAUf4FE8DSYCXgPbVJkThG4';
+
+    async function supabaseFetch(endpoint, options = {}) {
+      const url = `${SUPABASE_URL}/rest/v1/${endpoint}`;
+      const headers = {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        ...options.headers
+      };
+      const response = await fetch(url, { ...options, headers });
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || `Error ${response.status}`);
+      }
+      const text = await response.text();
+      return text ? JSON.parse(text) : null;
+    }
+
+    async function supabaseRpc(fnName, params) {
+      const url = `${SUPABASE_URL}/rest/v1/rpc/${fnName}`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify(params)
+      });
+      const text = await response.text();
+      return text ? JSON.parse(text) : null;
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // STATE
+    // ═══════════════════════════════════════════════════════════════════════════
+    let reserva = null;
+    let evento = null;
+    let historial = null;
+    let token = null;
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════════════════════════════════════════
+    document.addEventListener('DOMContentLoaded', init);
+
+    async function init() {
+      const params = new URLSearchParams(window.location.search);
+      token = params.get('token');
+
+      if (!token) {
+        showState('invalidState');
+        return;
+      }
+
+      await loadData();
+    }
+
+    async function loadData() {
+      showState('loadingState');
+
+      try {
+        // Buscar reserva por stripe_session_id o por id
+        const results = await supabaseFetch(
+          `reservas?select=*,eventos(*)&or=(stripe_session_id.eq.${token},id.eq.${token})`
+        );
+
+        if (!results || results.length === 0) {
+          showState('invalidState');
+          return;
+        }
+
+        reserva = results[0];
+        evento = reserva.eventos;
+
+        // Cargar historial
+        const historialResults = await supabaseFetch(
+          `vista_historial_persona?phone=eq.${reserva.phone}`
+        );
+        historial = historialResults && historialResults.length > 0 ? historialResults[0] : null;
+
+        renderCard();
+
+      } catch (error) {
+        console.error('Error loading data:', error);
+        showState('invalidState');
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // RENDER
+    // ═══════════════════════════════════════════════════════════════════════════
+    function renderCard() {
+      // Check if es hoy
+      const hoy = new Date().toISOString().split('T')[0];
+      const esHoy = evento.fecha === hoy;
+
+      // Badge HOY
+      const badgeHoy = document.getElementById('badgeHoy');
+      badgeHoy.style.display = esHoy ? 'inline-block' : 'none';
+
+      // Nombre
+      document.getElementById('nombreAsistente').textContent = reserva.nombre;
+
+      // Badge opcion
+      const badgeOpcion = document.getElementById('badgeOpcion');
+      const { badgeClass, badgeText } = getBadgeInfo();
+      badgeOpcion.className = `badge ${badgeClass}`;
+      badgeOpcion.textContent = badgeText;
+
+      // Acompanantes
+      const acompanantes = document.getElementById('acompanantes');
+      if (reserva.numero_lugares > 1) {
+        acompanantes.style.display = 'block';
+        acompanantes.textContent = `Viene con ${reserva.numero_lugares} personas`;
+      }
+
+      // Evento info
+      document.getElementById('eventoNombre').textContent = evento.nombre;
+
+      const eventoArtista = document.getElementById('eventoArtista');
+      if (evento.artista) {
+        eventoArtista.style.display = 'block';
+        eventoArtista.textContent = evento.artista;
+      }
+
+      document.getElementById('eventoFecha').textContent = formatFechaHora(evento.fecha, evento.hora);
+
+      // Historial
+      const historialStats = document.getElementById('historialStats');
+      const badgeHistorial = document.getElementById('badgeHistorial');
+
+      if (historial) {
+        historialStats.textContent = `${historial.total_reservas} reservas · ${historial.total_asistencias} asistencias`;
+
+        if (historial.porcentaje_asistencia < 50 && historial.total_reservas > 2) {
+          badgeHistorial.className = 'badge-historial badge-baja';
+          badgeHistorial.textContent = '↓ Asistencia baja';
+        } else if (historial.porcentaje_asistencia >= 80) {
+          badgeHistorial.className = 'badge-historial badge-frecuente';
+          badgeHistorial.textContent = '★ Frecuente';
+        } else {
+          badgeHistorial.className = 'badge-historial badge-primera';
+          badgeHistorial.textContent = 'Primera vez';
+        }
+      } else {
+        historialStats.textContent = '0 reservas · 0 asistencias';
+        badgeHistorial.className = 'badge-historial badge-primera';
+        badgeHistorial.textContent = 'Primera vez';
+      }
+
+      // Check if ya registro
+      if (reserva.checkin) {
+        document.getElementById('bannerYaRegistrado').style.display = 'flex';
+        document.getElementById('yaRegistradoText').textContent =
+          `Entrada ya registrada · ${formatHora(reserva.checkin_at)}`;
+        document.getElementById('btnConfirmar').style.display = 'none';
+      } else {
+        document.getElementById('btnConfirmar').style.display = 'flex';
+        document.getElementById('btnConfirmar').onclick = handleConfirmar;
+      }
+
+      document.getElementById('btnReintentar').onclick = loadData;
+
+      showState('readyState');
+    }
+
+    function getBadgeInfo() {
+      // Tipo comunidad
+      if (evento.tipo_comunidad) {
+        return { badgeClass: 'badge-comunidad', badgeText: 'Entrada libre' };
+      }
+
+      // Tipo cover
+      if (evento.tipo_evento === 'cover') {
+        return {
+          badgeClass: 'badge-cover',
+          badgeText: `Cover · $${reserva.monto_pagado} MXN`
+        };
+      }
+
+      // Tipo cooperacion
+      if (evento.tipo_evento === 'cooperacion') {
+        switch (reserva.opcion_elegida) {
+          case 'garantia_premium':
+            return {
+              badgeClass: 'badge-premium',
+              badgeText: `Garantia Premium · $${reserva.monto_pagado} MXN`
+            };
+          case 'garantia_basica':
+            return {
+              badgeClass: 'badge-basica',
+              badgeText: `Garantia Basica · $${reserva.monto_pagado} MXN`
+            };
+          case 'gratis':
+            return {
+              badgeClass: 'badge-gratis',
+              badgeText: `Entrada libre · antes de ${formatHoraSimple(evento.hora_limite_gratis)}`
+            };
+        }
+      }
+
+      // Default
+      return { badgeClass: 'badge-gratis', badgeText: 'Entrada libre' };
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // CONFIRMAR
+    // ═══════════════════════════════════════════════════════════════════════════
+    async function handleConfirmar() {
+      const btn = document.getElementById('btnConfirmar');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner-btn"></div>';
+
+      try {
+        const result = await supabaseRpc('hacer_checkin', { p_token: token });
+
+        if (result && result.ok) {
+          // Exito
+          document.getElementById('confirmadoNombre').textContent = result.nombre;
+          document.getElementById('confirmadoHora').textContent = formatHora(result.checkin_at);
+          showState('confirmadoState');
+        } else if (result && result.error === 'Ya hizo checkin') {
+          // Ya registrado
+          document.getElementById('bannerYaRegistrado').style.display = 'flex';
+          document.getElementById('yaRegistradoText').textContent =
+            `Entrada ya registrada · ${formatHora(result.checkin_at)}`;
+          btn.style.display = 'none';
+        } else {
+          throw new Error(result?.error || 'Error desconocido');
+        }
+      } catch (error) {
+        console.error('Error confirming:', error);
+        document.getElementById('bannerError').style.display = 'flex';
+        document.getElementById('errorText').textContent = 'Error al confirmar';
+        btn.style.display = 'none';
+        document.getElementById('btnReintentar').style.display = 'block';
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // HELPERS
+    // ═══════════════════════════════════════════════════════════════════════════
+    function showState(stateId) {
+      document.querySelectorAll('.state').forEach(el => el.classList.remove('active'));
+      document.getElementById(stateId).classList.add('active');
+    }
+
+    function formatFechaHora(fecha, hora) {
+      const date = new Date(fecha + 'T12:00:00');
+      const dias = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
+      const meses = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+      const diaSemana = dias[date.getDay()];
+      const dia = date.getDate();
+      const mes = meses[date.getMonth()];
+      const horaFormatted = formatHoraSimple(hora);
+      return `${diaSemana} ${dia} ${mes} · ${horaFormatted}`;
+    }
+
+    function formatHoraSimple(hora) {
+      if (!hora) return '';
+      const [h, m] = hora.split(':');
+      const hour = parseInt(h);
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      const hour12 = hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour);
+      return `${hour12}:${m} ${ampm}`;
+    }
+
+    function formatHora(timestamp) {
+      if (!timestamp) return '';
+      const date = new Date(timestamp);
+      const hours = date.getHours();
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      const hour12 = hours > 12 ? hours - 12 : (hours === 0 ? 12 : hours);
+      return `${hour12}:${minutes} ${ampm}`;
+    }
+  </script>
+</body>
+</html>

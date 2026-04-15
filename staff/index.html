@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Staff | Teokaye</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/favicon.ico">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════
+       PIN SCREEN
+    ═══════════════════════════════════════════════════════════════════════════ */
+    .pin-screen {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .pin-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .pin-subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 32px;
+    }
+    .pin-input {
+      width: 200px;
+      height: 56px;
+      text-align: center;
+      font-family: inherit;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 8px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .pin-input:focus {
+      border-color: #111;
+    }
+    .pin-input.error {
+      border-color: #dc2626;
+      animation: shake 0.3s;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      75% { transform: translateX(8px); }
+    }
+    .pin-error {
+      color: #dc2626;
+      font-size: 14px;
+      margin-top: 12px;
+      height: 20px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════
+       NO EVENTS SCREEN
+    ═══════════════════════════════════════════════════════════════════════════ */
+    .no-events-screen {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+    .no-events-icon {
+      width: 80px;
+      height: 80px;
+      background: #f3f4f6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .no-events-icon svg {
+      width: 40px;
+      height: 40px;
+      color: #9ca3af;
+    }
+    .no-events-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .no-events-date {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════
+       EVENT SELECTOR
+    ═══════════════════════════════════════════════════════════════════════════ */
+    .event-selector {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .selector-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 24px;
+    }
+    .event-option {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .event-option:hover {
+      border-color: #111;
+      background: #fafafa;
+    }
+    .event-option-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 4px;
+    }
+    .event-option-meta {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════
+       DASHBOARD
+    ═══════════════════════════════════════════════════════════════════════════ */
+    .dashboard {
+      display: none;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+    .dashboard.active {
+      display: block;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 16px 20px;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .header-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+    }
+    .btn-scanner {
+      width: 48px;
+      height: 48px;
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    .header-stats {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      font-size: 14px;
+      color: #6b7280;
+    }
+    .stat-item strong {
+      color: #111;
+      font-weight: 600;
+    }
+
+    /* Tabs */
+    .tabs {
+      position: sticky;
+      top: 106px;
+      z-index: 99;
+      background: #fff;
+      display: flex;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .tab {
+      flex: 1;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: #6b7280;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tab.active {
+      color: #111;
+      border-bottom-color: #111;
+    }
+
+    /* Search */
+    .search-container {
+      padding: 16px 20px;
+      background: #fff;
+    }
+    .search-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 16px;
+      font-family: inherit;
+      font-size: 15px;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      outline: none;
+    }
+    .search-input:focus {
+      border-color: #111;
+    }
+
+    /* List */
+    .list {
+      padding: 0 20px 20px;
+    }
+    .list-section {
+      margin-bottom: 24px;
+    }
+    .section-header {
+      font-size: 12px;
+      font-weight: 700;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 16px 0 8px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    /* Row */
+    .row {
+      display: flex;
+      align-items: center;
+      min-height: 56px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f3f4f6;
+      cursor: pointer;
+      gap: 12px;
+    }
+    .row:active {
+      background: #f9fafb;
+    }
+    .row-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .row-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #111;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .row-lugares {
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: 400;
+    }
+    .row-meta {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+    .badge-small {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 100px;
+    }
+    .badge-baja-small {
+      background: #fff7ed;
+      color: #c2410c;
+    }
+
+    /* Badge opciones */
+    .badge-row {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .badge-cover { background: #fef2f2; color: #991b1b; }
+    .badge-premium { background: #f5f3ff; color: #6d28d9; }
+    .badge-basica { background: #eff6ff; color: #1d4ed8; }
+    .badge-gratis { background: #f3f4f6; color: #374151; }
+    .badge-comunidad { background: #f0fdf4; color: #15803d; }
+
+    /* Check button */
+    .btn-check {
+      width: 44px;
+      height: 44px;
+      background: #16a34a;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 20px;
+    }
+    .btn-check:active {
+      background: #15803d;
+    }
+
+    /* Total en evento */
+    .total-evento {
+      text-align: center;
+      padding: 24px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: #6b7280;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════
+       SCANNER OVERLAY
+    ═══════════════════════════════════════════════════════════════════════════ */
+    .scanner-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 200;
+      display: none;
+    }
+    .scanner-overlay.active {
+      display: block;
+    }
+    .scanner-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 201;
+    }
+    .scanner-text {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .btn-close-scanner {
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #qr-reader {
+      width: 100%;
+      height: 100%;
+    }
+    #qr-reader video {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════
+       MODAL
+    ═══════════════════════════════════════════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 400px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .btn-close-modal {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      background: #f3f4f6;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #6b7280;
+    }
+    .modal-nombre {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 12px;
+      padding-right: 40px;
+    }
+    .modal-badge {
+      margin-bottom: 8px;
+    }
+    .modal-lugares {
+      font-size: 15px;
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+    .modal-divider {
+      height: 1px;
+      background: #e5e7eb;
+      margin: 20px 0;
+    }
+    .modal-evento {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+    .modal-historial {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+    .modal-badge-historial {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+    .badge-baja { background: #fff7ed; color: #c2410c; }
+    .badge-frecuente { background: #f0fdf4; color: #15803d; }
+    .badge-primera { background: #f3f4f6; color: #6b7280; }
+
+    .btn-confirmar-modal {
+      width: 100%;
+      height: 56px;
+      background: #16a34a;
+      color: #fff;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-confirmar-modal:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    .modal-registrado {
+      background: #f0fdf4;
+      color: #15803d;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 400;
+      display: none;
+    }
+    .toast.active {
+      display: block;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Loading screen */
+    .loading-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #e5e7eb;
+      border-top-color: #111;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* Hidden */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <!-- PIN Screen -->
+  <div id="pinScreen" class="pin-screen">
+    <div class="pin-title">Acceso Staff</div>
+    <div class="pin-subtitle">Ingresa el PIN de 4 digitos</div>
+    <input type="password" id="pinInput" class="pin-input" maxlength="4" inputmode="numeric" pattern="[0-9]*" autofocus>
+    <div class="pin-error" id="pinError"></div>
+  </div>
+
+  <!-- Loading Screen -->
+  <div id="loadingScreen" class="loading-screen hidden">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- No Events Screen -->
+  <div id="noEventsScreen" class="no-events-screen hidden">
+    <div class="no-events-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+    </div>
+    <div class="no-events-title">No hay eventos hoy</div>
+    <div class="no-events-date" id="noEventsDate"></div>
+  </div>
+
+  <!-- Event Selector -->
+  <div id="eventSelector" class="event-selector hidden">
+    <div class="selector-title">Selecciona el evento</div>
+    <div id="eventOptions"></div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="dashboard">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-top">
+        <div class="header-title" id="headerTitle"></div>
+        <button class="btn-scanner" id="btnScanner">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9.5 6.5v3h-3v-3h3M11 5H5v6h6V5zm-1.5 9.5v3h-3v-3h3M11 13H5v6h6v-6zm6.5-6.5v3h-3v-3h3M19 5h-6v6h6V5zm-6 8h1.5v1.5H13V13zm1.5 1.5H16V16h-1.5v-1.5zM16 13h1.5v1.5H16V13zm-3 3h1.5v1.5H13V16zm1.5 1.5H16V19h-1.5v-1.5zM16 16h1.5v1.5H16V16zm1.5-1.5H19V16h-1.5v-1.5zm0 3H19V19h-1.5v-1.5zM19 13h-1.5v1.5H19V13z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="header-stats" id="headerStats"></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" id="tabPendientes" data-tab="pendientes">Pendientes <span id="countPendientes">0</span></button>
+      <button class="tab" id="tabLlegados" data-tab="llegados">Llegados <span id="countLlegados">0</span></button>
+    </div>
+
+    <!-- Search -->
+    <div class="search-container">
+      <input type="text" class="search-input" id="searchInput" placeholder="Buscar...">
+    </div>
+
+    <!-- Lists -->
+    <div class="list" id="listPendientes"></div>
+    <div class="list hidden" id="listLlegados"></div>
+  </div>
+
+  <!-- Scanner Overlay -->
+  <div id="scannerOverlay" class="scanner-overlay">
+    <div class="scanner-header">
+      <div class="scanner-text">Apunta al QR del asistente</div>
+      <button class="btn-close-scanner" id="btnCloseScanner">&times;</button>
+    </div>
+    <div id="qr-reader"></div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modalOverlay" class="modal-overlay">
+    <div class="modal">
+      <button class="btn-close-modal" id="btnCloseModal">&times;</button>
+      <div class="modal-nombre" id="modalNombre"></div>
+      <div class="modal-badge" id="modalBadge"></div>
+      <div class="modal-lugares" id="modalLugares"></div>
+      <div class="modal-divider"></div>
+      <div class="modal-evento" id="modalEvento"></div>
+      <div class="modal-divider"></div>
+      <div class="modal-historial" id="modalHistorial"></div>
+      <div id="modalBadgeHistorial"></div>
+      <button class="btn-confirmar-modal" id="btnConfirmarModal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+        </svg>
+        Confirmar llegada
+      </button>
+      <div class="modal-registrado hidden" id="modalRegistrado">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+        </svg>
+        <span id="modalRegistradoText">Entrada registrada</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- html5-qrcode library -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════════════════
+    // CONFIGURACION
+    // ═══════════════════════════════════════════════════════════════════════════
+    const SUPABASE_URL = 'https://xfllewbfqxsnkltybqiw.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmbGxld2JmcXhzbmtsdHlicWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MzgyMTYsImV4cCI6MjA4OTUxNDIxNn0.8DgRYmM7_pBQ3shLk0hRiAUf4FE8DSYCXgPbVJkThG4';
+    const PIN_CORRECTO = '2810';
+    const STORAGE_KEY = 'teokaye_staff';
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // STATE
+    // ═══════════════════════════════════════════════════════════════════════════
+    let eventoActual = null;
+    let pendientes = [];
+    let llegados = [];
+    let currentTab = 'pendientes';
+    let searchQuery = '';
+    let html5QrCode = null;
+    let realtimeChannel = null;
+    let modalReserva = null;
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // SUPABASE HELPERS
+    // ═══════════════════════════════════════════════════════════════════════════
+    async function supabaseFetch(endpoint, options = {}) {
+      const url = `${SUPABASE_URL}/rest/v1/${endpoint}`;
+      const headers = {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        ...options.headers
+      };
+      const response = await fetch(url, { ...options, headers });
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || `Error ${response.status}`);
+      }
+      const text = await response.text();
+      return text ? JSON.parse(text) : null;
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════════════════════════════════════════
+    document.addEventListener('DOMContentLoaded', init);
+
+    function init() {
+      // Check if already authenticated
+      if (sessionStorage.getItem(STORAGE_KEY) === '1') {
+        hideAllScreens();
+        showScreen('loadingScreen');
+        loadEventosHoy();
+      } else {
+        setupPinInput();
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PIN
+    // ═══════════════════════════════════════════════════════════════════════════
+    function setupPinInput() {
+      const pinInput = document.getElementById('pinInput');
+      const pinError = document.getElementById('pinError');
+
+      pinInput.addEventListener('input', (e) => {
+        const value = e.target.value.replace(/\D/g, '').slice(0, 4);
+        e.target.value = value;
+        pinError.textContent = '';
+        pinInput.classList.remove('error');
+
+        if (value.length === 4) {
+          if (value === PIN_CORRECTO) {
+            sessionStorage.setItem(STORAGE_KEY, '1');
+            hideAllScreens();
+            showScreen('loadingScreen');
+            loadEventosHoy();
+          } else {
+            pinInput.classList.add('error');
+            pinError.textContent = 'PIN incorrecto';
+            setTimeout(() => {
+              pinInput.value = '';
+              pinInput.classList.remove('error');
+            }, 500);
+          }
+        }
+      });
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // LOAD EVENTOS
+    // ═══════════════════════════════════════════════════════════════════════════
+    async function loadEventosHoy() {
+      try {
+        const hoy = new Date().toISOString().split('T')[0];
+        const eventos = await supabaseFetch(`eventos?estado=eq.activo&fecha=eq.${hoy}&order=hora.asc`);
+
+        if (!eventos || eventos.length === 0) {
+          hideAllScreens();
+          showScreen('noEventsScreen');
+          document.getElementById('noEventsDate').textContent = formatFechaLarga(hoy);
+          return;
+        }
+
+        if (eventos.length === 1) {
+          selectEvento(eventos[0]);
+        } else {
+          showEventSelector(eventos);
+        }
+      } catch (error) {
+        console.error('Error loading events:', error);
+        showToast('Error al cargar eventos');
+      }
+    }
+
+    function showEventSelector(eventos) {
+      hideAllScreens();
+      showScreen('eventSelector');
+      const container = document.getElementById('eventOptions');
+      container.innerHTML = '';
+
+      eventos.forEach(evento => {
+        const div = document.createElement('div');
+        div.className = 'event-option';
+        div.innerHTML = `
+          <div class="event-option-name">${evento.nombre}</div>
+          <div class="event-option-meta">${formatHoraSimple(evento.hora)} · ${getTipoEvento(evento)}</div>
+        `;
+        div.onclick = () => selectEvento(evento);
+        container.appendChild(div);
+      });
+    }
+
+    async function selectEvento(evento) {
+      eventoActual = evento;
+      hideAllScreens();
+      showScreen('loadingScreen');
+      await loadReservas();
+      setupDashboard();
+      setupRealtime();
+      hideAllScreens();
+      document.getElementById('dashboard').classList.add('active');
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // LOAD RESERVAS
+    // ═══════════════════════════════════════════════════════════════════════════
+    async function loadReservas() {
+      try {
+        // Load pendientes with historial
+        const pendientesData = await supabaseFetch(
+          `reservas?evento_id=eq.${eventoActual.id}&checkin=eq.false&estado=not.in.(cancelado,en_lista)&select=*,vista_historial_persona(porcentaje_asistencia,total_reservas,total_asistencias)&order=nombre.asc`
+        );
+
+        // Sort by opcion priority
+        pendientes = (pendientesData || []).map(r => ({
+          ...r,
+          historial: r.vista_historial_persona?.[0] || null
+        })).sort((a, b) => {
+          const order = { cover: 1, garantia_premium: 2, garantia_basica: 3, gratis: 4 };
+          const orderA = order[a.opcion_elegida] || 5;
+          const orderB = order[b.opcion_elegida] || 5;
+          if (orderA !== orderB) return orderA - orderB;
+          return a.nombre.localeCompare(b.nombre);
+        });
+
+        // Load llegados
+        const llegadosData = await supabaseFetch(
+          `reservas?evento_id=eq.${eventoActual.id}&checkin=eq.true&select=*&order=checkin_at.desc`
+        );
+        llegados = llegadosData || [];
+
+      } catch (error) {
+        console.error('Error loading reservas:', error);
+        showToast('Error al cargar reservas');
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // DASHBOARD
+    // ═══════════════════════════════════════════════════════════════════════════
+    function setupDashboard() {
+      // Header
+      document.getElementById('headerTitle').textContent = `${eventoActual.nombre} · ${formatHoraSimple(eventoActual.hora)}`;
+      updateStats();
+
+      // Tabs
+      document.getElementById('tabPendientes').onclick = () => switchTab('pendientes');
+      document.getElementById('tabLlegados').onclick = () => switchTab('llegados');
+
+      // Search
+      document.getElementById('searchInput').oninput = (e) => {
+        searchQuery = e.target.value.toLowerCase();
+        renderList();
+      };
+
+      // Scanner
+      document.getElementById('btnScanner').onclick = openScanner;
+      document.getElementById('btnCloseScanner').onclick = closeScanner;
+
+      // Modal
+      document.getElementById('btnCloseModal').onclick = closeModal;
+      document.getElementById('modalOverlay').onclick = (e) => {
+        if (e.target === document.getElementById('modalOverlay')) closeModal();
+      };
+
+      renderList();
+
+      // Auto refresh stats every 60s
+      setInterval(updateStats, 60000);
+    }
+
+    function updateStats() {
+      const totalEsperados = pendientes.reduce((sum, r) => sum + (r.numero_lugares || 1), 0) +
+                            llegados.reduce((sum, r) => sum + (r.numero_lugares || 1), 0);
+      const totalLlegados = llegados.reduce((sum, r) => sum + (r.numero_lugares || 1), 0);
+      const totalRecaudado = llegados.reduce((sum, r) => sum + (r.monto_pagado || 0), 0);
+
+      let statsHTML = `<div class="stat-item"><strong>${totalLlegados}</strong> / ${totalEsperados} llegaron</div>`;
+
+      if (!eventoActual.tipo_comunidad) {
+        statsHTML += `<div class="stat-item"><strong>$${totalRecaudado}</strong> recaudado</div>`;
+      }
+
+      if (pendientes.length > 0) {
+        statsHTML += `<div class="stat-item"><strong>${pendientes.length}</strong> en espera</div>`;
+      }
+
+      document.getElementById('headerStats').innerHTML = statsHTML;
+      document.getElementById('countPendientes').textContent = pendientes.length;
+      document.getElementById('countLlegados').textContent = llegados.length;
+    }
+
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById(tab === 'pendientes' ? 'tabPendientes' : 'tabLlegados').classList.add('active');
+      document.getElementById('listPendientes').classList.toggle('hidden', tab !== 'pendientes');
+      document.getElementById('listLlegados').classList.toggle('hidden', tab !== 'llegados');
+      renderList();
+    }
+
+    function renderList() {
+      if (currentTab === 'pendientes') {
+        renderPendientes();
+      } else {
+        renderLlegados();
+      }
+    }
+
+    function renderPendientes() {
+      const container = document.getElementById('listPendientes');
+      const filtered = pendientes.filter(r =>
+        r.nombre.toLowerCase().includes(searchQuery)
+      );
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty-state">No hay reservas pendientes</div>';
+        return;
+      }
+
+      // Group by tipo for cooperacion events
+      if (eventoActual.tipo_evento === 'cooperacion' && !eventoActual.tipo_comunidad) {
+        const conGarantia = filtered.filter(r => r.opcion_elegida === 'garantia_premium' || r.opcion_elegida === 'garantia_basica');
+        const sinGarantia = filtered.filter(r => r.opcion_elegida === 'gratis');
+
+        let html = '';
+
+        if (conGarantia.length > 0) {
+          html += `<div class="list-section">
+            <div class="section-header">Con garantia (${conGarantia.length})</div>
+            ${conGarantia.map(r => renderRow(r)).join('')}
+          </div>`;
+        }
+
+        if (sinGarantia.length > 0) {
+          html += `<div class="list-section">
+            <div class="section-header">Entrada libre (${sinGarantia.length})</div>
+            ${sinGarantia.map(r => renderRow(r)).join('')}
+          </div>`;
+        }
+
+        container.innerHTML = html;
+      } else {
+        container.innerHTML = filtered.map(r => renderRow(r)).join('');
+      }
+
+      // Add click handlers
+      container.querySelectorAll('.row').forEach(row => {
+        const reservaId = row.dataset.id;
+        row.onclick = (e) => {
+          if (!e.target.closest('.btn-check')) {
+            const reserva = pendientes.find(r => r.id === reservaId);
+            if (reserva) openModal(reserva);
+          }
+        };
+      });
+
+      container.querySelectorAll('.btn-check').forEach(btn => {
+        btn.onclick = async (e) => {
+          e.stopPropagation();
+          const reservaId = btn.dataset.id;
+          await quickCheckin(reservaId);
+        };
+      });
+    }
+
+    function renderRow(r) {
+      const badgeInfo = getBadgeInfo(r);
+      const tieneAsistenciaBaja = r.historial &&
+        r.historial.porcentaje_asistencia < 50 &&
+        r.historial.total_reservas > 2;
+
+      return `
+        <div class="row" data-id="${r.id}">
+          <div class="row-content">
+            <div class="row-name">
+              ${r.nombre}
+              ${r.numero_lugares > 1 ? `<span class="row-lugares">(${r.numero_lugares} personas)</span>` : ''}
+              ${tieneAsistenciaBaja ? '<span class="badge-small badge-baja-small">↓</span>' : ''}
+            </div>
+            <div class="row-meta">
+              <span class="badge-row ${badgeInfo.class}">${badgeInfo.text}</span>
+            </div>
+          </div>
+          <button class="btn-check" data-id="${r.id}">&#10003;</button>
+        </div>
+      `;
+    }
+
+    function renderLlegados() {
+      const container = document.getElementById('listLlegados');
+      const filtered = llegados.filter(r =>
+        r.nombre.toLowerCase().includes(searchQuery)
+      );
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty-state">Nadie ha llegado aun</div>';
+        return;
+      }
+
+      let html = filtered.map(r => {
+        const badgeInfo = getBadgeInfo(r);
+        return `
+          <div class="row">
+            <div class="row-content">
+              <div class="row-name">
+                ${r.nombre}
+                ${r.numero_lugares > 1 ? `<span class="row-lugares">(${r.numero_lugares} personas)</span>` : ''}
+              </div>
+              <div class="row-meta">
+                ${formatHora(r.checkin_at)}
+                ${r.monto_pagado > 0 ? ` · $${r.monto_pagado}` : ''}
+              </div>
+            </div>
+            <span class="badge-row ${badgeInfo.class}">${badgeInfo.shortText || badgeInfo.text}</span>
+          </div>
+        `;
+      }).join('');
+
+      // Total en evento
+      const totalPersonas = llegados.reduce((sum, r) => sum + (r.numero_lugares || 1), 0);
+      html += `<div class="total-evento">${totalPersonas} personas en el evento</div>`;
+
+      container.innerHTML = html;
+    }
+
+    function getBadgeInfo(reserva) {
+      if (eventoActual.tipo_comunidad) {
+        return { class: 'badge-comunidad', text: 'Libre', shortText: 'Libre' };
+      }
+      if (eventoActual.tipo_evento === 'cover') {
+        return { class: 'badge-cover', text: 'Cover', shortText: 'Cover' };
+      }
+      switch (reserva.opcion_elegida) {
+        case 'garantia_premium':
+          return { class: 'badge-premium', text: 'Premium', shortText: 'Premium' };
+        case 'garantia_basica':
+          return { class: 'badge-basica', text: 'Basica', shortText: 'Basica' };
+        case 'gratis':
+          return { class: 'badge-gratis', text: 'Libre', shortText: 'Libre' };
+        default:
+          return { class: 'badge-gratis', text: 'Libre', shortText: 'Libre' };
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // QUICK CHECKIN
+    // ═══════════════════════════════════════════════════════════════════════════
+    async function quickCheckin(reservaId) {
+      // Optimistic update
+      const reserva = pendientes.find(r => r.id === reservaId);
+      if (!reserva) return;
+
+      pendientes = pendientes.filter(r => r.id !== reservaId);
+      const checkinAt = new Date().toISOString();
+      llegados = [{ ...reserva, checkin: true, checkin_at: checkinAt }, ...llegados];
+      updateStats();
+      renderList();
+
+      try {
+        await supabaseFetch(`reservas?id=eq.${reservaId}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ checkin: true, checkin_at: checkinAt })
+        });
+
+        await supabaseFetch('asistencias', {
+          method: 'POST',
+          body: JSON.stringify({
+            phone: reserva.phone,
+            evento_id: eventoActual.id,
+            reserva_id: reservaId
+          })
+        });
+      } catch (error) {
+        console.error('Error on checkin:', error);
+        // Revert on error
+        llegados = llegados.filter(r => r.id !== reservaId);
+        pendientes = [...pendientes, reserva].sort((a, b) => a.nombre.localeCompare(b.nombre));
+        updateStats();
+        renderList();
+        showToast('Error al confirmar');
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // SCANNER
+    // ═══════════════════════════════════════════════════════════════════════════
+    async function openScanner() {
+      document.getElementById('scannerOverlay').classList.add('active');
+
+      html5QrCode = new Html5Qrcode('qr-reader');
+
+      try {
+        await html5QrCode.start(
+          { facingMode: 'environment' },
+          {
+            fps: 10,
+            qrbox: { width: 250, height: 250 }
+          },
+          onScanSuccess,
+          () => {}
+        );
+      } catch (error) {
+        console.error('Error starting scanner:', error);
+        showToast('No se pudo acceder a la camara');
+        closeScanner();
+      }
+    }
+
+    function closeScanner() {
+      document.getElementById('scannerOverlay').classList.remove('active');
+      if (html5QrCode) {
+        html5QrCode.stop().catch(() => {});
+        html5QrCode = null;
+      }
+    }
+
+    async function onScanSuccess(decodedText) {
+      // Check if it's a checkin URL
+      if (!decodedText.includes('checkin?token=')) {
+        return;
+      }
+
+      closeScanner();
+
+      // Extract token
+      const url = new URL(decodedText);
+      const token = url.searchParams.get('token');
+
+      if (!token) {
+        showToast('QR no reconocido');
+        return;
+      }
+
+      // Find reservation
+      try {
+        const results = await supabaseFetch(
+          `reservas?select=*,eventos(*)&or=(stripe_session_id.eq.${token},id.eq.${token})`
+        );
+
+        if (!results || results.length === 0) {
+          showToast('QR no reconocido');
+          return;
+        }
+
+        const reserva = results[0];
+
+        // Load historial
+        const historialResults = await supabaseFetch(
+          `vista_historial_persona?phone=eq.${reserva.phone}`
+        );
+        reserva.historial = historialResults?.[0] || null;
+
+        openModal(reserva);
+      } catch (error) {
+        console.error('Error finding reservation:', error);
+        showToast('Error al buscar reserva');
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // MODAL
+    // ═══════════════════════════════════════════════════════════════════════════
+    async function openModal(reserva) {
+      modalReserva = reserva;
+
+      // If no historial loaded, load it
+      if (!reserva.historial) {
+        const historialResults = await supabaseFetch(
+          `vista_historial_persona?phone=eq.${reserva.phone}`
+        );
+        reserva.historial = historialResults?.[0] || null;
+      }
+
+      document.getElementById('modalNombre').textContent = reserva.nombre;
+
+      // Badge
+      const badgeInfo = getBadgeInfo(reserva);
+      document.getElementById('modalBadge').innerHTML =
+        `<span class="badge-row ${badgeInfo.class}">${badgeInfo.text}</span>`;
+
+      // Lugares
+      if (reserva.numero_lugares > 1) {
+        document.getElementById('modalLugares').textContent = `Viene con ${reserva.numero_lugares} personas`;
+        document.getElementById('modalLugares').style.display = 'block';
+      } else {
+        document.getElementById('modalLugares').style.display = 'none';
+      }
+
+      // Evento
+      const evento = reserva.eventos || eventoActual;
+      document.getElementById('modalEvento').textContent =
+        `${evento.nombre} · ${formatHoraSimple(evento.hora)}`;
+
+      // Historial
+      if (reserva.historial) {
+        document.getElementById('modalHistorial').textContent =
+          `${reserva.historial.total_reservas} reservas · ${reserva.historial.total_asistencias} asistencias · ${reserva.historial.porcentaje_asistencia}%`;
+
+        const badgeHistorial = document.getElementById('modalBadgeHistorial');
+        if (reserva.historial.porcentaje_asistencia < 50 && reserva.historial.total_reservas > 2) {
+          badgeHistorial.innerHTML = '<span class="modal-badge-historial badge-baja">↓ Asistencia baja</span>';
+        } else if (reserva.historial.porcentaje_asistencia >= 80) {
+          badgeHistorial.innerHTML = '<span class="modal-badge-historial badge-frecuente">★ Frecuente</span>';
+        } else {
+          badgeHistorial.innerHTML = '<span class="modal-badge-historial badge-primera">Primera vez</span>';
+        }
+      } else {
+        document.getElementById('modalHistorial').textContent = '0 reservas · 0 asistencias';
+        document.getElementById('modalBadgeHistorial').innerHTML =
+          '<span class="modal-badge-historial badge-primera">Primera vez</span>';
+      }
+
+      // Button or registered message
+      const btnConfirmar = document.getElementById('btnConfirmarModal');
+      const modalRegistrado = document.getElementById('modalRegistrado');
+
+      if (reserva.checkin) {
+        btnConfirmar.classList.add('hidden');
+        modalRegistrado.classList.remove('hidden');
+        document.getElementById('modalRegistradoText').textContent =
+          `Entrada registrada · ${formatHora(reserva.checkin_at)}`;
+      } else {
+        btnConfirmar.classList.remove('hidden');
+        modalRegistrado.classList.add('hidden');
+        btnConfirmar.onclick = () => confirmFromModal();
+      }
+
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+      modalReserva = null;
+    }
+
+    async function confirmFromModal() {
+      if (!modalReserva) return;
+
+      const btn = document.getElementById('btnConfirmarModal');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner"></div>';
+
+      try {
+        const checkinAt = new Date().toISOString();
+
+        await supabaseFetch(`reservas?id=eq.${modalReserva.id}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ checkin: true, checkin_at: checkinAt })
+        });
+
+        await supabaseFetch('asistencias', {
+          method: 'POST',
+          body: JSON.stringify({
+            phone: modalReserva.phone,
+            evento_id: modalReserva.evento_id || eventoActual.id,
+            reserva_id: modalReserva.id
+          })
+        });
+
+        // Update local state
+        pendientes = pendientes.filter(r => r.id !== modalReserva.id);
+        llegados = [{ ...modalReserva, checkin: true, checkin_at: checkinAt }, ...llegados];
+        updateStats();
+        renderList();
+
+        closeModal();
+
+      } catch (error) {
+        console.error('Error confirming from modal:', error);
+        showToast('Error al confirmar');
+        btn.disabled = false;
+        btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Confirmar llegada';
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // REALTIME
+    // ═══════════════════════════════════════════════════════════════════════════
+    function setupRealtime() {
+      // Using Supabase Realtime via WebSocket
+      const url = SUPABASE_URL.replace('https://', 'wss://') + '/realtime/v1/websocket?apikey=' + SUPABASE_ANON_KEY + '&vsn=1.0.0';
+
+      const ws = new WebSocket(url);
+
+      ws.onopen = () => {
+        // Join channel for reservas
+        const joinMsg = {
+          topic: `realtime:public:reservas:evento_id=eq.${eventoActual.id}`,
+          event: 'phx_join',
+          payload: {},
+          ref: '1'
+        };
+        ws.send(JSON.stringify(joinMsg));
+
+        // Heartbeat
+        setInterval(() => {
+          if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({ topic: 'phoenix', event: 'heartbeat', payload: {}, ref: 'heartbeat' }));
+          }
+        }, 30000);
+      };
+
+      ws.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+        if (msg.event === 'INSERT' || msg.event === 'UPDATE') {
+          handleRealtimeChange(msg.payload);
+        }
+      };
+
+      ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
+    }
+
+    function handleRealtimeChange(payload) {
+      if (!payload || !payload.record) return;
+
+      const record = payload.record;
+
+      if (payload.type === 'UPDATE' && record.checkin === true) {
+        // Someone checked in
+        const existing = pendientes.find(r => r.id === record.id);
+        if (existing) {
+          pendientes = pendientes.filter(r => r.id !== record.id);
+          llegados = [{ ...existing, ...record }, ...llegados];
+          updateStats();
+          renderList();
+        }
+      }
+
+      if (payload.type === 'INSERT') {
+        if (!['cancelado', 'en_lista'].includes(record.estado)) {
+          pendientes = [...pendientes, record].sort((a, b) => a.nombre.localeCompare(b.nombre));
+          updateStats();
+          renderList();
+        }
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // HELPERS
+    // ═══════════════════════════════════════════════════════════════════════════
+    function hideAllScreens() {
+      document.getElementById('pinScreen').classList.add('hidden');
+      document.getElementById('loadingScreen').classList.add('hidden');
+      document.getElementById('noEventsScreen').classList.add('hidden');
+      document.getElementById('eventSelector').classList.add('hidden');
+      document.getElementById('dashboard').classList.remove('active');
+    }
+
+    function showScreen(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function getTipoEvento(evento) {
+      if (evento.tipo_comunidad) return 'Comunidad';
+      if (evento.tipo_evento === 'cover') return 'Cover';
+      if (evento.tipo_evento === 'cooperacion') return 'Cooperacion';
+      return 'Evento';
+    }
+
+    function formatFechaLarga(fecha) {
+      const date = new Date(fecha + 'T12:00:00');
+      const dias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+      const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+      return `${dias[date.getDay()]}, ${date.getDate()} de ${meses[date.getMonth()]}`;
+    }
+
+    function formatHoraSimple(hora) {
+      if (!hora) return '';
+      const [h, m] = hora.split(':');
+      const hour = parseInt(h);
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      const hour12 = hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour);
+      return `${hour12}:${m} ${ampm}`;
+    }
+
+    function formatHora(timestamp) {
+      if (!timestamp) return '';
+      const date = new Date(timestamp);
+      const hours = date.getHours();
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      const hour12 = hours > 12 ? hours - 12 : (hours === 0 ? 12 : hours);
+      return `${hour12}:${minutes} ${ampm}`;
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('active');
+      setTimeout(() => {
+        toast.classList.remove('active');
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
