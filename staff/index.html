@@ -797,7 +797,7 @@
     async function loadEventosHoy() {
       try {
         const hoy = new Date().toISOString().split('T')[0];
-        const eventos = await supabaseFetch(`eventos?estado=eq.activo&fecha=eq.${hoy}&order=hora.asc`);
+        const eventos = await supabaseFetch(`eventos?fecha=eq.${hoy}&order=hora.asc`);
 
         if (!eventos || eventos.length === 0) {
           hideAllScreens();

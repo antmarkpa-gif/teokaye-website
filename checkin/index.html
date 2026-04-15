@@ -495,22 +495,34 @@
       try {
         // Buscar reserva por stripe_session_id o por id
         const results = await supabaseFetch(
-          `reservas?select=*,eventos(*)&or=(stripe_session_id.eq.${token},id.eq.${token})`
+          `reservas?select=*,eventos(*)&or=(stripe_session_id.eq.${encodeURIComponent(token)},id.eq.${encodeURIComponent(token)})`
         );
 
-        if (!results || results.length === 0) {
+        // Verificar que hay resultados válidos
+        if (!results || !Array.isArray(results) || results.length === 0) {
           showState('invalidState');
           return;
         }
 
         reserva = results[0];
+
+        // Verificar que la reserva tiene datos válidos
+        if (!reserva || !reserva.id || !reserva.eventos) {
+          showState('invalidState');
+          return;
+        }
+
         evento = reserva.eventos;
 
         // Cargar historial
-        const historialResults = await supabaseFetch(
-          `vista_historial_persona?phone=eq.${reserva.phone}`
-        );
-        historial = historialResults && historialResults.length > 0 ? historialResults[0] : null;
+        try {
+          const historialResults = await supabaseFetch(
+            `vista_historial_persona?phone=eq.${encodeURIComponent(reserva.phone)}`
+          );
+          historial = historialResults && historialResults.length > 0 ? historialResults[0] : null;
+        } catch (e) {
+          historial = null;
+        }
 
         renderCard();
 
