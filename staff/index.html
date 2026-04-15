@@ -851,15 +851,15 @@
     // ═══════════════════════════════════════════════════════════════════════════
     async function loadReservas() {
       try {
-        // Load pendientes with historial
+        // Load pendientes
         const pendientesData = await supabaseFetch(
-          `reservas?evento_id=eq.${eventoActual.id}&checkin=eq.false&estado=not.in.(cancelado,en_lista)&select=*,vista_historial_persona(porcentaje_asistencia,total_reservas,total_asistencias)&order=nombre.asc`
+          `reservas?evento_id=eq.${eventoActual.id}&checkin=eq.false&estado=not.in.(cancelado,en_lista)&select=*&order=nombre.asc`
         );
 
         // Sort by opcion priority
         pendientes = (pendientesData || []).map(r => ({
           ...r,
-          historial: r.vista_historial_persona?.[0] || null
+          historial: null
         })).sort((a, b) => {
           const order = { cover: 1, garantia_premium: 2, garantia_basica: 3, gratis: 4 };
           const orderA = order[a.opcion_elegida] || 5;
@@ -1190,11 +1190,15 @@
 
         const reserva = results[0];
 
-        // Load historial
-        const historialResults = await supabaseFetch(
-          `vista_historial_persona?phone=eq.${reserva.phone}`
-        );
-        reserva.historial = historialResults?.[0] || null;
+        // Load historial (ignore if view doesn't exist)
+        try {
+          const historialResults = await supabaseFetch(
+            `vista_historial_persona?phone=eq.${reserva.phone}`
+          );
+          reserva.historial = historialResults?.[0] || null;
+        } catch (e) {
+          reserva.historial = null;
+        }
 
         openModal(reserva);
       } catch (error) {
@@ -1209,12 +1213,16 @@
     async function openModal(reserva) {
       modalReserva = reserva;
 
-      // If no historial loaded, load it
+      // If no historial loaded, try to load it (ignore if view doesn't exist)
       if (!reserva.historial) {
-        const historialResults = await supabaseFetch(
-          `vista_historial_persona?phone=eq.${reserva.phone}`
-        );
-        reserva.historial = historialResults?.[0] || null;
+        try {
+          const historialResults = await supabaseFetch(
+            `vista_historial_persona?phone=eq.${reserva.phone}`
+          );
+          reserva.historial = historialResults?.[0] || null;
+        } catch (e) {
+          reserva.historial = null;
+        }
       }
 
       document.getElementById('modalNombre').textContent = reserva.nombre;
