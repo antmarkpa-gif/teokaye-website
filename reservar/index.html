@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservar | Teokaye</title>
+  <meta name="description" content="Reserva tu lugar en los eventos de Teokaye, foro cultural en San Pedro Cholula.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="icon" href="/favicon.ico">
+
+  <style>
+    :root {
+      --bg: #E6E0D6;
+      --text: #1E1B18;
+      --text-light: #4A4540;
+      --accent: #B8826B;
+      --accent-dark: #461D14;
+      --white: #FFFCF8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .logo {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    /* Steps */
+    .step {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .step.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Step header */
+    .step-title {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .step-subtitle {
+      font-size: 15px;
+      color: var(--text-light);
+      margin-bottom: 32px;
+    }
+
+    /* Event cards */
+    .event-card {
+      background: var(--white);
+      padding: 24px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+    .event-card:hover {
+      border-color: var(--accent);
+    }
+    .event-card.selected {
+      border-color: var(--accent-dark);
+      background: #FAF8F5;
+    }
+    .event-nombre {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .event-artista {
+      font-size: 14px;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+    .event-fecha {
+      font-size: 14px;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+    .event-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      letter-spacing: 0.03em;
+    }
+    .badge-cover {
+      background: var(--accent);
+      color: var(--white);
+    }
+    .badge-cooperacion {
+      background: var(--accent-dark);
+      color: var(--white);
+    }
+    .badge-gratis {
+      background: var(--text);
+      color: var(--white);
+    }
+
+    /* Option cards */
+    .option-card {
+      background: var(--white);
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .option-card:hover {
+      border-color: var(--accent);
+    }
+    .option-card.selected {
+      border-color: var(--accent-dark);
+      background: #FAF8F5;
+    }
+    .option-content {
+      flex: 1;
+    }
+    .option-title {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .option-desc {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+    .option-badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      margin-left: 16px;
+      white-space: nowrap;
+    }
+    .option-badge-gratis {
+      background: #E8E5E0;
+      color: var(--text-light);
+    }
+    .option-badge-basica {
+      background: var(--accent);
+      color: var(--white);
+    }
+    .option-badge-premium {
+      background: var(--accent-dark);
+      color: var(--white);
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 28px;
+    }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-light);
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+    .form-input {
+      width: 100%;
+      padding: 12px 0;
+      font-family: inherit;
+      font-size: 16px;
+      color: var(--text);
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--accent);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus {
+      border-bottom-color: var(--accent-dark);
+    }
+    .form-input::placeholder {
+      color: #A09A94;
+    }
+    .form-help {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 8px;
+    }
+
+    /* Number input */
+    .number-input {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .number-btn {
+      width: 40px;
+      height: 40px;
+      background: var(--white);
+      border: 1px solid var(--accent);
+      color: var(--accent-dark);
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .number-btn:hover {
+      background: var(--accent);
+      color: var(--white);
+    }
+    .number-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .number-value {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 24px;
+      font-weight: 500;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    /* Policy note */
+    .policy-note {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #D5CFC5;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      width: 100%;
+      padding: 16px 24px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--bg);
+      background: var(--text);
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary:hover {
+      background: var(--accent-dark);
+    }
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .btn-secondary {
+      width: 100%;
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      background: transparent;
+      border: 1px solid var(--accent);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 12px;
+    }
+    .btn-secondary:hover {
+      background: var(--white);
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: var(--text-light);
+      text-decoration: none;
+      margin-bottom: 24px;
+      cursor: pointer;
+    }
+    .back-link:hover {
+      color: var(--accent-dark);
+    }
+
+    /* Success */
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .success-icon svg {
+      width: 48px;
+      height: 48px;
+      color: var(--accent-dark);
+    }
+    .success-title {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--text);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .success-event {
+      font-size: 15px;
+      color: var(--text-light);
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .success-message {
+      font-size: 15px;
+      color: var(--text);
+      text-align: center;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    .btn-menu {
+      display: block;
+      width: 100%;
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      background: transparent;
+      border: 1px solid var(--accent);
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .btn-menu:hover {
+      background: var(--white);
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+    }
+    .empty-title {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .empty-text {
+      font-size: 15px;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+    .empty-text a {
+      color: var(--accent-dark);
+      text-decoration: none;
+    }
+
+    /* Loading */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 64px;
+    }
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 2px solid #D5CFC5;
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Comunidad message */
+    .comunidad-message {
+      background: var(--white);
+      padding: 24px;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .comunidad-message p {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* Summary */
+    .summary {
+      background: var(--white);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 8px 0;
+    }
+    .summary-label {
+      color: var(--text-light);
+    }
+    .summary-value {
+      color: var(--text);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <a href="https://teokaye.mx" class="logo">Teokaye</a>
+    </div>
+
+    <!-- Step 1: Select Event -->
+    <div class="step active" id="step1">
+      <h1 class="step-title">Reserva tu lugar</h1>
+      <p class="step-subtitle">Selecciona el evento al que quieres asistir</p>
+
+      <div id="eventsList">
+        <div class="loading">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Select Option -->
+    <div class="step" id="step2">
+      <div class="back-link" onclick="goToStep(1)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Volver
+      </div>
+
+      <h1 class="step-title" id="step2Title">Elige tu opcion</h1>
+      <p class="step-subtitle" id="step2Subtitle"></p>
+
+      <div id="optionsList"></div>
+
+      <button class="btn-primary" id="btnContinue" onclick="goToStep(3)" disabled>Continuar</button>
+    </div>
+
+    <!-- Step 3: Personal Info -->
+    <div class="step" id="step3">
+      <div class="back-link" onclick="goBack()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Volver
+      </div>
+
+      <h1 class="step-title">Tus datos</h1>
+      <p class="step-subtitle">Para confirmar tu reserva</p>
+
+      <div class="summary" id="summary"></div>
+
+      <form id="reservaForm" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Nombre completo</label>
+          <input type="text" class="form-input" id="nombre" placeholder="Tu nombre" required autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">WhatsApp</label>
+          <input type="tel" class="form-input" id="telefono" placeholder="52 222 123 4567" required autocomplete="tel">
+        </div>
+
+        <div class="form-group" id="lugaresGroup">
+          <label class="form-label">Numero de lugares</label>
+          <div class="number-input">
+            <button type="button" class="number-btn" onclick="changeLugares(-1)">-</button>
+            <span class="number-value" id="lugaresValue">1</span>
+            <button type="button" class="number-btn" onclick="changeLugares(1)">+</button>
+          </div>
+          <p class="form-help">Vienes con alguien mas?</p>
+        </div>
+
+        <div class="policy-note" id="policyNote" style="display: none;">
+          Los pagos de garantia son definitivos y no tienen reembolso.
+        </div>
+
+        <button type="submit" class="btn-primary" id="btnSubmit">Confirmar reserva</button>
+      </form>
+    </div>
+
+    <!-- Step 4: Success -->
+    <div class="step" id="step4">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M8 12l3 3 5-6"/>
+        </svg>
+      </div>
+
+      <h1 class="success-title">Tu lugar esta apartado</h1>
+      <p class="success-event" id="successEvent"></p>
+      <p class="success-message" id="successMessage"></p>
+
+      <a href="https://teokaye.mx/menu" class="btn-menu">Ver menu</a>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════════════════
+    // CONFIG
+    // ═══════════════════════════════════════════════════════════════════════════
+    const SUPABASE_URL = 'https://ifewzsfbyobprzpbukmj.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmZXd6c2ZieW9icHJ6cGJ1a21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMzMwMDAsImV4cCI6MjA5MTYwOTAwMH0.d0A-clF08uC2UJ1nD-xZ5Sqvim7F4LYZIl0Y5KoRHYY';
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // STATE
+    // ═══════════════════════════════════════════════════════════════════════════
+    let eventos = [];
+    let selectedEvento = null;
+    let selectedOpcion = null;
+    let numLugares = 1;
+    let currentStep = 1;
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // SUPABASE
+    // ═══════════════════════════════════════════════════════════════════════════
+    async function supabaseFetch(endpoint, options = {}) {
+      const url = `${SUPABASE_URL}/rest/v1/${endpoint}`;
+      const headers = {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        ...options.headers
+      };
+      const response = await fetch(url, { ...options, headers });
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || `Error ${response.status}`);
+      }
+      const text = await response.text();
+      return text ? JSON.parse(text) : null;
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════════════════════════════════════════
+    document.addEventListener('DOMContentLoaded', init);
+
+    async function init() {
+      await loadEventos();
+    }
+
+    async function loadEventos() {
+      try {
+        const data = await supabaseFetch('eventos?estado=eq.activo&order=fecha.asc');
+        eventos = data || [];
+        renderEventos();
+      } catch (error) {
+        console.error('Error loading eventos:', error);
+        document.getElementById('eventsList').innerHTML = `
+          <div class="empty-state">
+            <p class="empty-title">Error al cargar eventos</p>
+            <p class="empty-text">Intenta recargar la pagina.</p>
+          </div>
+        `;
+      }
+    }
+
+    function renderEventos() {
+      const container = document.getElementById('eventsList');
+
+      if (eventos.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <p class="empty-title">No hay eventos proximos</p>
+            <p class="empty-text">Por el momento no tenemos eventos programados.<br>Siguenos en <a href="https://instagram.com/teokaye.mx" target="_blank">@teokaye.mx</a> para enterarte primero.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = eventos.map(evento => `
+        <div class="event-card" data-id="${evento.id}" onclick="selectEvento('${evento.id}')">
+          <div class="event-nombre">${evento.nombre}</div>
+          ${evento.artista ? `<div class="event-artista">${evento.artista}</div>` : ''}
+          <div class="event-fecha">${formatFecha(evento.fecha)} · ${formatHora(evento.hora)}</div>
+          <span class="event-badge ${getBadgeClass(evento)}">${getBadgeText(evento)}</span>
+        </div>
+      `).join('');
+    }
+
+    function getBadgeClass(evento) {
+      if (evento.tipo_comunidad) return 'badge-gratis';
+      if (evento.tipo_evento === 'cover') return 'badge-cover';
+      if (evento.tipo_evento === 'cooperacion') return 'badge-cooperacion';
+      return 'badge-gratis';
+    }
+
+    function getBadgeText(evento) {
+      if (evento.tipo_comunidad) return 'Entrada libre';
+      if (evento.tipo_evento === 'cover') return `Cover $${evento.precio_cover}`;
+      if (evento.tipo_evento === 'cooperacion') return 'Cooperacion voluntaria';
+      return 'Entrada libre';
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // NAVIGATION
+    // ═══════════════════════════════════════════════════════════════════════════
+    function goToStep(step) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById(`step${step}`).classList.add('active');
+      currentStep = step;
+      window.scrollTo(0, 0);
+    }
+
+    function goBack() {
+      if (selectedEvento.tipo_comunidad || selectedEvento.tipo_evento === 'cover') {
+        goToStep(1);
+      } else {
+        goToStep(2);
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // SELECT EVENTO
+    // ═══════════════════════════════════════════════════════════════════════════
+    function selectEvento(id) {
+      selectedEvento = eventos.find(e => e.id === id);
+      selectedOpcion = null;
+
+      // Update selected state
+      document.querySelectorAll('.event-card').forEach(card => {
+        card.classList.toggle('selected', card.dataset.id === id);
+      });
+
+      // Determine next step based on event type
+      if (selectedEvento.tipo_comunidad) {
+        // Comunidad: go directly to step 3 with gratis option
+        selectedOpcion = 'gratis';
+        setupStep3();
+        goToStep(3);
+      } else if (selectedEvento.tipo_evento === 'cover') {
+        // Cover: go directly to step 3 with cover option
+        selectedOpcion = 'cover';
+        setupStep3();
+        goToStep(3);
+      } else {
+        // Cooperacion: show options
+        setupStep2();
+        goToStep(2);
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // STEP 2: OPTIONS
+    // ═══════════════════════════════════════════════════════════════════════════
+    function setupStep2() {
+      document.getElementById('step2Title').textContent = selectedEvento.nombre;
+      document.getElementById('step2Subtitle').textContent = 'Elige como quieres asistir';
+
+      const container = document.getElementById('optionsList');
+      container.innerHTML = `
+        <div class="option-card" data-opcion="gratis" onclick="selectOpcion('gratis')">
+          <div class="option-content">
+            <div class="option-title">Entrada libre</div>
+            <div class="option-desc">Llega antes de las ${formatHora(selectedEvento.hora_limite_gratis)} · Lugar no garantizado</div>
+          </div>
+          <span class="option-badge option-badge-gratis">Gratis</span>
+        </div>
+
+        <div class="option-card" data-opcion="garantia_basica" onclick="selectOpcion('garantia_basica')">
+          <div class="option-content">
+            <div class="option-title">Garantia basica</div>
+            <div class="option-desc">Lugar asegurado · Bebida incluida</div>
+          </div>
+          <span class="option-badge option-badge-basica">$${selectedEvento.precio_garantia_basica}</span>
+        </div>
+
+        <div class="option-card" data-opcion="garantia_premium" onclick="selectOpcion('garantia_premium')">
+          <div class="option-content">
+            <div class="option-title">Garantia premium</div>
+            <div class="option-desc">Lugar asegurado · Bebida premium</div>
+          </div>
+          <span class="option-badge option-badge-premium">$${selectedEvento.precio_garantia_premium}</span>
+        </div>
+      `;
+
+      document.getElementById('btnContinue').disabled = true;
+    }
+
+    function selectOpcion(opcion) {
+      selectedOpcion = opcion;
+
+      document.querySelectorAll('.option-card').forEach(card => {
+        card.classList.toggle('selected', card.dataset.opcion === opcion);
+      });
+
+      document.getElementById('btnContinue').disabled = false;
+      document.getElementById('btnContinue').onclick = () => {
+        setupStep3();
+        goToStep(3);
+      };
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // STEP 3: FORM
+    // ═══════════════════════════════════════════════════════════════════════════
+    function setupStep3() {
+      // Summary
+      const summary = document.getElementById('summary');
+      let summaryHTML = `
+        <div class="summary-row">
+          <span class="summary-label">Evento</span>
+          <span class="summary-value">${selectedEvento.nombre}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Fecha</span>
+          <span class="summary-value">${formatFecha(selectedEvento.fecha)}</span>
+        </div>
+      `;
+
+      if (selectedOpcion === 'cover') {
+        summaryHTML += `
+          <div class="summary-row">
+            <span class="summary-label">Cover</span>
+            <span class="summary-value">$${selectedEvento.precio_cover} MXN</span>
+          </div>
+        `;
+      } else if (selectedOpcion === 'garantia_basica') {
+        summaryHTML += `
+          <div class="summary-row">
+            <span class="summary-label">Garantia basica</span>
+            <span class="summary-value">$${selectedEvento.precio_garantia_basica} MXN</span>
+          </div>
+        `;
+      } else if (selectedOpcion === 'garantia_premium') {
+        summaryHTML += `
+          <div class="summary-row">
+            <span class="summary-label">Garantia premium</span>
+            <span class="summary-value">$${selectedEvento.precio_garantia_premium} MXN</span>
+          </div>
+        `;
+      } else {
+        summaryHTML += `
+          <div class="summary-row">
+            <span class="summary-label">Tipo</span>
+            <span class="summary-value">Entrada libre</span>
+          </div>
+        `;
+      }
+
+      summary.innerHTML = summaryHTML;
+
+      // Show policy note for paid options
+      const policyNote = document.getElementById('policyNote');
+      policyNote.style.display = ['garantia_basica', 'garantia_premium', 'cover'].includes(selectedOpcion) ? 'block' : 'none';
+
+      // Reset form
+      numLugares = 1;
+      document.getElementById('lugaresValue').textContent = '1';
+      document.getElementById('nombre').value = '';
+      document.getElementById('telefono').value = '';
+    }
+
+    function changeLugares(delta) {
+      numLugares = Math.max(1, Math.min(10, numLugares + delta));
+      document.getElementById('lugaresValue').textContent = numLugares;
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // SUBMIT
+    // ═══════════════════════════════════════════════════════════════════════════
+    async function handleSubmit(e) {
+      e.preventDefault();
+
+      const nombre = document.getElementById('nombre').value.trim();
+      const telefonoRaw = document.getElementById('telefono').value.trim();
+
+      if (!nombre || !telefonoRaw) {
+        alert('Por favor completa todos los campos');
+        return;
+      }
+
+      // Clean phone number
+      let phone = telefonoRaw.replace(/\D/g, '');
+      if (phone.length === 10) {
+        phone = '52' + phone;
+      }
+
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+
+      try {
+        const estado = selectedOpcion === 'gratis' ? 'confirmado_gratis' : 'link_enviado';
+
+        await supabaseFetch('reservas', {
+          method: 'POST',
+          headers: { 'Prefer': 'return=representation' },
+          body: JSON.stringify({
+            phone: phone,
+            nombre: nombre,
+            evento_id: selectedEvento.id,
+            numero_lugares: numLugares,
+            opcion_elegida: selectedOpcion,
+            estado: estado,
+            pagado: false,
+            monto_pagado: 0
+          })
+        });
+
+        showSuccess();
+
+      } catch (error) {
+        console.error('Error creating reservation:', error);
+        alert('Hubo un error al crear tu reserva. Por favor intenta de nuevo.');
+        btn.disabled = false;
+        btn.textContent = 'Confirmar reserva';
+      }
+    }
+
+    function showSuccess() {
+      document.getElementById('successEvent').textContent =
+        `${selectedEvento.nombre} · ${formatFecha(selectedEvento.fecha)}`;
+
+      let message = '';
+      if (selectedOpcion === 'gratis' || selectedEvento.tipo_comunidad) {
+        message = `Te esperamos el ${formatFecha(selectedEvento.fecha)} a las ${formatHora(selectedEvento.hora)}. Llega puntual, los lugares son limitados.`;
+      } else {
+        message = 'Recibiras un mensaje de WhatsApp con tu QR de entrada en cuanto confirmemos tu lugar.';
+      }
+
+      document.getElementById('successMessage').textContent = message;
+      goToStep(4);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // HELPERS
+    // ═══════════════════════════════════════════════════════════════════════════
+    function formatFecha(fecha) {
+      const date = new Date(fecha + 'T12:00:00');
+      const dias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+      const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+      return `${dias[date.getDay()]} ${date.getDate()} de ${meses[date.getMonth()]}`;
+    }
+
+    function formatHora(hora) {
+      if (!hora) return '';
+      if (hora.includes('AM') || hora.includes('PM')) {
+        return hora;
+      }
+      const [h, m] = hora.split(':');
+      const hour = parseInt(h);
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      const hour12 = hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour);
+      return `${hour12}:${m} ${ampm}`;
+    }
+  </script>
+</body>
+</html>
