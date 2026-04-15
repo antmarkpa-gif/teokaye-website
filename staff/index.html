@@ -1422,6 +1422,10 @@
 
     function formatHoraSimple(hora) {
       if (!hora) return '';
+      // Si ya tiene AM/PM, devolverlo tal cual
+      if (hora.includes('AM') || hora.includes('PM')) {
+        return hora;
+      }
       const [h, m] = hora.split(':');
       const hour = parseInt(h);
       const ampm = hour >= 12 ? 'PM' : 'AM';
