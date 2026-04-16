@@ -23,11 +23,20 @@
     comentario_libre text,
     created_at timestamptz DEFAULT now()
   );
+
+  -- Nuevas columnas:
+  ALTER TABLE reviews
+  ADD COLUMN IF NOT EXISTS motivo_visita text,
+  ADD COLUMN IF NOT EXISTS percepcion_precio text,
+  ADD COLUMN IF NOT EXISTS testimonio text,
+  ADD COLUMN IF NOT EXISTS cambio_unico text,
+  ADD COLUMN IF NOT EXISTS intencion_regreso text,
+  ADD COLUMN IF NOT EXISTS contacto_opcional text;
   -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <link rel="icon" href="/favicon.ico">
 
@@ -40,7 +49,9 @@
       --accent-dark: #461D14;
       --white: #FFFCF8;
       --green: #6B7A3E;
-      --red-soft: #A65D57;
+      --nps-low: rgba(70, 29, 20, 0.15);
+      --nps-mid: rgba(184, 130, 107, 0.2);
+      --nps-high: rgba(107, 122, 62, 0.2);
     }
 
     * {
@@ -110,6 +121,11 @@
       font-size: 20px;
       font-weight: 500;
       color: var(--text);
+      margin-bottom: 8px;
+    }
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--text-light);
       margin-bottom: 20px;
     }
 
@@ -170,9 +186,16 @@
       resize: vertical;
       min-height: 80px;
     }
-    .form-textarea-brutal {
+    .form-textarea-dark {
       border-bottom-color: var(--accent-dark);
       border-bottom-width: 2px;
+    }
+    .conditional-input {
+      display: none;
+      margin-top: 12px;
+    }
+    .conditional-input.visible {
+      display: block;
     }
 
     /* NPS Selector */
@@ -192,40 +215,26 @@
       font-family: 'Cormorant Infant', serif;
       font-size: 18px;
       font-weight: 500;
-      background: var(--white);
       border: 1px solid transparent;
       cursor: pointer;
       transition: all 0.2s;
+      color: var(--text);
     }
     .nps-btn:hover {
       border-color: var(--accent);
     }
-    .nps-btn.selected {
-      color: var(--white);
-    }
     .nps-btn.nps-low {
-      background: var(--white);
-      color: var(--red-soft);
-    }
-    .nps-btn.nps-low.selected {
-      background: var(--red-soft);
-      color: var(--white);
+      background: var(--nps-low);
     }
     .nps-btn.nps-mid {
-      background: var(--white);
-      color: var(--accent);
-    }
-    .nps-btn.nps-mid.selected {
-      background: var(--accent);
-      color: var(--white);
+      background: var(--nps-mid);
     }
     .nps-btn.nps-high {
-      background: var(--white);
-      color: var(--green);
+      background: var(--nps-high);
     }
-    .nps-btn.nps-high.selected {
-      background: var(--green);
-      color: var(--white);
+    .nps-btn.selected {
+      border-color: var(--text);
+      border-width: 2px;
     }
     .nps-help {
       display: flex;
@@ -236,6 +245,11 @@
     }
 
     /* Star Rating */
+    .rating-scale {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-bottom: 16px;
+    }
     .rating-row {
       display: flex;
       align-items: center;
@@ -272,24 +286,26 @@
     .star svg {
       width: 100%;
       height: 100%;
-      fill: #D5CFC5;
-      transition: fill 0.2s;
+      fill: var(--bg);
+      stroke: var(--accent);
+      stroke-width: 1;
+      transition: all 0.2s;
     }
     .star.active svg {
       fill: var(--accent);
+      stroke: var(--accent);
     }
 
-    /* Toggle buttons */
-    .toggle-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 24px;
+    /* Pills / Toggle buttons */
+    .pills-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
-    .toggle-btn {
-      padding: 16px;
+    .pill-btn {
+      padding: 12px 20px;
       font-family: inherit;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--text);
       background: var(--white);
@@ -298,10 +314,10 @@
       transition: all 0.2s;
       text-align: center;
     }
-    .toggle-btn:hover {
+    .pill-btn:hover {
       border-color: var(--accent);
     }
-    .toggle-btn.selected {
+    .pill-btn.selected {
       background: var(--text);
       color: var(--bg);
     }
@@ -333,50 +349,92 @@
     .success-screen {
       display: none;
       text-align: center;
-      padding: 48px 0;
+      padding: 32px 0;
     }
     .success-screen.active {
       display: block;
     }
+    .success-logo {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 32px;
+    }
     .success-icon {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 32px;
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 24px;
     }
     .success-icon svg {
       width: 100%;
       height: 100%;
-      color: var(--accent-dark);
+      color: var(--accent);
     }
     .success-title {
       font-family: 'Cormorant Infant', serif;
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 500;
       color: var(--text);
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
     .success-subtitle {
       font-size: 18px;
-      color: var(--text-light);
+      color: var(--accent-dark);
       margin-bottom: 32px;
     }
-    .success-message {
+    .success-divider {
+      height: 1px;
+      background: rgba(184, 130, 107, 0.3);
+      margin: 24px 0;
+    }
+    .success-box {
+      background: var(--white);
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .success-box-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+    .success-box-text {
       font-size: 16px;
       color: var(--text);
-      line-height: 1.8;
-      margin-bottom: 32px;
-    }
-    .success-restrictions {
-      font-size: 13px;
-      color: var(--text-light);
-      line-height: 1.7;
+      line-height: 1.6;
       margin-bottom: 16px;
     }
-    .success-expiry {
+    .success-box-expiry {
       font-family: 'Cormorant Infant', serif;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 500;
       color: var(--accent-dark);
+    }
+    .success-restrictions {
+      font-size: 12px;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .success-farewell {
+      font-family: 'Cormorant Infant', serif;
+      font-style: italic;
+      font-size: 20px;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    .success-link {
+      font-size: 14px;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .success-link:hover {
+      text-decoration: underline;
     }
 
     /* Form container */
@@ -393,21 +451,39 @@
     <!-- Header -->
     <div class="header">
       <a href="https://teokaye.mx" class="logo">Teokaye</a>
-      <h1 class="header-title">Cuéntanos tu experiencia</h1>
-      <p class="header-subtitle">Tu honestidad nos ayuda a ser mejores. A cambio, una bebida de nuestra barra te espera en tu próxima visita.</p>
-      <p class="header-note">Aplican restricciones · Válido presentando esta pantalla</p>
+      <h1 class="header-title">Tu experiencia importa</h1>
+      <p class="header-subtitle">Cuéntanos cómo estuvo. Tu opinión es completamente privada — no conectamos quién dijo qué, así que puedes ser totalmente honesto. A cambio, una bebida de nuestra barra te espera en tu próxima visita.</p>
+      <p class="header-note">Aplican restricciones · Válido presentando esta pantalla al finalizar</p>
     </div>
 
     <!-- Form -->
     <form class="form-container" id="reviewForm" onsubmit="handleSubmit(event)">
 
-      <!-- Section 1: Who are you -->
+      <!-- 1. Nombre -->
       <div class="section">
         <div class="form-group">
           <label class="form-label">¿Cómo te llamas?</label>
-          <input type="text" class="form-input" id="nombre" placeholder="Tu nombre (opcional)">
+          <input type="text" class="form-input" id="nombre" placeholder="Opcional">
         </div>
 
+        <!-- 2. Motivo de visita -->
+        <div class="form-group">
+          <label class="form-label">¿Qué te trajo hoy a Teokaye?</label>
+          <select class="form-select" id="motivoVisita" onchange="handleMotivoChange()" required>
+            <option value="">Selecciona una opción</option>
+            <option value="evento">Ver un evento</option>
+            <option value="cafe">Café tranquilo / trabajo / estudio</option>
+            <option value="social">Plan social (cita, amigos, celebración)</option>
+            <option value="recomendacion">Recomendación de alguien</option>
+            <option value="primera_vez">Primera vez, vine a conocer</option>
+            <option value="otro">Otro</option>
+          </select>
+          <div class="conditional-input" id="motivoOtroContainer">
+            <input type="text" class="form-input" id="motivoOtro" placeholder="Cuéntanos...">
+          </div>
+        </div>
+
+        <!-- 3. Número de visitas -->
         <div class="form-group">
           <label class="form-label">¿Cuántas veces has visitado Teokaye?</label>
           <select class="form-select" id="visitas">
@@ -420,55 +496,47 @@
         </div>
       </div>
 
-      <!-- Section 2: NPS -->
+      <!-- 4. Experiencia positiva (testimonio) -->
       <div class="section">
-        <h2 class="section-title">Del 1 al 10, ¿qué tan probable es que recomiendes Teokaye?</h2>
-
-        <div class="nps-container">
-          <div class="nps-grid" id="npsGrid">
-            <button type="button" class="nps-btn nps-low" data-value="1">1</button>
-            <button type="button" class="nps-btn nps-low" data-value="2">2</button>
-            <button type="button" class="nps-btn nps-low" data-value="3">3</button>
-            <button type="button" class="nps-btn nps-low" data-value="4">4</button>
-            <button type="button" class="nps-btn nps-low" data-value="5">5</button>
-            <button type="button" class="nps-btn nps-low" data-value="6">6</button>
-            <button type="button" class="nps-btn nps-mid" data-value="7">7</button>
-            <button type="button" class="nps-btn nps-mid" data-value="8">8</button>
-            <button type="button" class="nps-btn nps-high" data-value="9">9</button>
-            <button type="button" class="nps-btn nps-high" data-value="10">10</button>
-          </div>
-          <div class="nps-help">
-            <span>1 = nunca</span>
-            <span>10 = ya lo hice</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section 3: What matters -->
-      <div class="section">
-        <h2 class="section-title">Lo que más importa</h2>
-
-        <div class="form-group">
-          <label class="form-label">¿Qué es lo que más disfrutaste?</label>
-          <textarea class="form-textarea" id="mejor" placeholder="Cuéntanos ese momento, esa sensación, ese detalle..." rows="3" required></textarea>
-        </div>
-
         <div class="form-group">
           <label class="form-label">
-            ¿Qué es lo peor de tu experiencia?
-            <span class="form-sublabel">Sé brutal. Solo así podemos arreglarlo.</span>
+            Descríbenos tu experiencia como si se la contaras a un amigo
+            <span class="form-sublabel">(Podríamos usarla como testimonio 👀)</span>
           </label>
-          <textarea class="form-textarea form-textarea-brutal" id="peor" placeholder="No hay respuesta incorrecta. Si algo te incomodó, queremos saberlo." rows="3" required></textarea>
+          <textarea class="form-textarea" id="testimonio" placeholder="Ese momento, esa sensación, ese detalle que no olvidaste..." rows="3" required></textarea>
+        </div>
+
+        <!-- 5. Experiencia negativa -->
+        <div class="form-group">
+          <label class="form-label">
+            ¿Qué fue lo menos bueno de tu experiencia?
+            <span class="form-sublabel">Puedes ser completamente honesto, nos ayuda mucho</span>
+          </label>
+          <textarea class="form-textarea form-textarea-dark" id="peor" placeholder="No hay respuesta incorrecta. Si algo no estuvo bien, queremos saberlo para arreglarlo." rows="3" required></textarea>
+        </div>
+
+        <!-- 6. Percepción de precio -->
+        <div class="form-group">
+          <label class="form-label">¿En algún momento sentiste que algo no valía lo que costaba?</label>
+          <textarea class="form-textarea" id="percepcionPrecio" placeholder="Si sí, ¿qué fue? Si no, puedes dejarlo en blanco." rows="2"></textarea>
+        </div>
+
+        <!-- 7. Cambio único -->
+        <div class="form-group">
+          <label class="form-label">Si pudieras cambiar una sola cosa de Teokaye, ¿qué sería?</label>
+          <textarea class="form-textarea" id="cambioUnico" placeholder="Una cosa. La que más importa." rows="2"></textarea>
         </div>
       </div>
 
-      <!-- Section 4: Rate each space -->
+      <!-- 8. Calificación por área -->
       <div class="section">
-        <h2 class="section-title">¿Cómo estuvo cada parte de Teokaye?</h2>
+        <h2 class="section-title">¿Cómo estuvo cada parte?</h2>
+        <p class="section-subtitle">Califica solo las áreas que visitaste</p>
+        <p class="rating-scale">1 = malo · 5 = excelente</p>
 
         <div class="rating-row">
           <div class="rating-label">
-            <span>&#9749;</span> Cafetería
+            <span>☕</span> Cafetería
           </div>
           <div class="stars" data-rating="cafeteria">
             <div class="star" data-value="1"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
@@ -481,7 +549,7 @@
 
         <div class="rating-row">
           <div class="rating-label">
-            <span>&#127917;</span> Foro / Eventos
+            <span>🎭</span> Foro / Eventos
           </div>
           <div class="stars" data-rating="foro">
             <div class="star" data-value="1"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
@@ -494,7 +562,7 @@
 
         <div class="rating-row">
           <div class="rating-label">
-            <span>&#128444;</span> Galería
+            <span>🖼</span> Galería
           </div>
           <div class="stars" data-rating="galeria">
             <div class="star" data-value="1"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
@@ -506,21 +574,47 @@
         </div>
       </div>
 
-      <!-- Section 5: Final -->
+      <!-- 9. NPS -->
       <div class="section">
-        <h2 class="section-title">Una última cosa</h2>
-
         <div class="form-group">
-          <label class="form-label">¿Recomendarías Teokaye a alguien que aprecias?</label>
-          <div class="toggle-group">
-            <button type="button" class="toggle-btn selected" data-value="true" onclick="selectRecomendaria(true)">Sí, sin dudarlo</button>
-            <button type="button" class="toggle-btn" data-value="false" onclick="selectRecomendaria(false)">Todavía no</button>
+          <label class="form-label">¿Qué tan probable es que recomiendes Teokaye a alguien que aprecias?</label>
+          <div class="nps-container">
+            <div class="nps-grid" id="npsGrid">
+              <button type="button" class="nps-btn nps-low" data-value="1">1</button>
+              <button type="button" class="nps-btn nps-low" data-value="2">2</button>
+              <button type="button" class="nps-btn nps-low" data-value="3">3</button>
+              <button type="button" class="nps-btn nps-low" data-value="4">4</button>
+              <button type="button" class="nps-btn nps-low" data-value="5">5</button>
+              <button type="button" class="nps-btn nps-low" data-value="6">6</button>
+              <button type="button" class="nps-btn nps-mid" data-value="7">7</button>
+              <button type="button" class="nps-btn nps-mid" data-value="8">8</button>
+              <button type="button" class="nps-btn nps-high" data-value="9">9</button>
+              <button type="button" class="nps-btn nps-high" data-value="10">10</button>
+            </div>
+            <div class="nps-help">
+              <span>1 = nunca</span>
+              <span>10 = ya lo hice</span>
+            </div>
           </div>
         </div>
 
+        <!-- 10. Intención de regreso -->
         <div class="form-group">
-          <label class="form-label">¿Algo más que quieras decirnos?</label>
-          <textarea class="form-textarea" id="comentario" placeholder="Ideas, sugerencias, o simplemente lo que sientas..." rows="2"></textarea>
+          <label class="form-label">¿Te gustaría volver en los próximos 30 días?</label>
+          <div class="pills-group" id="intencionRegreso">
+            <button type="button" class="pill-btn" data-value="si" onclick="selectIntencion('si')">Sí, definitivamente</button>
+            <button type="button" class="pill-btn" data-value="tal_vez" onclick="selectIntencion('tal_vez')">Tal vez</button>
+            <button type="button" class="pill-btn" data-value="no" onclick="selectIntencion('no')">Por ahora no</button>
+          </div>
+        </div>
+
+        <!-- 11. Contacto opcional -->
+        <div class="form-group">
+          <label class="form-label">
+            ¿Te gustaría enterarte de eventos privados y experiencias especiales?
+            <span class="form-sublabel">Déjanos tu WhatsApp o Instagram. Nada de spam, solo lo que vale la pena.</span>
+          </label>
+          <input type="text" class="form-input" id="contactoOpcional" placeholder="@usuario o 222 123 4567">
         </div>
       </div>
 
@@ -529,26 +623,37 @@
 
     <!-- Success Screen -->
     <div class="success-screen" id="successScreen">
+      <div class="success-logo">Teokaye</div>
+
       <div class="success-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-          <circle cx="17" cy="8" r="1" fill="currentColor"/>
+        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 20h40v28c0 4-3 8-8 8H16c-5 0-8-4-8-8V20z"/>
+          <path d="M48 28c6 0 10 4 10 10s-4 10-10 10"/>
+          <path d="M4 20h48"/>
+          <ellipse cx="28" cy="38" rx="8" ry="4" opacity="0.3"/>
         </svg>
       </div>
 
       <h1 class="success-title" id="successTitle">Gracias</h1>
-      <p class="success-subtitle">Tu honestidad es un regalo.</p>
+      <p class="success-subtitle">Tu honestidad es un regalo para nosotros.</p>
 
-      <p class="success-message">
-        Presenta esta pantalla en nuestra barra y elige la bebida que más te llame. Es nuestra forma de decirte gracias.
-      </p>
+      <div class="success-divider"></div>
+
+      <div class="success-box">
+        <p class="success-box-title">Tu bebida gratis</p>
+        <p class="success-box-text">Muestra esta pantalla a nuestro equipo y elige la bebida que más te llame.</p>
+        <p class="success-box-expiry" id="successExpiry"></p>
+      </div>
 
       <p class="success-restrictions">
-        Válido una vez por persona · No aplica en eventos con cover · Vigente 30 días a partir de hoy
+        Válido una vez · No aplica con eventos cover · Una bebida por persona
       </p>
 
-      <p class="success-expiry" id="successExpiry"></p>
+      <div class="success-divider"></div>
+
+      <p class="success-farewell">Nos vemos pronto.</p>
+
+      <a href="https://teokaye.mx/menu" class="success-link">Ver menú · teokaye.mx/menu</a>
     </div>
   </div>
 
@@ -568,7 +673,7 @@
       foro: 0,
       galeria: 0
     };
-    let recomendaria = true;
+    let intencionRegreso = null;
 
     // ═══════════════════════════════════════════════════════════════════════════
     // INIT
@@ -578,6 +683,24 @@
     function init() {
       setupNPS();
       setupStars();
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // MOTIVO CHANGE
+    // ═══════════════════════════════════════════════════════════════════════════
+    function handleMotivoChange() {
+      const select = document.getElementById('motivoVisita');
+      const container = document.getElementById('motivoOtroContainer');
+      const input = document.getElementById('motivoOtro');
+
+      if (select.value === 'otro') {
+        container.classList.add('visible');
+        input.required = true;
+      } else {
+        container.classList.remove('visible');
+        input.required = false;
+        input.value = '';
+      }
     }
 
     // ═══════════════════════════════════════════════════════════════════════════
@@ -634,12 +757,12 @@
     }
 
     // ═══════════════════════════════════════════════════════════════════════════
-    // TOGGLE
+    // INTENCIÓN DE REGRESO
     // ═══════════════════════════════════════════════════════════════════════════
-    function selectRecomendaria(value) {
-      recomendaria = value;
-      document.querySelectorAll('.toggle-btn').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === String(value));
+    function selectIntencion(value) {
+      intencionRegreso = value;
+      document.querySelectorAll('#intencionRegreso .pill-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.value === value);
       });
     }
 
@@ -650,13 +773,22 @@
       e.preventDefault();
 
       const nombre = document.getElementById('nombre').value.trim();
+      const motivoVisita = document.getElementById('motivoVisita').value;
+      const motivoOtro = document.getElementById('motivoOtro').value.trim();
       const visitas = document.getElementById('visitas').value;
-      const mejor = document.getElementById('mejor').value.trim();
+      const testimonio = document.getElementById('testimonio').value.trim();
       const peor = document.getElementById('peor').value.trim();
-      const comentario = document.getElementById('comentario').value.trim();
+      const percepcionPrecio = document.getElementById('percepcionPrecio').value.trim();
+      const cambioUnico = document.getElementById('cambioUnico').value.trim();
+      const contactoOpcional = document.getElementById('contactoOpcional').value.trim();
 
-      if (!mejor || !peor) {
-        alert('Por favor completa las preguntas sobre lo que más disfrutaste y lo peor de tu experiencia.');
+      // Validación
+      if (!motivoVisita) {
+        alert('Por favor selecciona qué te trajo hoy a Teokaye.');
+        return;
+      }
+      if (!testimonio || !peor) {
+        alert('Por favor completa las preguntas sobre tu experiencia.');
         return;
       }
 
@@ -664,20 +796,26 @@
       btn.disabled = true;
       btn.textContent = 'Enviando...';
 
+      // Preparar motivo (incluir texto de "otro" si aplica)
+      const motivoFinal = motivoVisita === 'otro' ? `otro: ${motivoOtro}` : motivoVisita;
+
       try {
         await supabaseFetch('reviews', {
           method: 'POST',
           body: JSON.stringify({
             nombre: nombre || null,
+            motivo_visita: motivoFinal,
             visitas: visitas || null,
-            nps: npsValue,
-            mejor: mejor,
+            testimonio: testimonio,
             peor: peor,
+            percepcion_precio: percepcionPrecio || null,
+            cambio_unico: cambioUnico || null,
+            nps: npsValue,
             cafeteria: ratings.cafeteria || null,
             foro: ratings.foro || null,
             galeria: ratings.galeria || null,
-            recomendaria: recomendaria,
-            comentario_libre: comentario || null
+            intencion_regreso: intencionRegreso,
+            contacto_opcional: contactoOpcional || null
           })
         });
 
@@ -702,7 +840,7 @@
       // Calculate expiry date (30 days from now)
       const expiry = new Date();
       expiry.setDate(expiry.getDate() + 30);
-      const expiryFormatted = formatDate(expiry);
+      const expiryFormatted = formatDateFull(expiry);
       document.getElementById('successExpiry').textContent = `Válido hasta el ${expiryFormatted}`;
 
       window.scrollTo(0, 0);
@@ -728,9 +866,14 @@
       return null;
     }
 
-    function formatDate(date) {
+    function formatDateFull(date) {
+      const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
       const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-      return `${date.getDate()} de ${meses[date.getMonth()]} de ${date.getFullYear()}`;
+      const diaSemana = dias[date.getDay()];
+      const dia = date.getDate();
+      const mes = meses[date.getMonth()];
+      const anio = date.getFullYear();
+      return `${diaSemana} ${dia} de ${mes} de ${anio}`;
     }
   </script>
 </body>
