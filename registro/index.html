@@ -173,6 +173,20 @@
       color: var(--bg);
     }
 
+    /* Promo message */
+    .promo-message {
+      display: none;
+      margin-top: 12px;
+      padding: 14px 16px;
+      background: rgba(107, 122, 62, 0.15);
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .promo-message.visible {
+      display: block;
+    }
+
     /* Divider */
     .divider {
       height: 1px;
@@ -269,10 +283,11 @@
 
       <!-- Recibir eventos -->
       <div class="form-group">
-        <label class="checkbox-group">
-          <input type="checkbox" class="checkbox-input" id="recibirEventos">
-          <span class="checkbox-label">Me gustaría recibir información sobre próximos eventos</span>
-        </label>
+        <label class="form-label">¿Te gustaría recibir más información sobre los eventos?</label>
+        <div class="pills-group" id="recibirEventosGroup">
+          <button type="button" class="pill-btn" data-value="si" onclick="selectRecibirEventos('si')">Sí</button>
+          <button type="button" class="pill-btn" data-value="no" onclick="selectRecibirEventos('no')">No</button>
+        </div>
       </div>
 
       <div class="divider"></div>
@@ -297,9 +312,11 @@
       <div class="form-group">
         <label class="form-label">¿Nos recomendarías a alguien?</label>
         <div class="pills-group" id="recomendariaGroup">
-          <button type="button" class="pill-btn" data-value="si" onclick="selectRecomendaria('si')">Sí, claro</button>
-          <button type="button" class="pill-btn" data-value="tal_vez" onclick="selectRecomendaria('tal_vez')">Tal vez</button>
-          <button type="button" class="pill-btn" data-value="no" onclick="selectRecomendaria('no')">No por ahora</button>
+          <button type="button" class="pill-btn" data-value="si" onclick="selectRecomendaria('si')">Sí</button>
+          <button type="button" class="pill-btn" data-value="no" onclick="selectRecomendaria('no')">No</button>
+        </div>
+        <div class="promo-message" id="promoMessage">
+          Si traes a alguien en tu próxima visita, te regalamos un postre o bebida gratis.
         </div>
       </div>
 
@@ -332,6 +349,7 @@
     // ═══════════════════════════════════════════════════════════════════════════
     let volveria = null;
     let recomendaria = null;
+    let recibirEventos = null;
 
     // ═══════════════════════════════════════════════════════════════════════════
     // PILLS SELECTION
@@ -348,6 +366,16 @@
       document.querySelectorAll('#recomendariaGroup .pill-btn').forEach(btn => {
         btn.classList.toggle('selected', btn.dataset.value === value);
       });
+      // Mostrar mensaje de promo si dice sí
+      const promo = document.getElementById('promoMessage');
+      promo.classList.toggle('visible', value === 'si');
+    }
+
+    function selectRecibirEventos(value) {
+      recibirEventos = value;
+      document.querySelectorAll('#recibirEventosGroup .pill-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.value === value);
+      });
     }
 
     // ═══════════════════════════════════════════════════════════════════════════
@@ -358,7 +386,6 @@
 
       const nombre = document.getElementById('nombre').value.trim();
       const telefono = document.getElementById('telefono').value.trim();
-      const recibirEventos = document.getElementById('recibirEventos').checked;
       const experiencia = document.getElementById('experiencia').value.trim();
 
       if (!nombre || !telefono) {
@@ -376,7 +403,7 @@
           body: JSON.stringify({
             nombre: nombre,
             telefono: telefono,
-            recibir_eventos: recibirEventos,
+            recibir_eventos: recibirEventos === 'si',
             experiencia: experiencia || null,
             volveria: volveria,
             recomendaria: recomendaria
