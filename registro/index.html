@@ -173,18 +173,16 @@
       color: var(--bg);
     }
 
-    /* Promo message */
-    .promo-message {
+    /* Conditional field */
+    .conditional-field {
       display: none;
-      margin-top: 12px;
-      padding: 14px 16px;
-      background: rgba(107, 122, 62, 0.15);
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.5;
+      margin-top: 16px;
     }
-    .promo-message.visible {
+    .conditional-field.visible {
       display: block;
+    }
+    .conditional-field .form-label {
+      margin-bottom: 8px;
     }
 
     /* Divider */
@@ -292,12 +290,6 @@
 
       <div class="divider"></div>
 
-      <!-- Experiencia -->
-      <div class="form-group">
-        <label class="form-label">¿Cómo fue tu experiencia?</label>
-        <textarea class="form-textarea" id="experiencia" placeholder="Cuéntanos brevemente..." rows="3"></textarea>
-      </div>
-
       <!-- Volvería -->
       <div class="form-group">
         <label class="form-label">¿Volverías a Teokaye?</label>
@@ -305,6 +297,16 @@
           <button type="button" class="pill-btn" data-value="si" onclick="selectVolveria('si')">Sí, seguro</button>
           <button type="button" class="pill-btn" data-value="tal_vez" onclick="selectVolveria('tal_vez')">Tal vez</button>
           <button type="button" class="pill-btn" data-value="no" onclick="selectVolveria('no')">No creo</button>
+        </div>
+        <!-- Pregunta condicional: qué te gustó (si dice sí) -->
+        <div class="conditional-field" id="queTeGustoContainer">
+          <label class="form-label">¿Qué te gustó?</label>
+          <textarea class="form-textarea" id="queTeGusto" placeholder="Cuéntanos..." rows="2"></textarea>
+        </div>
+        <!-- Pregunta condicional: qué mejorar (si dice tal vez o no) -->
+        <div class="conditional-field" id="queMejorarContainer">
+          <label class="form-label">¿Qué podríamos mejorar?</label>
+          <textarea class="form-textarea" id="queMejorar" placeholder="Tu opinión nos ayuda..." rows="2"></textarea>
         </div>
       </div>
 
@@ -314,9 +316,6 @@
         <div class="pills-group" id="recomendariaGroup">
           <button type="button" class="pill-btn" data-value="si" onclick="selectRecomendaria('si')">Sí</button>
           <button type="button" class="pill-btn" data-value="no" onclick="selectRecomendaria('no')">No</button>
-        </div>
-        <div class="promo-message" id="promoMessage">
-          Si traes a alguien en tu próxima visita, te regalamos un postre o bebida gratis.
         </div>
       </div>
 
@@ -359,6 +358,20 @@
       document.querySelectorAll('#volveriaGroup .pill-btn').forEach(btn => {
         btn.classList.toggle('selected', btn.dataset.value === value);
       });
+
+      // Mostrar pregunta condicional según respuesta
+      const queTeGustoContainer = document.getElementById('queTeGustoContainer');
+      const queMejorarContainer = document.getElementById('queMejorarContainer');
+
+      if (value === 'si') {
+        queTeGustoContainer.classList.add('visible');
+        queMejorarContainer.classList.remove('visible');
+        document.getElementById('queMejorar').value = '';
+      } else if (value === 'tal_vez' || value === 'no') {
+        queTeGustoContainer.classList.remove('visible');
+        queMejorarContainer.classList.add('visible');
+        document.getElementById('queTeGusto').value = '';
+      }
     }
 
     function selectRecomendaria(value) {
@@ -366,9 +379,6 @@
       document.querySelectorAll('#recomendariaGroup .pill-btn').forEach(btn => {
         btn.classList.toggle('selected', btn.dataset.value === value);
       });
-      // Mostrar mensaje de promo si dice sí
-      const promo = document.getElementById('promoMessage');
-      promo.classList.toggle('visible', value === 'si');
     }
 
     function selectRecibirEventos(value) {
@@ -386,7 +396,10 @@
 
       const nombre = document.getElementById('nombre').value.trim();
       const telefono = document.getElementById('telefono').value.trim();
-      const experiencia = document.getElementById('experiencia').value.trim();
+      const queTeGusto = document.getElementById('queTeGusto').value.trim();
+      const queMejorar = document.getElementById('queMejorar').value.trim();
+      // Combinar en un solo campo experiencia
+      const experiencia = queTeGusto || queMejorar || null;
 
       if (!nombre || !telefono) {
         alert('Por favor ingresa tu nombre y número de teléfono.');
