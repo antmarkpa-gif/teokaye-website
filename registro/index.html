@@ -17,8 +17,17 @@
     experiencia text,
     volveria text,
     recomendaria text,
+    rating_experiencia integer,
+    rating_banda integer,
+    volveria_banda text,
     created_at timestamptz DEFAULT now()
   );
+
+  -- Si la tabla ya existe, agregar las nuevas columnas:
+  ALTER TABLE registros
+  ADD COLUMN IF NOT EXISTS rating_experiencia integer,
+  ADD COLUMN IF NOT EXISTS rating_banda integer,
+  ADD COLUMN IF NOT EXISTS volveria_banda text;
   -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -185,6 +194,48 @@
       margin-bottom: 8px;
     }
 
+    /* Star Rating */
+    .stars-inline {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .star-btn {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .star-btn:hover {
+      transform: scale(1.15);
+    }
+    .star-btn svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--bg);
+      stroke: var(--accent);
+      stroke-width: 1;
+      transition: all 0.2s;
+    }
+    .star-btn.active svg {
+      fill: var(--accent);
+      stroke: var(--accent);
+    }
+
+    /* Section title */
+    .section-title {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(184, 130, 107, 0.3);
+    }
+
     /* Divider */
     .divider {
       height: 1px;
@@ -322,6 +373,7 @@
     <div class="header">
       <a href="https://teokaye.mx" class="logo">Teokaye</a>
       <h1 class="header-title">Gracias por visitarnos</h1>
+      <p class="header-subtitle">Cuéntanos cómo te fue y mantente conectado con nosotros.</p>
     </div>
 
     <!-- Form -->
@@ -344,6 +396,21 @@
         <div class="pills-group" id="recibirEventosGroup">
           <button type="button" class="pill-btn" data-value="si" onclick="selectRecibirEventos('si')">Sí</button>
           <button type="button" class="pill-btn" data-value="no" onclick="selectRecibirEventos('no')">No</button>
+        </div>
+      </div>
+
+      <!-- Sección: Experiencia general -->
+      <h2 class="section-title">Tu experiencia</h2>
+
+      <!-- Rating experiencia -->
+      <div class="form-group">
+        <label class="form-label">¿Cómo calificarías tu experiencia en Teokaye?</label>
+        <div class="stars-inline" id="starsExperiencia">
+          <button type="button" class="star-btn" data-value="1" onclick="setRating('experiencia', 1)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button type="button" class="star-btn" data-value="2" onclick="setRating('experiencia', 2)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button type="button" class="star-btn" data-value="3" onclick="setRating('experiencia', 3)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button type="button" class="star-btn" data-value="4" onclick="setRating('experiencia', 4)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button type="button" class="star-btn" data-value="5" onclick="setRating('experiencia', 5)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
         </div>
       </div>
 
@@ -373,6 +440,31 @@
         <div class="pills-group" id="recomendariaGroup">
           <button type="button" class="pill-btn" data-value="si" onclick="selectRecomendaria('si')">Sí</button>
           <button type="button" class="pill-btn" data-value="no" onclick="selectRecomendaria('no')">No</button>
+        </div>
+      </div>
+
+      <!-- Sección: Evaluación de la banda -->
+      <h2 class="section-title">La banda de hoy</h2>
+
+      <!-- Rating banda -->
+      <div class="form-group">
+        <label class="form-label">¿Qué te pareció la banda de hoy?</label>
+        <div class="stars-inline" id="starsBanda">
+          <button type="button" class="star-btn" data-value="1" onclick="setRating('banda', 1)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button type="button" class="star-btn" data-value="2" onclick="setRating('banda', 2)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button type="button" class="star-btn" data-value="3" onclick="setRating('banda', 3)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button type="button" class="star-btn" data-value="4" onclick="setRating('banda', 4)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button type="button" class="star-btn" data-value="5" onclick="setRating('banda', 5)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Volvería a ver banda -->
+      <div class="form-group">
+        <label class="form-label">¿Volverías a ver a esta banda?</label>
+        <div class="pills-group" id="volveriaBandaGroup">
+          <button type="button" class="pill-btn" data-value="si" onclick="selectVolveriaBanda('si')">Sí</button>
+          <button type="button" class="pill-btn" data-value="tal_vez" onclick="selectVolveriaBanda('tal_vez')">Tal vez</button>
+          <button type="button" class="pill-btn" data-value="no" onclick="selectVolveriaBanda('no')">No</button>
         </div>
       </div>
 
@@ -436,6 +528,9 @@
     let volveria = null;
     let recomendaria = null;
     let recibirEventos = null;
+    let ratingExperiencia = null;
+    let ratingBanda = null;
+    let volveriaBanda = null;
 
     // ═══════════════════════════════════════════════════════════════════════════
     // PILLS SELECTION
@@ -475,6 +570,29 @@
       });
     }
 
+    function setRating(type, value) {
+      if (type === 'experiencia') {
+        ratingExperiencia = value;
+        updateStars('starsExperiencia', value);
+      } else if (type === 'banda') {
+        ratingBanda = value;
+        updateStars('starsBanda', value);
+      }
+    }
+
+    function updateStars(containerId, value) {
+      document.querySelectorAll(`#${containerId} .star-btn`).forEach(btn => {
+        btn.classList.toggle('active', parseInt(btn.dataset.value) <= value);
+      });
+    }
+
+    function selectVolveriaBanda(value) {
+      volveriaBanda = value;
+      document.querySelectorAll('#volveriaBandaGroup .pill-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.value === value);
+      });
+    }
+
     // ═══════════════════════════════════════════════════════════════════════════
     // SUBMIT
     // ═══════════════════════════════════════════════════════════════════════════
@@ -506,7 +624,10 @@
             recibir_eventos: recibirEventos === 'si',
             experiencia: experiencia || null,
             volveria: volveria,
-            recomendaria: recomendaria
+            recomendaria: recomendaria,
+            rating_experiencia: ratingExperiencia,
+            rating_banda: ratingBanda,
+            volveria_banda: volveriaBanda
           })
         });
 
