@@ -246,6 +246,66 @@
       color: var(--text-light);
       line-height: 1.7;
     }
+    .success-subtitle {
+      font-size: 18px;
+      color: var(--accent-dark);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* Review steps */
+    .review-steps {
+      text-align: left;
+      margin-bottom: 32px;
+    }
+    .review-step {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(184, 130, 107, 0.2);
+    }
+    .review-step:last-child {
+      border-bottom: none;
+    }
+    .step-number {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: var(--white);
+      font-family: 'Cormorant Infant', serif;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .step-text {
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    /* Review button */
+    .btn-review {
+      display: block;
+      width: 100%;
+      padding: 18px 24px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--bg);
+      background: var(--accent-dark);
+      border: none;
+      text-decoration: none;
+      text-align: center;
+      letter-spacing: 0.02em;
+      transition: background 0.2s;
+    }
+    .btn-review:hover {
+      background: var(--text);
+    }
 
     /* Form container */
     .form-container {
@@ -298,13 +358,13 @@
         </div>
         <!-- Pregunta condicional: qué te gustó (si dice sí) -->
         <div class="conditional-field" id="queTeGustoContainer">
-          <label class="form-label">¿Qué te gustó?</label>
-          <textarea class="form-textarea" id="queTeGusto" placeholder="Cuéntanos..." rows="2"></textarea>
+          <label class="form-label">¿Qué fue lo que más te gustó de esta experiencia?</label>
+          <textarea class="form-textarea" id="queTeGusto" placeholder="Cuéntanos ese momento o detalle que te hizo sentir bien..." rows="2"></textarea>
         </div>
         <!-- Pregunta condicional: qué mejorar (si dice tal vez o no) -->
         <div class="conditional-field" id="queMejorarContainer">
-          <label class="form-label">¿Qué podríamos mejorar?</label>
-          <textarea class="form-textarea" id="queMejorar" placeholder="Tu opinión nos ayuda..." rows="2"></textarea>
+          <label class="form-label">¿Qué no te gustó que nos ayudaría a mejorar?</label>
+          <textarea class="form-textarea" id="queMejorar" placeholder="Tu honestidad nos ayuda a ser mejores..." rows="2"></textarea>
         </div>
       </div>
 
@@ -320,7 +380,7 @@
       <button type="submit" class="btn-submit" id="btnSubmit">Enviar</button>
     </form>
 
-    <!-- Success Screen -->
+    <!-- Success Screen Normal -->
     <div class="success-screen" id="successScreen">
       <div class="success-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -331,6 +391,36 @@
 
       <h1 class="success-title">¡Gracias!</h1>
       <p class="success-message">Tu registro se ha enviado correctamente.<br>Nos vemos pronto.</p>
+    </div>
+
+    <!-- Success Screen con Review (solo si todo fue positivo) -->
+    <div class="success-screen" id="successScreenReview">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+      </div>
+
+      <h1 class="success-title">¡Gracias!</h1>
+      <p class="success-subtitle">Te regalamos una bebida gratis a cambio de una review en Google</p>
+
+      <div class="review-steps">
+        <div class="review-step">
+          <span class="step-number">1</span>
+          <span class="step-text">Déjanos la review</span>
+        </div>
+        <div class="review-step">
+          <span class="step-number">2</span>
+          <span class="step-text">Toma un screenshot</span>
+        </div>
+        <div class="review-step">
+          <span class="step-number">3</span>
+          <span class="step-text">En tu siguiente visita, presenta el screenshot</span>
+        </div>
+      </div>
+
+      <a href="https://g.page/r/CeM63H24DXIREBM/review" target="_blank" class="btn-review">Dejar review en Google</a>
     </div>
   </div>
 
@@ -433,7 +523,20 @@
 
     function showSuccess() {
       document.getElementById('registroForm').classList.add('hidden');
-      document.getElementById('successScreen').classList.add('active');
+
+      // Verificar si todo fue positivo para mostrar pantalla de review
+      const queTeGusto = document.getElementById('queTeGusto').value.trim();
+      const todoPositivo = recibirEventos === 'si' &&
+                           volveria === 'si' &&
+                           queTeGusto &&
+                           recomendaria === 'si';
+
+      if (todoPositivo) {
+        document.getElementById('successScreenReview').classList.add('active');
+      } else {
+        document.getElementById('successScreen').classList.add('active');
+      }
+
       window.scrollTo(0, 0);
     }
 
