@@ -571,9 +571,12 @@
             </div>
           </div>
 
-          <!-- Conditional WhatsApp field -->
-          <div class="conditional-field" id="whatsappField">
-            <label class="form-label">WhatsApp (opcional)</label>
+          <!-- Conditional contact fields -->
+          <div class="conditional-field" id="contactFields">
+            <label class="form-label">Nombre <span class="required">*</span></label>
+            <input type="text" class="form-input" id="nombre" placeholder="Ej: Ana García">
+
+            <label class="form-label" style="margin-top: 16px;">WhatsApp <span class="required">*</span></label>
             <input type="tel" class="form-input" id="whatsapp" placeholder="Ej: 2221234567">
             <div class="helper-text">10 dígitos, sin espacios ni guiones</div>
           </div>
@@ -683,17 +686,24 @@
       }
 
       function setupEventListeners() {
-        // Show/hide WhatsApp field based on communication preference
+        // Show/hide contact fields based on communication preference
         const comunicacionRadios = document.querySelectorAll('input[name="comunicacion"]');
-        const whatsappField = document.getElementById('whatsappField');
+        const contactFields = document.getElementById('contactFields');
+        const nombreInput = document.getElementById('nombre');
+        const whatsappInput = document.getElementById('whatsapp');
 
         comunicacionRadios.forEach(radio => {
           radio.addEventListener('change', (e) => {
             if (e.target.value === 'true') {
-              whatsappField.classList.add('show');
+              contactFields.classList.add('show');
+              nombreInput.setAttribute('required', 'required');
+              whatsappInput.setAttribute('required', 'required');
             } else {
-              whatsappField.classList.remove('show');
-              document.getElementById('whatsapp').value = '';
+              contactFields.classList.remove('show');
+              nombreInput.removeAttribute('required');
+              whatsappInput.removeAttribute('required');
+              nombreInput.value = '';
+              whatsappInput.value = '';
             }
           });
         });
@@ -726,7 +736,14 @@
           const primeraVez = document.querySelector('input[name="primeraVez"]:checked')?.value === 'true';
           const rangoEdad = document.getElementById('edad').value;
           const aceptaComunicacion = document.querySelector('input[name="comunicacion"]:checked')?.value === 'true';
-          const whatsapp = aceptaComunicacion ? document.getElementById('whatsapp').value.trim() || null : null;
+
+          // Get contact info if they want to receive communications
+          let nombre = null;
+          let whatsapp = null;
+          if (aceptaComunicacion) {
+            nombre = document.getElementById('nombre').value.trim();
+            whatsapp = document.getElementById('whatsapp').value.trim();
+          }
 
           // Validate required fields
           if (!evento || !ciudadOrigen || !comoSeEntero || !rangoEdad) {
@@ -745,6 +762,13 @@
             throw new Error('Por favor indica si quieres recibir información de próximas ediciones');
           }
 
+          // Validate contact info if they want communications
+          if (aceptaComunicacion) {
+            if (!nombre || !whatsapp) {
+              throw new Error('Por favor completa tu nombre y WhatsApp para recibir información');
+            }
+          }
+
           // Insert into Supabase
           const { data, error } = await supabase
             .from('checkins')
@@ -755,6 +779,7 @@
               primera_vez: primeraVez,
               rango_edad: rangoEdad,
               acepta_comunicacion: aceptaComunicacion,
+              nombre,
               whatsapp
             }]);
 
