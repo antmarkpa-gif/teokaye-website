@@ -389,6 +389,41 @@
       animation: slideDown 0.5s ease 0.5s backwards;
     }
 
+    .success-links {
+      margin-top: 40px;
+      animation: slideDown 0.5s ease 0.6s backwards;
+    }
+
+    .success-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 28px;
+      background: rgba(244, 191, 0, 0.15);
+      border: 2px solid rgba(244, 191, 0, 0.4);
+      border-radius: 12px;
+      color: #f4bf00;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .success-link:hover {
+      background: rgba(244, 191, 0, 0.25);
+      border-color: #f4bf00;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(244, 191, 0, 0.3);
+    }
+
+    .success-link svg {
+      transition: transform 0.3s ease;
+    }
+
+    .success-link:hover svg {
+      transform: translateX(4px);
+    }
+
     /* Footer */
     .footer {
       background: #1a1a1a;
@@ -561,6 +596,15 @@
       <div class="success-title">¡Gracias por venir!</div>
       <div class="success-subtitle">Disfruta el festival</div>
       <div class="success-brand">Teokaye x FEMCA 2026</div>
+
+      <div class="success-links">
+        <a href="https://teokaye.mx/links" class="success-link" target="_blank">
+          <span>Conoce más sobre Teokaye</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
 
