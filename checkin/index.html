@@ -573,170 +573,175 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
-    // ═══════════════════════════════════════════════════════════════════════════
-    // SUPABASE CONFIG
-    // ═══════════════════════════════════════════════════════════════════════════
-    const SUPABASE_URL = 'https://ifewzsfbyobprzpbukmj.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmZXd6c2ZieW9icHJ6cGJ1a21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMzMwMDAsImV4cCI6MjA5MTYwOTAwMH0.d0A-clF08uC2UJ1nD-xZ5Sqvim7F4LYZIl0Y5KoRHYY';
+    (function() {
+      'use strict';
 
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      // ═══════════════════════════════════════════════════════════════════════════
+      // SUPABASE CONFIG
+      // ═══════════════════════════════════════════════════════════════════════════
+      const SUPABASE_URL = 'https://ifewzsfbyobprzpbukmj.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmZXd6c2ZieW9icHJ6cGJ1a21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMzMwMDAsImV4cCI6MjA5MTYwOTAwMH0.d0A-clF08uC2UJ1nD-xZ5Sqvim7F4LYZIl0Y5KoRHYY';
 
-    // ═══════════════════════════════════════════════════════════════════════════
-    // EVENT DATES MAPPING (Mexico City timezone)
-    // ═══════════════════════════════════════════════════════════════════════════
-    const eventDates = {
-      '2026-04-30': 'Jueves 30 abril, 18:00 — Ensamble de Percusiones FEMCA — Patio del Palacio Municipal',
-      '2026-05-01-12': 'Viernes 1 mayo, 12:00 — Toccato Ensamble — Centro Cultural LA SOL',
-      '2026-05-01-18': 'Viernes 1 mayo, 18:00 — Xica Ensamble — Casa de Cultura Acapetlahuacan',
-      '2026-05-02': 'Sábado 2 mayo, 17:00 — Orquesta Femenil de Guitarras Sencuicati — Estaca SUD Atlixco',
-      '2026-05-03': 'Domingo 3 mayo, 13:00 — Orquesta de Guitarras de Xalapa — Patio Museo MAVA'
-    };
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // ═══════════════════════════════════════════════════════════════════════════
-    // INIT
-    // ═══════════════════════════════════════════════════════════════════════════
-    document.addEventListener('DOMContentLoaded', () => {
-      autoSelectEvent();
-      setupEventListeners();
-    });
+      // ═══════════════════════════════════════════════════════════════════════════
+      // EVENT DATES MAPPING (Mexico City timezone)
+      // ═══════════════════════════════════════════════════════════════════════════
+      const eventDates = {
+        '2026-04-30': 'Jueves 30 abril, 18:00 — Ensamble de Percusiones FEMCA — Patio del Palacio Municipal',
+        '2026-05-01-12': 'Viernes 1 mayo, 12:00 — Toccato Ensamble — Centro Cultural LA SOL',
+        '2026-05-01-18': 'Viernes 1 mayo, 18:00 — Xica Ensamble — Casa de Cultura Acapetlahuacan',
+        '2026-05-02': 'Sábado 2 mayo, 17:00 — Orquesta Femenil de Guitarras Sencuicati — Estaca SUD Atlixco',
+        '2026-05-03': 'Domingo 3 mayo, 13:00 — Orquesta de Guitarras de Xalapa — Patio Museo MAVA'
+      };
 
-    function autoSelectEvent() {
-      // Get current date in Mexico City timezone
-      const now = new Date();
-      const mexicoCityTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Mexico_City' }));
-
-      const year = mexicoCityTime.getFullYear();
-      const month = String(mexicoCityTime.getMonth() + 1).padStart(2, '0');
-      const day = String(mexicoCityTime.getDate()).padStart(2, '0');
-      const hour = mexicoCityTime.getHours();
-
-      const dateKey = `${year}-${month}-${day}`;
-
-      // Check if there's an event today
-      let eventToSelect = null;
-
-      // For May 1st, select based on time of day
-      if (dateKey === '2026-05-01') {
-        if (hour < 15) {
-          // Before 3pm, select the 12:00 event
-          eventToSelect = eventDates['2026-05-01-12'];
-        } else {
-          // After 3pm, select the 18:00 event
-          eventToSelect = eventDates['2026-05-01-18'];
-        }
-      } else if (eventDates[dateKey]) {
-        eventToSelect = eventDates[dateKey];
-      }
-
-      // Auto-select if event found
-      if (eventToSelect) {
-        const selectElement = document.getElementById('evento');
-        selectElement.value = eventToSelect;
-      }
-    }
-
-    function setupEventListeners() {
-      // Show/hide WhatsApp field based on communication preference
-      const comunicacionRadios = document.querySelectorAll('input[name="comunicacion"]');
-      const whatsappField = document.getElementById('whatsappField');
-
-      comunicacionRadios.forEach(radio => {
-        radio.addEventListener('change', (e) => {
-          if (e.target.value === 'true') {
-            whatsappField.classList.add('show');
-          } else {
-            whatsappField.classList.remove('show');
-            document.getElementById('whatsapp').value = '';
-          }
-        });
+      // ═══════════════════════════════════════════════════════════════════════════
+      // INIT
+      // ═══════════════════════════════════════════════════════════════════════════
+      document.addEventListener('DOMContentLoaded', () => {
+        autoSelectEvent();
+        setupEventListeners();
       });
 
-      // Form submission
-      document.getElementById('checkinForm').addEventListener('submit', handleSubmit);
-    }
+      function autoSelectEvent() {
+        // Get current date in Mexico City timezone
+        const now = new Date();
+        const mexicoCityTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Mexico_City' }));
 
-    // ═══════════════════════════════════════════════════════════════════════════
-    // FORM SUBMISSION
-    // ═══════════════════════════════════════════════════════════════════════════
-    async function handleSubmit(e) {
-      e.preventDefault();
+        const year = mexicoCityTime.getFullYear();
+        const month = String(mexicoCityTime.getMonth() + 1).padStart(2, '0');
+        const day = String(mexicoCityTime.getDate()).padStart(2, '0');
+        const hour = mexicoCityTime.getHours();
 
-      const btnSubmit = document.getElementById('btnSubmit');
-      const errorMessage = document.getElementById('errorMessage');
+        const dateKey = `${year}-${month}-${day}`;
 
-      // Hide error message
-      errorMessage.classList.remove('show');
+        // Check if there's an event today
+        let eventToSelect = null;
 
-      // Show loading state
-      btnSubmit.disabled = true;
-      btnSubmit.innerHTML = '<div class="spinner"></div>';
-
-      try {
-        // Get form values
-        const evento = document.getElementById('evento').value;
-        const ciudadOrigen = document.getElementById('ciudad').value.trim();
-        const comoSeEntero = document.getElementById('comoSeEntero').value;
-        const primeraVez = document.querySelector('input[name="primeraVez"]:checked')?.value === 'true';
-        const rangoEdad = document.getElementById('edad').value;
-        const aceptaComunicacion = document.querySelector('input[name="comunicacion"]:checked')?.value === 'true';
-        const whatsapp = aceptaComunicacion ? document.getElementById('whatsapp').value.trim() || null : null;
-
-        // Validate required fields
-        if (!evento || !ciudadOrigen || !comoSeEntero || !rangoEdad) {
-          throw new Error('Por favor completa todos los campos requeridos');
+        // For May 1st, select based on time of day
+        if (dateKey === '2026-05-01') {
+          if (hour < 15) {
+            // Before 3pm, select the 12:00 event
+            eventToSelect = eventDates['2026-05-01-12'];
+          } else {
+            // After 3pm, select the 18:00 event
+            eventToSelect = eventDates['2026-05-01-18'];
+          }
+        } else if (eventDates[dateKey]) {
+          eventToSelect = eventDates[dateKey];
         }
 
-        // Check if primera_vez radio is selected
-        const primeraVezSelected = document.querySelector('input[name="primeraVez"]:checked');
-        if (!primeraVezSelected) {
-          throw new Error('Por favor indica si es tu primera vez en el festival');
+        // Auto-select if event found
+        if (eventToSelect) {
+          const selectElement = document.getElementById('evento');
+          selectElement.value = eventToSelect;
         }
-
-        // Check if comunicacion radio is selected
-        const comunicacionSelected = document.querySelector('input[name="comunicacion"]:checked');
-        if (!comunicacionSelected) {
-          throw new Error('Por favor indica si quieres recibir información de próximas ediciones');
-        }
-
-        // Insert into Supabase
-        const { data, error } = await supabase
-          .from('checkins')
-          .insert([{
-            evento,
-            ciudad_origen: ciudadOrigen,
-            como_se_entero: comoSeEntero,
-            primera_vez: primeraVez,
-            rango_edad: rangoEdad,
-            acepta_comunicacion: aceptaComunicacion,
-            whatsapp
-          }]);
-
-        if (error) {
-          throw error;
-        }
-
-        // Show success screen
-        document.getElementById('formContainer').classList.add('hide');
-        document.getElementById('successScreen').classList.add('show');
-
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      } catch (error) {
-        console.error('Error submitting form:', error);
-
-        // Show error message
-        errorMessage.textContent = error.message || 'Error al enviar el formulario. Por favor intenta de nuevo.';
-        errorMessage.classList.add('show');
-
-        // Reset button
-        btnSubmit.disabled = false;
-        btnSubmit.innerHTML = 'Enviar check-in';
-
-        // Scroll to error
-        errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-    }
+
+      function setupEventListeners() {
+        // Show/hide WhatsApp field based on communication preference
+        const comunicacionRadios = document.querySelectorAll('input[name="comunicacion"]');
+        const whatsappField = document.getElementById('whatsappField');
+
+        comunicacionRadios.forEach(radio => {
+          radio.addEventListener('change', (e) => {
+            if (e.target.value === 'true') {
+              whatsappField.classList.add('show');
+            } else {
+              whatsappField.classList.remove('show');
+              document.getElementById('whatsapp').value = '';
+            }
+          });
+        });
+
+        // Form submission
+        document.getElementById('checkinForm').addEventListener('submit', handleSubmit);
+      }
+
+      // ═══════════════════════════════════════════════════════════════════════════
+      // FORM SUBMISSION
+      // ═══════════════════════════════════════════════════════════════════════════
+      async function handleSubmit(e) {
+        e.preventDefault();
+
+        const btnSubmit = document.getElementById('btnSubmit');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Hide error message
+        errorMessage.classList.remove('show');
+
+        // Show loading state
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<div class="spinner"></div>';
+
+        try {
+          // Get form values
+          const evento = document.getElementById('evento').value;
+          const ciudadOrigen = document.getElementById('ciudad').value.trim();
+          const comoSeEntero = document.getElementById('comoSeEntero').value;
+          const primeraVez = document.querySelector('input[name="primeraVez"]:checked')?.value === 'true';
+          const rangoEdad = document.getElementById('edad').value;
+          const aceptaComunicacion = document.querySelector('input[name="comunicacion"]:checked')?.value === 'true';
+          const whatsapp = aceptaComunicacion ? document.getElementById('whatsapp').value.trim() || null : null;
+
+          // Validate required fields
+          if (!evento || !ciudadOrigen || !comoSeEntero || !rangoEdad) {
+            throw new Error('Por favor completa todos los campos requeridos');
+          }
+
+          // Check if primera_vez radio is selected
+          const primeraVezSelected = document.querySelector('input[name="primeraVez"]:checked');
+          if (!primeraVezSelected) {
+            throw new Error('Por favor indica si es tu primera vez en el festival');
+          }
+
+          // Check if comunicacion radio is selected
+          const comunicacionSelected = document.querySelector('input[name="comunicacion"]:checked');
+          if (!comunicacionSelected) {
+            throw new Error('Por favor indica si quieres recibir información de próximas ediciones');
+          }
+
+          // Insert into Supabase
+          const { data, error } = await supabase
+            .from('checkins')
+            .insert([{
+              evento,
+              ciudad_origen: ciudadOrigen,
+              como_se_entero: comoSeEntero,
+              primera_vez: primeraVez,
+              rango_edad: rangoEdad,
+              acepta_comunicacion: aceptaComunicacion,
+              whatsapp
+            }]);
+
+          if (error) {
+            throw error;
+          }
+
+          // Show success screen
+          document.getElementById('formContainer').classList.add('hide');
+          document.getElementById('successScreen').classList.add('show');
+
+          // Scroll to top
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        } catch (error) {
+          console.error('Error submitting form:', error);
+
+          // Show error message
+          errorMessage.textContent = error.message || 'Error al enviar el formulario. Por favor intenta de nuevo.';
+          errorMessage.classList.add('show');
+
+          // Reset button
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = 'Enviar check-in';
+
+          // Scroll to error
+          errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+
+    })();
   </script>
 </body>
 </html>
