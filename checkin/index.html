@@ -446,6 +446,15 @@
       display: none;
     }
 
+    /* Screen visibility */
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
     /* Mobile adjustments */
     @media (max-width: 480px) {
       .header h1 {
@@ -485,108 +494,151 @@
 
     <!-- Form -->
     <div class="form-container" id="formContainer">
-      <form id="checkinForm">
-        <!-- 1. Evento -->
-        <div class="form-group">
-          <label class="form-label">
-            ¿A qué concierto vienes? <span class="required">*</span>
-          </label>
-          <select class="form-select" id="evento" required>
-            <option value="" disabled selected>Selecciona un concierto</option>
-            <option value="Jueves 30 abril, 18:00 — Ensamble de Percusiones FEMCA — Patio del Palacio Municipal">Jueves 30 abril, 18:00 — Ensamble de Percusiones FEMCA</option>
-            <option value="Viernes 1 mayo, 12:00 — Toccato Ensamble — Centro Cultural LA SOL">Viernes 1 mayo, 12:00 — Toccato Ensamble</option>
-            <option value="Viernes 1 mayo, 18:00 — Xica Ensamble — Casa de Cultura Acapetlahuacan">Viernes 1 mayo, 18:00 — Xica Ensamble</option>
-            <option value="Sábado 2 mayo, 17:00 — Orquesta Femenil de Guitarras Sencuicati — Estaca SUD Atlixco">Sábado 2 mayo, 17:00 — Orquesta Femenil de Guitarras Sencuicati</option>
-            <option value="Domingo 3 mayo, 13:00 — Orquesta de Guitarras de Xalapa — Patio Museo MAVA">Domingo 3 mayo, 13:00 — Orquesta de Guitarras de Xalapa</option>
-          </select>
-        </div>
-
-        <!-- 2. Ciudad -->
-        <div class="form-group">
-          <label class="form-label">
-            ¿De qué ciudad o colonia vienes? <span class="required">*</span>
-          </label>
-          <input type="text" class="form-input" id="ciudad" required placeholder="Ej: San Pedro Cholula">
-        </div>
-
-        <!-- 3. Cómo se enteró -->
-        <div class="form-group">
-          <label class="form-label">
-            ¿Cómo te enteraste del festival? <span class="required">*</span>
-          </label>
-          <select class="form-select" id="comoSeEntero" required>
-            <option value="" disabled selected>Selecciona una opción</option>
-            <option value="Anuncio en Instagram o Facebook">Anuncio en Instagram o Facebook</option>
-            <option value="Me invitó alguien">Me invitó alguien</option>
-            <option value="Redes sociales de FEMCA">Redes sociales de FEMCA</option>
-            <option value="Periódico o radio">Periódico o radio</option>
-            <option value="Otro">Otro</option>
-          </select>
-        </div>
-
-        <!-- 4. Primera vez -->
-        <div class="form-group">
-          <label class="form-label">
-            ¿Es tu primera vez en el festival? <span class="required">*</span>
-          </label>
-          <div class="radio-group">
-            <div class="radio-option">
-              <input type="radio" id="primeraVezSi" name="primeraVez" value="true" required>
-              <label class="radio-label" for="primeraVezSi">Sí</label>
-            </div>
-            <div class="radio-option">
-              <input type="radio" id="primeraVezNo" name="primeraVez" value="false" required>
-              <label class="radio-label" for="primeraVezNo">No</label>
-            </div>
-          </div>
-        </div>
-
-        <!-- 5. Edad -->
-        <div class="form-group">
-          <label class="form-label">
-            ¿Qué edad tienes? <span class="required">*</span>
-          </label>
-          <select class="form-select" id="edad" required>
-            <option value="" disabled selected>Selecciona tu rango de edad</option>
-            <option value="18-24">18-24</option>
-            <option value="25-34">25-34</option>
-            <option value="35-44">35-44</option>
-            <option value="45+">45+</option>
-          </select>
-        </div>
-
-        <!-- 6. Comunicación -->
-        <div class="form-group">
-          <label class="form-label">
-            ¿Quieres recibir info de próximas ediciones?
-          </label>
-          <div class="radio-group">
-            <div class="radio-option">
-              <input type="radio" id="comunicacionSi" name="comunicacion" value="true">
-              <label class="radio-label" for="comunicacionSi">Sí</label>
-            </div>
-            <div class="radio-option">
-              <input type="radio" id="comunicacionNo" name="comunicacion" value="false">
-              <label class="radio-label" for="comunicacionNo">No</label>
-            </div>
-          </div>
-
-          <!-- Conditional contact fields -->
-          <div class="conditional-field" id="contactFields">
-            <label class="form-label">Nombre <span class="required">*</span></label>
-            <input type="text" class="form-input" id="nombre" placeholder="Ej: Ana García">
-
-            <label class="form-label" style="margin-top: 16px;">WhatsApp <span class="required">*</span></label>
-            <input type="tel" class="form-input" id="whatsapp" placeholder="Ej: 2221234567">
+      <!-- SCREEN 1: Phone Number -->
+      <div class="screen active" id="phoneScreen">
+        <form id="phoneForm">
+          <div class="form-group">
+            <label class="form-label">
+              ¿Cuál es tu número de WhatsApp? <span class="required">*</span>
+            </label>
+            <input type="tel" class="form-input" id="phoneNumber" required placeholder="Ej: 2221234567" pattern="[0-9]{10}">
             <div class="helper-text">10 dígitos, sin espacios ni guiones</div>
           </div>
-        </div>
 
-        <!-- Submit button -->
-        <button type="submit" class="btn-submit" id="btnSubmit">
-          Enviar check-in
-        </button>
-      </form>
+          <button type="submit" class="btn-submit" id="btnPhoneSubmit">
+            Continuar
+          </button>
+        </form>
+      </div>
+
+      <!-- SCREEN 2a: Returning Visitor (Event Only) -->
+      <div class="screen" id="returningScreen">
+        <form id="returningForm">
+          <div class="form-group">
+            <label class="form-label">
+              ¡Bienvenido de nuevo! ¿A qué concierto vienes hoy? <span class="required">*</span>
+            </label>
+            <select class="form-select" id="eventoReturning" required>
+              <option value="" disabled selected>Selecciona un concierto</option>
+              <option value="Jueves 30 abril, 18:00 — Ensamble de Percusiones FEMCA — Patio del Palacio Municipal">Jueves 30 abril, 18:00 — Ensamble de Percusiones FEMCA</option>
+              <option value="Viernes 1 mayo, 12:00 — Toccato Ensamble — Centro Cultural LA SOL">Viernes 1 mayo, 12:00 — Toccato Ensamble</option>
+              <option value="Viernes 1 mayo, 18:00 — Xica Ensamble — Casa de Cultura Acapetlahuacan">Viernes 1 mayo, 18:00 — Xica Ensamble</option>
+              <option value="Sábado 2 mayo, 17:00 — Orquesta Femenil de Guitarras Sencuicati — Estaca SUD Atlixco">Sábado 2 mayo, 17:00 — Orquesta Femenil de Guitarras Sencuicati</option>
+              <option value="Domingo 3 mayo, 13:00 — Orquesta de Guitarras de Xalapa — Patio Museo MAVA">Domingo 3 mayo, 13:00 — Orquesta de Guitarras de Xalapa</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-submit" id="btnReturningSubmit">
+            Enviar check-in
+          </button>
+        </form>
+      </div>
+
+      <!-- SCREEN 2b: New Visitor (Full Form) -->
+      <div class="screen" id="newUserScreen">
+        <form id="checkinForm">
+          <!-- 1. Evento -->
+          <div class="form-group">
+            <label class="form-label">
+              ¿A qué concierto vienes? <span class="required">*</span>
+            </label>
+            <select class="form-select" id="evento" required>
+              <option value="" disabled selected>Selecciona un concierto</option>
+              <option value="Jueves 30 abril, 18:00 — Ensamble de Percusiones FEMCA — Patio del Palacio Municipal">Jueves 30 abril, 18:00 — Ensamble de Percusiones FEMCA</option>
+              <option value="Viernes 1 mayo, 12:00 — Toccato Ensamble — Centro Cultural LA SOL">Viernes 1 mayo, 12:00 — Toccato Ensamble</option>
+              <option value="Viernes 1 mayo, 18:00 — Xica Ensamble — Casa de Cultura Acapetlahuacan">Viernes 1 mayo, 18:00 — Xica Ensamble</option>
+              <option value="Sábado 2 mayo, 17:00 — Orquesta Femenil de Guitarras Sencuicati — Estaca SUD Atlixco">Sábado 2 mayo, 17:00 — Orquesta Femenil de Guitarras Sencuicati</option>
+              <option value="Domingo 3 mayo, 13:00 — Orquesta de Guitarras de Xalapa — Patio Museo MAVA">Domingo 3 mayo, 13:00 — Orquesta de Guitarras de Xalapa</option>
+            </select>
+          </div>
+
+          <!-- 2. Ciudad -->
+          <div class="form-group">
+            <label class="form-label">
+              ¿De qué ciudad o colonia vienes? <span class="required">*</span>
+            </label>
+            <input type="text" class="form-input" id="ciudad" required placeholder="Ej: San Pedro Cholula">
+          </div>
+
+          <!-- 3. Cómo se enteró -->
+          <div class="form-group">
+            <label class="form-label">
+              ¿Cómo te enteraste del festival? <span class="required">*</span>
+            </label>
+            <select class="form-select" id="comoSeEntero" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option value="Anuncio en Instagram o Facebook">Anuncio en Instagram o Facebook</option>
+              <option value="Me invitó alguien">Me invitó alguien</option>
+              <option value="Redes sociales de FEMCA">Redes sociales de FEMCA</option>
+              <option value="Periódico o radio">Periódico o radio</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+
+          <!-- 4. Primera vez -->
+          <div class="form-group">
+            <label class="form-label">
+              ¿Es tu primera vez en el festival? <span class="required">*</span>
+            </label>
+            <div class="radio-group">
+              <div class="radio-option">
+                <input type="radio" id="primeraVezSi" name="primeraVez" value="true" required>
+                <label class="radio-label" for="primeraVezSi">Sí</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" id="primeraVezNo" name="primeraVez" value="false" required>
+                <label class="radio-label" for="primeraVezNo">No</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Edad -->
+          <div class="form-group">
+            <label class="form-label">
+              ¿Qué edad tienes? <span class="required">*</span>
+            </label>
+            <select class="form-select" id="edad" required>
+              <option value="" disabled selected>Selecciona tu rango de edad</option>
+              <option value="18-24">18-24</option>
+              <option value="25-34">25-34</option>
+              <option value="35-44">35-44</option>
+              <option value="45+">45+</option>
+            </select>
+          </div>
+
+          <!-- 6. Comunicación -->
+          <div class="form-group">
+            <label class="form-label">
+              ¿Quieres recibir info de próximas ediciones?
+            </label>
+            <div class="radio-group">
+              <div class="radio-option">
+                <input type="radio" id="comunicacionSi" name="comunicacion" value="true">
+                <label class="radio-label" for="comunicacionSi">Sí</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" id="comunicacionNo" name="comunicacion" value="false">
+                <label class="radio-label" for="comunicacionNo">No</label>
+              </div>
+            </div>
+
+            <!-- Conditional contact fields -->
+            <div class="conditional-field" id="contactFields">
+              <label class="form-label">Nombre <span class="required">*</span></label>
+              <input type="text" class="form-input" id="nombre" placeholder="Ej: Ana García">
+
+              <label class="form-label" style="margin-top: 16px;">WhatsApp <span class="required">*</span></label>
+              <input type="tel" class="form-input" id="whatsapp" placeholder="Ej: 2221234567">
+              <div class="helper-text">10 dígitos, sin espacios ni guiones</div>
+            </div>
+          </div>
+
+          <!-- Submit button -->
+          <button type="submit" class="btn-submit" id="btnSubmit">
+            Enviar check-in
+          </button>
+        </form>
+      </div>
     </div>
 
     <!-- Success screen -->
@@ -632,6 +684,12 @@
       const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
       // ═══════════════════════════════════════════════════════════════════════════
+      // STATE
+      // ═══════════════════════════════════════════════════════════════════════════
+      let userPhone = null;
+      let previousUserData = null;
+
+      // ═══════════════════════════════════════════════════════════════════════════
       // EVENT DATES MAPPING (Mexico City timezone)
       // ═══════════════════════════════════════════════════════════════════════════
       const eventDates = {
@@ -646,46 +704,19 @@
       // INIT
       // ═══════════════════════════════════════════════════════════════════════════
       document.addEventListener('DOMContentLoaded', () => {
-        autoSelectEvent();
         setupEventListeners();
       });
 
-      function autoSelectEvent() {
-        // Get current date in Mexico City timezone
-        const now = new Date();
-        const mexicoCityTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Mexico_City' }));
-
-        const year = mexicoCityTime.getFullYear();
-        const month = String(mexicoCityTime.getMonth() + 1).padStart(2, '0');
-        const day = String(mexicoCityTime.getDate()).padStart(2, '0');
-        const hour = mexicoCityTime.getHours();
-
-        const dateKey = `${year}-${month}-${day}`;
-
-        // Check if there's an event today
-        let eventToSelect = null;
-
-        // For May 1st, select based on time of day
-        if (dateKey === '2026-05-01') {
-          if (hour < 15) {
-            // Before 3pm, select the 12:00 event
-            eventToSelect = eventDates['2026-05-01-12'];
-          } else {
-            // After 3pm, select the 18:00 event
-            eventToSelect = eventDates['2026-05-01-18'];
-          }
-        } else if (eventDates[dateKey]) {
-          eventToSelect = eventDates[dateKey];
-        }
-
-        // Auto-select if event found
-        if (eventToSelect) {
-          const selectElement = document.getElementById('evento');
-          selectElement.value = eventToSelect;
-        }
-      }
-
       function setupEventListeners() {
+        // Phone form submission
+        document.getElementById('phoneForm').addEventListener('submit', handlePhoneSubmit);
+
+        // Returning user form submission
+        document.getElementById('returningForm').addEventListener('submit', handleReturningSubmit);
+
+        // New user form submission
+        document.getElementById('checkinForm').addEventListener('submit', handleNewUserSubmit);
+
         // Show/hide contact fields based on communication preference
         const comunicacionRadios = document.querySelectorAll('input[name="comunicacion"]');
         const contactFields = document.getElementById('contactFields');
@@ -707,15 +738,148 @@
             }
           });
         });
-
-        // Form submission
-        document.getElementById('checkinForm').addEventListener('submit', handleSubmit);
       }
 
       // ═══════════════════════════════════════════════════════════════════════════
-      // FORM SUBMISSION
+      // PHONE SUBMISSION
       // ═══════════════════════════════════════════════════════════════════════════
-      async function handleSubmit(e) {
+      async function handlePhoneSubmit(e) {
+        e.preventDefault();
+
+        const btnPhoneSubmit = document.getElementById('btnPhoneSubmit');
+        const errorMessage = document.getElementById('errorMessage');
+        const phoneInput = document.getElementById('phoneNumber');
+
+        // Hide error message
+        errorMessage.classList.remove('show');
+
+        // Validate phone number
+        const phone = phoneInput.value.trim();
+        if (!/^[0-9]{10}$/.test(phone)) {
+          showError('Por favor ingresa un número de WhatsApp válido de 10 dígitos');
+          return;
+        }
+
+        // Show loading state
+        btnPhoneSubmit.disabled = true;
+        btnPhoneSubmit.innerHTML = '<div class="spinner"></div>';
+
+        try {
+          userPhone = phone;
+
+          // Check if phone exists in database
+          const { data, error } = await supabase
+            .from('checkins')
+            .select('*')
+            .eq('phone', phone)
+            .order('created_at', { ascending: false })
+            .limit(1);
+
+          if (error) {
+            throw error;
+          }
+
+          // Hide phone screen
+          document.getElementById('phoneScreen').classList.remove('active');
+
+          if (data && data.length > 0) {
+            // Returning user
+            previousUserData = data[0];
+            showReturningUserScreen();
+          } else {
+            // New user
+            showNewUserScreen();
+          }
+
+        } catch (error) {
+          console.error('Error checking phone:', error);
+          showError('Error al verificar el número. Por favor intenta de nuevo.');
+
+          // Reset button
+          btnPhoneSubmit.disabled = false;
+          btnPhoneSubmit.innerHTML = 'Continuar';
+        }
+      }
+
+      // ═══════════════════════════════════════════════════════════════════════════
+      // RETURNING USER FLOW
+      // ═══════════════════════════════════════════════════════════════════════════
+      function showReturningUserScreen() {
+        const returningScreen = document.getElementById('returningScreen');
+        const eventoSelect = document.getElementById('eventoReturning');
+
+        // Auto-select event based on today's date
+        autoSelectEvent(eventoSelect);
+
+        returningScreen.classList.add('active');
+      }
+
+      async function handleReturningSubmit(e) {
+        e.preventDefault();
+
+        const btnReturningSubmit = document.getElementById('btnReturningSubmit');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Hide error message
+        errorMessage.classList.remove('show');
+
+        // Show loading state
+        btnReturningSubmit.disabled = true;
+        btnReturningSubmit.innerHTML = '<div class="spinner"></div>';
+
+        try {
+          const evento = document.getElementById('eventoReturning').value;
+
+          if (!evento) {
+            throw new Error('Por favor selecciona un concierto');
+          }
+
+          // Insert new record with phone + evento, copy other fields from previous record
+          const { data, error } = await supabase
+            .from('checkins')
+            .insert([{
+              phone: userPhone,
+              evento,
+              ciudad_origen: previousUserData.ciudad_origen,
+              como_se_entero: previousUserData.como_se_entero,
+              rango_edad: previousUserData.rango_edad,
+              acepta_comunicacion: previousUserData.acepta_comunicacion,
+              whatsapp: previousUserData.whatsapp,
+              nombre: previousUserData.nombre,
+              primera_vez: false // Returning user, so not first time
+            }]);
+
+          if (error) {
+            throw error;
+          }
+
+          // Show success screen
+          showSuccess();
+
+        } catch (error) {
+          console.error('Error submitting returning user form:', error);
+          showError(error.message || 'Error al enviar el formulario. Por favor intenta de nuevo.');
+
+          // Reset button
+          btnReturningSubmit.disabled = false;
+          btnReturningSubmit.innerHTML = 'Enviar check-in';
+        }
+      }
+
+      // ═══════════════════════════════════════════════════════════════════════════
+      // NEW USER FLOW
+      // ═══════════════════════════════════════════════════════════════════════════
+      function showNewUserScreen() {
+        const newUserScreen = document.getElementById('newUserScreen');
+        const eventoSelect = document.getElementById('evento');
+
+        // Auto-select event based on today's date
+        autoSelectEvent(eventoSelect);
+
+        newUserScreen.classList.add('active');
+      }
+
+      async function handleNewUserSubmit(e) {
         e.preventDefault();
 
         const btnSubmit = document.getElementById('btnSubmit');
@@ -769,10 +933,11 @@
             }
           }
 
-          // Insert into Supabase
+          // Insert into Supabase with phone
           const { data, error } = await supabase
             .from('checkins')
             .insert([{
+              phone: userPhone,
               evento,
               ciudad_origen: ciudadOrigen,
               como_se_entero: comoSeEntero,
@@ -788,26 +953,66 @@
           }
 
           // Show success screen
-          document.getElementById('formContainer').classList.add('hide');
-          document.getElementById('successScreen').classList.add('show');
-
-          // Scroll to top
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          showSuccess();
 
         } catch (error) {
           console.error('Error submitting form:', error);
-
-          // Show error message
-          errorMessage.textContent = error.message || 'Error al enviar el formulario. Por favor intenta de nuevo.';
-          errorMessage.classList.add('show');
+          showError(error.message || 'Error al enviar el formulario. Por favor intenta de nuevo.');
 
           // Reset button
           btnSubmit.disabled = false;
           btnSubmit.innerHTML = 'Enviar check-in';
-
-          // Scroll to error
-          errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
+      }
+
+      // ═══════════════════════════════════════════════════════════════════════════
+      // UTILITIES
+      // ═══════════════════════════════════════════════════════════════════════════
+      function autoSelectEvent(selectElement) {
+        // Get current date in Mexico City timezone
+        const now = new Date();
+        const mexicoCityTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Mexico_City' }));
+
+        const year = mexicoCityTime.getFullYear();
+        const month = String(mexicoCityTime.getMonth() + 1).padStart(2, '0');
+        const day = String(mexicoCityTime.getDate()).padStart(2, '0');
+        const hour = mexicoCityTime.getHours();
+
+        const dateKey = `${year}-${month}-${day}`;
+
+        // Check if there's an event today
+        let eventToSelect = null;
+
+        // For May 1st, select based on time of day
+        if (dateKey === '2026-05-01') {
+          if (hour < 15) {
+            // Before 3pm, select the 12:00 event
+            eventToSelect = eventDates['2026-05-01-12'];
+          } else {
+            // After 3pm, select the 18:00 event
+            eventToSelect = eventDates['2026-05-01-18'];
+          }
+        } else if (eventDates[dateKey]) {
+          eventToSelect = eventDates[dateKey];
+        }
+
+        // Auto-select if event found
+        if (eventToSelect && selectElement) {
+          selectElement.value = eventToSelect;
+        }
+      }
+
+      function showError(message) {
+        const errorMessage = document.getElementById('errorMessage');
+        errorMessage.textContent = message;
+        errorMessage.classList.add('show');
+        errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      function showSuccess() {
+        document.getElementById('formContainer').classList.add('hide');
+        document.getElementById('successScreen').classList.add('show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
     })();
