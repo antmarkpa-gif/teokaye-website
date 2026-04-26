@@ -13,12 +13,26 @@
       box-sizing: border-box;
     }
 
+    html {
+      height: 100%;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
       min-height: 100vh;
+      min-height: 100dvh; /* Dynamic viewport height for mobile */
       padding: 0;
       -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Page wrapper */
+    .page-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     /* Header */
@@ -62,9 +76,21 @@
 
     /* Container */
     .container {
+      flex: 1;
       max-width: 560px;
       margin: 0 auto;
-      padding: 32px 20px 100px;
+      padding: 32px 20px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 0;
     }
 
     /* Form Card */
@@ -429,10 +455,12 @@
       background: #1a1a1a;
       color: #999;
       text-align: center;
-      padding: 32px 24px;
+      padding: 24px 20px;
       font-size: 13px;
-      line-height: 1.8;
+      line-height: 1.6;
       border-top: 1px solid #333;
+      margin-top: auto;
+      flex-shrink: 0;
     }
 
     .footer-sponsor {
@@ -481,16 +509,18 @@
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <div class="header">
-    <h1>Teokaye x FEMCA</h1>
-    <div class="header-subtitle">Festival de Música 2026</div>
-  </div>
+  <div class="page-wrapper">
+    <!-- Header -->
+    <div class="header">
+      <h1>Teokaye x FEMCA</h1>
+      <div class="header-subtitle">Festival de Música 2026</div>
+    </div>
 
-  <!-- Container -->
-  <div class="container">
-    <!-- Error message -->
-    <div class="error-message" id="errorMessage"></div>
+    <!-- Container -->
+    <div class="container">
+      <div class="content-wrapper">
+        <!-- Error message -->
+        <div class="error-message" id="errorMessage"></div>
 
     <!-- Form -->
     <div class="form-container" id="formContainer">
@@ -659,6 +689,8 @@
             <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
+      </div>
+    </div>
       </div>
     </div>
   </div>
