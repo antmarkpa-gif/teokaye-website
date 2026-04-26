@@ -654,10 +654,7 @@
 
             <!-- Conditional contact fields -->
             <div class="conditional-field" id="contactFields">
-              <label class="form-label">Nombre <span class="required">*</span></label>
-              <input type="text" class="form-input" id="nombre" placeholder="Ej: Ana García">
-
-              <label class="form-label" style="margin-top: 16px;">WhatsApp <span class="required">*</span></label>
+              <label class="form-label">WhatsApp <span class="required">*</span></label>
               <input type="tel" class="form-input" id="whatsapp" placeholder="Ej: 2221234567">
               <div class="helper-text">10 dígitos, sin espacios ni guiones</div>
             </div>
@@ -752,20 +749,16 @@
         // Show/hide contact fields based on communication preference
         const comunicacionRadios = document.querySelectorAll('input[name="comunicacion"]');
         const contactFields = document.getElementById('contactFields');
-        const nombreInput = document.getElementById('nombre');
         const whatsappInput = document.getElementById('whatsapp');
 
         comunicacionRadios.forEach(radio => {
           radio.addEventListener('change', (e) => {
             if (e.target.value === 'true') {
               contactFields.classList.add('show');
-              nombreInput.setAttribute('required', 'required');
               whatsappInput.setAttribute('required', 'required');
             } else {
               contactFields.classList.remove('show');
-              nombreInput.removeAttribute('required');
               whatsappInput.removeAttribute('required');
-              nombreInput.value = '';
               whatsappInput.value = '';
             }
           });
@@ -877,7 +870,6 @@
               rango_edad: previousUserData.rango_edad,
               acepta_comunicacion: previousUserData.acepta_comunicacion,
               whatsapp: previousUserData.whatsapp,
-              nombre: previousUserData.nombre,
               primera_vez: false // Returning user, so not first time
             }]);
 
@@ -934,10 +926,8 @@
           const aceptaComunicacion = document.querySelector('input[name="comunicacion"]:checked')?.value === 'true';
 
           // Get contact info if they want to receive communications
-          let nombre = null;
           let whatsapp = null;
           if (aceptaComunicacion) {
-            nombre = document.getElementById('nombre').value.trim();
             whatsapp = document.getElementById('whatsapp').value.trim();
           }
 
@@ -960,8 +950,8 @@
 
           // Validate contact info if they want communications
           if (aceptaComunicacion) {
-            if (!nombre || !whatsapp) {
-              throw new Error('Por favor completa tu nombre y WhatsApp para recibir información');
+            if (!whatsapp) {
+              throw new Error('Por favor completa tu WhatsApp para recibir información');
             }
           }
 
@@ -976,7 +966,6 @@
               primera_vez: primeraVez,
               rango_edad: rangoEdad,
               acepta_comunicacion: aceptaComunicacion,
-              nombre,
               whatsapp
             }]);
 
