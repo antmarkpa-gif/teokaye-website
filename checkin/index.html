@@ -634,20 +634,44 @@
         const checkinAt = new Date().toISOString();
 
         // Actualizar reserva
-        await supabaseFetch(`reservas?id=eq.${reserva.id}`, {
+        const url1 = `${SUPABASE_URL}/rest/v1/reservas?id=eq.${reserva.id}`;
+        const response1 = await fetch(url1, {
           method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          },
           body: JSON.stringify({ checkin: true, checkin_at: checkinAt })
         });
 
+        if (!response1.ok) {
+          const error1 = await response1.text();
+          console.error('Error updating reserva:', error1);
+          throw new Error('Error al actualizar reserva');
+        }
+
         // Insertar asistencia
-        await supabaseFetch('asistencias', {
+        const url2 = `${SUPABASE_URL}/rest/v1/asistencias`;
+        const response2 = await fetch(url2, {
           method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          },
           body: JSON.stringify({
             phone: reserva.phone,
             evento_id: reserva.evento_id,
             fecha: new Date().toISOString().split('T')[0]
           })
         });
+
+        if (!response2.ok) {
+          const error2 = await response2.text();
+          console.error('Error inserting asistencia:', error2);
+          throw new Error('Error al registrar asistencia');
+        }
 
         // Éxito
         document.getElementById('confirmadoNombre').textContent = reserva.nombre;
@@ -657,7 +681,7 @@
       } catch (error) {
         console.error('Error confirming:', error);
         document.getElementById('bannerError').style.display = 'flex';
-        document.getElementById('errorText').textContent = 'Error al confirmar. Intenta de nuevo.';
+        document.getElementById('errorText').textContent = error.message || 'Error al confirmar. Intenta de nuevo.';
         btn.disabled = false;
         btn.innerHTML = 'Confirmar llegada';
       }
