@@ -449,21 +449,6 @@
       return text ? JSON.parse(text) : null;
     }
 
-    async function supabaseRpc(fnName, params) {
-      const url = `${SUPABASE_URL}/rest/v1/rpc/${fnName}`;
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-        },
-        body: JSON.stringify(params)
-      });
-      const text = await response.text();
-      return text ? JSON.parse(text) : null;
-    }
-
     // ═══════════════════════════════════════════════════════════════════════════
     // STATE
     // ═══════════════════════════════════════════════════════════════════════════
@@ -646,28 +631,35 @@
       btn.innerHTML = '<div class="spinner-btn"></div>';
 
       try {
-        const result = await supabaseRpc('hacer_checkin', { p_token: token });
+        const checkinAt = new Date().toISOString();
 
-        if (result && result.ok) {
-          // Exito
-          document.getElementById('confirmadoNombre').textContent = result.nombre;
-          document.getElementById('confirmadoHora').textContent = formatHora(result.checkin_at);
-          showState('confirmadoState');
-        } else if (result && result.error === 'Ya hizo checkin') {
-          // Ya registrado
-          document.getElementById('bannerYaRegistrado').style.display = 'flex';
-          document.getElementById('yaRegistradoText').textContent =
-            `Entrada ya registrada · ${formatHora(result.checkin_at)}`;
-          btn.style.display = 'none';
-        } else {
-          throw new Error(result?.error || 'Error desconocido');
-        }
+        // Actualizar reserva
+        await supabaseFetch(`reservas?id=eq.${reserva.id}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ checkin: true, checkin_at: checkinAt })
+        });
+
+        // Insertar asistencia
+        await supabaseFetch('asistencias', {
+          method: 'POST',
+          body: JSON.stringify({
+            phone: reserva.phone,
+            evento_id: reserva.evento_id,
+            fecha: new Date().toISOString().split('T')[0]
+          })
+        });
+
+        // Éxito
+        document.getElementById('confirmadoNombre').textContent = reserva.nombre;
+        document.getElementById('confirmadoHora').textContent = formatHora(checkinAt);
+        showState('confirmadoState');
+
       } catch (error) {
         console.error('Error confirming:', error);
         document.getElementById('bannerError').style.display = 'flex';
-        document.getElementById('errorText').textContent = 'Error al confirmar';
-        btn.style.display = 'none';
-        document.getElementById('btnReintentar').style.display = 'block';
+        document.getElementById('errorText').textContent = 'Error al confirmar. Intenta de nuevo.';
+        btn.disabled = false;
+        btn.innerHTML = 'Confirmar llegada';
       }
     }
 
