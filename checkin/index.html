@@ -480,7 +480,7 @@
       try {
         // Buscar reserva por stripe_session_id o por id
         const results = await supabaseFetch(
-          `reservas?select=*,eventos(*)&or=(stripe_session_id.eq.${token},id.eq.${token})`
+          `reservas_eventos?select=*,eventos(*)&or=(stripe_session_id.eq.${token},id.eq.${token})`
         );
 
         if (!results || results.length === 0) {
@@ -634,7 +634,7 @@
         const checkinAt = new Date().toISOString();
 
         // Actualizar reserva
-        const url1 = `${SUPABASE_URL}/rest/v1/reservas?id=eq.${reserva.id}`;
+        const url1 = `${SUPABASE_URL}/rest/v1/reservas_eventos?id=eq.${reserva.id}`;
         const response1 = await fetch(url1, {
           method: 'PATCH',
           headers: {
@@ -663,7 +663,8 @@
           body: JSON.stringify({
             phone: reserva.phone,
             evento_id: reserva.evento_id,
-            fecha: new Date().toISOString().split('T')[0]
+            reserva_id: reserva.id,
+            checkin_at: checkinAt
           })
         });
 
