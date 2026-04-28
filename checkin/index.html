@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Check-in | Teokaye x FEMCA</title>
+  <title>Check-in | Teokaye</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="/favicon.ico">
   <style>
@@ -13,1030 +13,701 @@
       box-sizing: border-box;
     }
 
-    html {
-      height: 100%;
-    }
-
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
       min-height: 100vh;
-      min-height: 100dvh; /* Dynamic viewport height for mobile */
-      padding: 0;
-      -webkit-font-smoothing: antialiased;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Page wrapper */
-    .page-wrapper {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Header */
-    .header {
-      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-      padding: 48px 24px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #f4bf00, transparent);
-    }
-
-    .header h1 {
-      font-size: 32px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      background: linear-gradient(135deg, #f4bf00 0%, #ffde59 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 0 2px 20px rgba(244, 191, 0, 0.3);
-    }
-
-    .header-subtitle {
-      color: #999;
-      font-size: 14px;
-      margin-top: 8px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
-
-    /* Container */
-    .container {
-      flex: 1;
-      max-width: 560px;
-      margin: 0 auto;
-      padding: 32px 20px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .content-wrapper {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 0;
-    }
-
-    /* Form Card */
-    .form-container {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 36px 28px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Form */
-    .form-group {
-      margin-bottom: 28px;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 14px;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 10px;
-      letter-spacing: 0.3px;
-      text-transform: uppercase;
-    }
-
-    .required {
-      color: #f4bf00;
-      margin-left: 2px;
-    }
-
-    .form-select,
-    .form-input {
-      width: 100%;
-      padding: 16px 18px;
-      font-size: 16px;
-      font-family: inherit;
-      color: #1a1a1a;
-      background: #fafafa;
-      border: 2px solid #e8e8e8;
-      border-radius: 12px;
-      transition: all 0.3s ease;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-    }
-
-    .form-select {
-      background-image: url("data:image/svg+xml,%3Csvg width='14' height='9' viewBox='0 0 14 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L7 7.5L13 1.5' stroke='%23f4bf00' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 18px center;
-      padding-right: 50px;
-      cursor: pointer;
-    }
-
-    .form-select:hover,
-    .form-input:hover {
-      border-color: #f4bf00;
-      background: #ffffff;
-    }
-
-    .form-select:focus,
-    .form-input:focus {
-      outline: none;
-      border-color: #f4bf00;
-      background: #ffffff;
-      box-shadow: 0 0 0 4px rgba(244, 191, 0, 0.1);
-    }
-
-    .form-select option {
-      color: #1a1a1a;
-      padding: 12px;
-    }
-
-    .form-select option:first-child {
-      color: #999;
-    }
-
-    /* Radio buttons */
-    .radio-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .radio-option {
-      position: relative;
-    }
-
-    .radio-option input[type="radio"] {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .radio-label {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 18px 20px;
-      font-size: 16px;
-      font-weight: 600;
-      color: #666;
-      background: #fafafa;
-      border: 2px solid #e8e8e8;
-      border-radius: 12px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
+      padding: 16px;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .radio-label:hover {
-      border-color: #f4bf00;
-      background: #fffbf0;
-      transform: translateY(-2px);
+    .container {
+      width: 100%;
+      max-width: 430px;
     }
 
-    .radio-option input[type="radio"]:checked + .radio-label {
-      background: linear-gradient(135deg, #f4bf00 0%, #ffde59 100%);
-      border-color: #f4bf00;
-      color: #1a1a1a;
-      font-weight: 700;
-      box-shadow: 0 4px 12px rgba(244, 191, 0, 0.3);
-      transform: translateY(-2px);
-    }
-
-    /* Conditional field */
-    .conditional-field {
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 2px solid #f0f0f0;
+    /* States */
+    .state {
       display: none;
-      animation: slideDown 0.3s ease;
     }
-
-    .conditional-field.show {
+    .state.active {
       display: block;
     }
 
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* Loading */
+    .loading-state {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
     }
-
-    .helper-text {
-      font-size: 13px;
-      color: #999;
-      margin-top: 8px;
-      font-style: italic;
-    }
-
-    /* Submit button */
-    .btn-submit {
-      width: 100%;
-      padding: 20px;
-      font-size: 17px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #1a1a1a;
-      background: linear-gradient(135deg, #f4bf00 0%, #ffde59 100%);
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 36px;
-      box-shadow: 0 8px 20px rgba(244, 191, 0, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-submit::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      transform: translate(-50%, -50%);
-      transition: width 0.6s, height 0.6s;
-    }
-
-    .btn-submit:hover::before {
-      width: 300px;
-      height: 300px;
-    }
-
-    .btn-submit:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(244, 191, 0, 0.4);
-    }
-
-    .btn-submit:active {
-      transform: translateY(-1px);
-    }
-
-    .btn-submit:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
     .spinner {
-      width: 22px;
-      height: 22px;
-      border: 3px solid rgba(26, 26, 26, 0.2);
-      border-top-color: #1a1a1a;
+      width: 40px;
+      height: 40px;
+      border: 3px solid #e5e7eb;
+      border-top-color: #111;
       border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      margin: 0 auto;
+      animation: spin 0.8s linear infinite;
     }
-
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
 
-    /* Error message */
-    .error-message {
-      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-      color: #991b1b;
-      padding: 16px 20px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 24px;
-      display: none;
-      border-left: 4px solid #dc2626;
-    }
-
-    .error-message.show {
-      display: block;
-      animation: slideDown 0.3s ease;
-    }
-
-    /* Success screen */
-    .success-screen {
-      display: none;
+    /* Invalid */
+    .invalid-state {
+      background: #fef2f2;
+      border-radius: 16px;
+      padding: 48px 24px;
       text-align: center;
-      padding: 80px 20px;
-      animation: fadeIn 0.5s ease;
     }
-
-    .success-screen.show {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .success-check {
-      width: 100px;
-      height: 100px;
-      background: linear-gradient(135deg, #f4bf00 0%, #ffde59 100%);
+    .invalid-icon {
+      width: 64px;
+      height: 64px;
+      background: #fee2e2;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 32px;
-      box-shadow: 0 10px 40px rgba(244, 191, 0, 0.4);
-      animation: scaleIn 0.5s ease 0.2s backwards;
+      margin: 0 auto 20px;
     }
-
-    @keyframes scaleIn {
-      from {
-        transform: scale(0);
-        rotate: -180deg;
-      }
-      to {
-        transform: scale(1);
-        rotate: 0deg;
-      }
+    .invalid-icon svg {
+      width: 32px;
+      height: 32px;
+      color: #dc2626;
     }
-
-    .success-check svg {
-      width: 56px;
-      height: 56px;
-      color: #1a1a1a;
-      stroke-width: 4;
-    }
-
-    .success-title {
-      font-size: 32px;
-      font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 16px;
-      animation: slideDown 0.5s ease 0.3s backwards;
-    }
-
-    .success-subtitle {
+    .invalid-title {
       font-size: 20px;
-      color: #d4d4d4;
-      margin-bottom: 12px;
-      font-weight: 500;
-      animation: slideDown 0.5s ease 0.4s backwards;
-    }
-
-    .success-brand {
-      font-size: 18px;
       font-weight: 700;
-      background: linear-gradient(135deg, #f4bf00 0%, #ffde59 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 1px;
-      animation: slideDown 0.5s ease 0.5s backwards;
+      color: #991b1b;
+      margin-bottom: 8px;
+    }
+    .invalid-text {
+      font-size: 14px;
+      color: #b91c1c;
     }
 
-    .success-links {
-      margin-top: 40px;
-      animation: slideDown 0.5s ease 0.6s backwards;
+    /* Card */
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
-    .success-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 16px 28px;
-      background: rgba(244, 191, 0, 0.15);
-      border: 2px solid rgba(244, 191, 0, 0.4);
-      border-radius: 12px;
-      color: #f4bf00;
+    /* Badge HOY */
+    .badge-hoy {
+      display: inline-block;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 6px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    /* Nombre */
+    .nombre-asistente {
+      font-size: 28px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    /* Badge opcion */
+    .badge {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 8px;
+    }
+    .badge-cover {
+      background: #fef2f2;
+      color: #991b1b;
+    }
+    .badge-premium {
+      background: #f5f3ff;
+      color: #6d28d9;
+    }
+    .badge-basica {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+    .badge-gratis {
+      background: #f3f4f6;
+      color: #374151;
+    }
+    .badge-comunidad {
+      background: #f0fdf4;
+      color: #15803d;
+    }
+
+    /* Acompanantes */
+    .acompanantes {
+      font-size: 15px;
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: #e5e7eb;
+      margin: 20px 0;
+    }
+
+    /* Evento info */
+    .evento-nombre {
       font-size: 16px;
       font-weight: 700;
-      text-decoration: none;
-      transition: all 0.3s ease;
+      color: #111;
+      margin-bottom: 4px;
     }
-
-    .success-link:hover {
-      background: rgba(244, 191, 0, 0.25);
-      border-color: #f4bf00;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(244, 191, 0, 0.3);
-    }
-
-    .success-link svg {
-      transition: transform 0.3s ease;
-    }
-
-    .success-link:hover svg {
-      transform: translateX(4px);
-    }
-
-    /* Footer */
-    .footer {
-      background: #1a1a1a;
-      color: #999;
-      text-align: center;
-      padding: 24px 20px;
+    .evento-artista {
       font-size: 13px;
-      line-height: 1.6;
-      border-top: 1px solid #333;
-      margin-top: auto;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+    .evento-fecha {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    /* Historial */
+    .historial-stats {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+    .badge-historial {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+    .badge-baja {
+      background: #fff7ed;
+      color: #c2410c;
+    }
+    .badge-frecuente {
+      background: #f0fdf4;
+      color: #15803d;
+    }
+    .badge-primera {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    /* Boton confirmar */
+    .btn-confirmar {
+      width: 100%;
+      height: 56px;
+      background: #111;
+      color: #fff;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-confirmar:hover {
+      background: #333;
+    }
+    .btn-confirmar:active {
+      transform: scale(0.98);
+    }
+    .btn-confirmar:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-confirmar .spinner-btn {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* Banner ya registrado */
+    .banner-ya-registrado {
+      background: #fef3c7;
+      color: #92400e;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .banner-ya-registrado svg {
+      width: 18px;
+      height: 18px;
       flex-shrink: 0;
     }
 
-    .footer-sponsor {
-      color: #f4bf00;
+    /* Error banner */
+    .banner-error {
+      background: #fef2f2;
+      color: #dc2626;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-reintentar {
+      width: 100%;
+      height: 48px;
+      background: #fff;
+      color: #111;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 16px;
+    }
+
+    /* Confirmado fullscreen */
+    .confirmado-state {
+      position: fixed;
+      inset: 0;
+      background: #16a34a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+      padding: 24px;
+    }
+    .confirmado-check {
+      width: 80px;
+      height: 80px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .confirmado-check svg {
+      width: 48px;
+      height: 48px;
+    }
+    .confirmado-titulo {
+      font-size: 28px;
       font-weight: 700;
-      letter-spacing: 0.5px;
+      margin-bottom: 8px;
     }
-
-    /* Hide form when success */
-    .form-container.hide {
-      display: none;
+    .confirmado-nombre {
+      font-size: 20px;
+      font-weight: 500;
+      opacity: 0.9;
+      margin-bottom: 8px;
     }
-
-    /* Screen visibility */
-    .screen {
-      display: none;
-    }
-
-    .screen.active {
-      display: block;
-    }
-
-    /* Mobile adjustments */
-    @media (max-width: 480px) {
-      .header h1 {
-        font-size: 26px;
-      }
-
-      .form-container {
-        padding: 28px 20px;
-      }
-
-      .form-label {
-        font-size: 13px;
-      }
-
-      .radio-group {
-        gap: 10px;
-      }
-
-      .radio-label {
-        padding: 16px;
-        font-size: 15px;
-      }
+    .confirmado-hora {
+      font-size: 14px;
+      opacity: 0.7;
     }
   </style>
 </head>
 <body>
-  <div class="page-wrapper">
-    <!-- Header -->
-    <div class="header">
-      <h1>Teokaye x FEMCA</h1>
-      <div class="header-subtitle">Festival de Música 2026</div>
+  <div class="container">
+    <!-- Loading -->
+    <div class="state loading-state active" id="loadingState">
+      <div class="spinner"></div>
     </div>
 
-    <!-- Container -->
-    <div class="container">
-      <div class="content-wrapper">
-        <!-- Error message -->
-        <div class="error-message" id="errorMessage"></div>
+    <!-- Invalid -->
+    <div class="state invalid-state" id="invalidState">
+      <div class="invalid-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="15" y1="9" x2="9" y2="15"/>
+          <line x1="9" y1="9" x2="15" y2="15"/>
+        </svg>
+      </div>
+      <div class="invalid-title">QR no valido</div>
+      <div class="invalid-text">Este codigo no existe</div>
+    </div>
 
-    <!-- Form -->
-    <div class="form-container" id="formContainer">
-      <!-- SCREEN 1: Phone Number -->
-      <div class="screen active" id="phoneScreen">
-        <form id="phoneForm">
-          <div class="form-group">
-            <label class="form-label">
-              ¿Cuál es tu número de WhatsApp? <span class="required">*</span>
-            </label>
-            <input type="tel" class="form-input" id="phoneNumber" required placeholder="Ej: 2221234567" pattern="[0-9]{10}">
-            <div class="helper-text">10 dígitos, sin espacios ni guiones</div>
-          </div>
-
-          <button type="submit" class="btn-submit" id="btnPhoneSubmit">
-            Continuar
-          </button>
-        </form>
+    <!-- Ready / Ya registrado / Error -->
+    <div class="state" id="readyState">
+      <!-- Banner ya registrado (hidden by default) -->
+      <div class="banner-ya-registrado" id="bannerYaRegistrado" style="display: none;">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+        <span id="yaRegistradoText">Entrada ya registrada</span>
       </div>
 
-      <!-- SCREEN 2a: Returning Visitor (Event Only) -->
-      <div class="screen" id="returningScreen">
-        <form id="returningForm">
-          <div class="form-group">
-            <label class="form-label">
-              ¡Bienvenido de nuevo! ¿A qué concierto vienes hoy? <span class="required">*</span>
-            </label>
-            <select class="form-select" id="eventoReturning" required>
-              <option value="" disabled selected>Selecciona un concierto</option>
-              <option value="Jueves 30 abril, 18:00 — Ensamble de Percusiones FEMCA — Patio del Palacio Municipal">Jueves 30 abril, 18:00 — Ensamble de Percusiones FEMCA</option>
-              <option value="Viernes 1 mayo, 12:00 — Toccato Ensamble — Centro Cultural LA SOL">Viernes 1 mayo, 12:00 — Toccato Ensamble</option>
-              <option value="Viernes 1 mayo, 18:00 — Xica Ensamble — Casa de Cultura Acapetlahuacan">Viernes 1 mayo, 18:00 — Xica Ensamble</option>
-              <option value="Sábado 2 mayo, 17:00 — Orquesta Femenil de Guitarras Sencuicati — Estaca SUD Atlixco">Sábado 2 mayo, 17:00 — Orquesta Femenil de Guitarras Sencuicati</option>
-              <option value="Domingo 3 mayo, 13:00 — Orquesta de Guitarras de Xalapa — Patio Museo MAVA">Domingo 3 mayo, 13:00 — Orquesta de Guitarras de Xalapa</option>
-            </select>
-          </div>
-
-          <button type="submit" class="btn-submit" id="btnReturningSubmit">
-            Enviar check-in
-          </button>
-        </form>
+      <!-- Banner error (hidden by default) -->
+      <div class="banner-error" id="bannerError" style="display: none;">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+        <span id="errorText">Error al confirmar</span>
       </div>
 
-      <!-- SCREEN 2b: New Visitor (Full Form) -->
-      <div class="screen" id="newUserScreen">
-        <form id="checkinForm">
-          <!-- 1. Evento -->
-          <div class="form-group">
-            <label class="form-label">
-              ¿A qué concierto vienes? <span class="required">*</span>
-            </label>
-            <select class="form-select" id="evento" required>
-              <option value="" disabled selected>Selecciona un concierto</option>
-              <option value="Jueves 30 abril, 18:00 — Ensamble de Percusiones FEMCA — Patio del Palacio Municipal">Jueves 30 abril, 18:00 — Ensamble de Percusiones FEMCA</option>
-              <option value="Viernes 1 mayo, 12:00 — Toccato Ensamble — Centro Cultural LA SOL">Viernes 1 mayo, 12:00 — Toccato Ensamble</option>
-              <option value="Viernes 1 mayo, 18:00 — Xica Ensamble — Casa de Cultura Acapetlahuacan">Viernes 1 mayo, 18:00 — Xica Ensamble</option>
-              <option value="Sábado 2 mayo, 17:00 — Orquesta Femenil de Guitarras Sencuicati — Estaca SUD Atlixco">Sábado 2 mayo, 17:00 — Orquesta Femenil de Guitarras Sencuicati</option>
-              <option value="Domingo 3 mayo, 13:00 — Orquesta de Guitarras de Xalapa — Patio Museo MAVA">Domingo 3 mayo, 13:00 — Orquesta de Guitarras de Xalapa</option>
-            </select>
-          </div>
+      <div class="card">
+        <!-- Badge HOY -->
+        <div class="badge-hoy" id="badgeHoy" style="display: none;">HOY</div>
 
-          <!-- 2. Ciudad -->
-          <div class="form-group">
-            <label class="form-label">
-              ¿De qué ciudad o colonia vienes? <span class="required">*</span>
-            </label>
-            <input type="text" class="form-input" id="ciudad" required placeholder="Ej: San Pedro Cholula">
-          </div>
+        <!-- Nombre -->
+        <div class="nombre-asistente" id="nombreAsistente"></div>
 
-          <!-- 3. Cómo se enteró -->
-          <div class="form-group">
-            <label class="form-label">
-              ¿Cómo te enteraste del festival? <span class="required">*</span>
-            </label>
-            <select class="form-select" id="comoSeEntero" required>
-              <option value="" disabled selected>Selecciona una opción</option>
-              <option value="Anuncio en Instagram o Facebook">Anuncio en Instagram o Facebook</option>
-              <option value="Me invitó alguien">Me invitó alguien</option>
-              <option value="Redes sociales de FEMCA">Redes sociales de FEMCA</option>
-              <option value="Periódico o radio">Periódico o radio</option>
-              <option value="Otro">Otro</option>
-            </select>
-          </div>
+        <!-- Badge opcion -->
+        <div class="badge" id="badgeOpcion"></div>
 
-          <!-- 4. Primera vez -->
-          <div class="form-group">
-            <label class="form-label">
-              ¿Es tu primera vez en el festival? <span class="required">*</span>
-            </label>
-            <div class="radio-group">
-              <div class="radio-option">
-                <input type="radio" id="primeraVezSi" name="primeraVez" value="true" required>
-                <label class="radio-label" for="primeraVezSi">Sí</label>
-              </div>
-              <div class="radio-option">
-                <input type="radio" id="primeraVezNo" name="primeraVez" value="false" required>
-                <label class="radio-label" for="primeraVezNo">No</label>
-              </div>
-            </div>
-          </div>
+        <!-- Acompanantes -->
+        <div class="acompanantes" id="acompanantes" style="display: none;"></div>
 
-          <!-- 5. Edad -->
-          <div class="form-group">
-            <label class="form-label">
-              ¿Qué edad tienes? <span class="required">*</span>
-            </label>
-            <select class="form-select" id="edad" required>
-              <option value="" disabled selected>Selecciona tu rango de edad</option>
-              <option value="18-24">18-24</option>
-              <option value="25-34">25-34</option>
-              <option value="35-44">35-44</option>
-              <option value="45+">45+</option>
-            </select>
-          </div>
+        <div class="divider"></div>
 
-          <!-- 6. Comunicación -->
-          <div class="form-group">
-            <label class="form-label">
-              ¿Quieres recibir info de próximas ediciones?
-            </label>
-            <div class="radio-group">
-              <div class="radio-option">
-                <input type="radio" id="comunicacionSi" name="comunicacion" value="true">
-                <label class="radio-label" for="comunicacionSi">Sí</label>
-              </div>
-              <div class="radio-option">
-                <input type="radio" id="comunicacionNo" name="comunicacion" value="false">
-                <label class="radio-label" for="comunicacionNo">No</label>
-              </div>
-            </div>
+        <!-- Evento info -->
+        <div class="evento-nombre" id="eventoNombre"></div>
+        <div class="evento-artista" id="eventoArtista" style="display: none;"></div>
+        <div class="evento-fecha" id="eventoFecha"></div>
 
-            <!-- Conditional contact fields -->
-            <div class="conditional-field" id="contactFields">
-              <label class="form-label">WhatsApp <span class="required">*</span></label>
-              <input type="tel" class="form-input" id="whatsapp" placeholder="Ej: 2221234567">
-              <div class="helper-text">10 dígitos, sin espacios ni guiones</div>
-            </div>
-          </div>
+        <div class="divider"></div>
 
-          <!-- Submit button -->
-          <button type="submit" class="btn-submit" id="btnSubmit">
-            Enviar check-in
-          </button>
-        </form>
+        <!-- Historial -->
+        <div class="historial-stats" id="historialStats"></div>
+        <div class="badge-historial" id="badgeHistorial"></div>
+
+        <!-- Boton confirmar -->
+        <button class="btn-confirmar" id="btnConfirmar">
+          Confirmar llegada
+        </button>
+
+        <!-- Boton reintentar (hidden by default) -->
+        <button class="btn-reintentar" id="btnReintentar" style="display: none;">
+          Reintentar
+        </button>
       </div>
     </div>
 
-    <!-- Success screen -->
-    <div class="success-screen" id="successScreen">
-      <div class="success-check">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Confirmado fullscreen -->
+    <div class="state confirmado-state" id="confirmadoState">
+      <div class="confirmado-check">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <polyline points="20 6 9 17 4 12"/>
         </svg>
       </div>
-      <div class="success-title">¡Gracias por venir!</div>
-      <div class="success-subtitle">Disfruta el festival</div>
-      <div class="success-brand">Teokaye x FEMCA 2026</div>
-
-      <div class="success-links">
-        <a href="https://teokaye.mx/links" class="success-link" target="_blank">
-          <span>Conoce más sobre Teokaye</span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
-    </div>
-      </div>
+      <div class="confirmado-titulo">Bienvenido!</div>
+      <div class="confirmado-nombre" id="confirmadoNombre"></div>
+      <div class="confirmado-hora" id="confirmadoHora"></div>
     </div>
   </div>
-
-  <!-- Footer -->
-  <div class="footer">
-    Patrocinado por <span class="footer-sponsor">Teokaye</span>, foro cultural de San Pedro Cholula
-  </div>
-
-  <!-- Supabase CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
-    (function() {
-      'use strict';
+    // ═══════════════════════════════════════════════════════════════════════════
+    // CONFIGURACION SUPABASE
+    // ═══════════════════════════════════════════════════════════════════════════
+    const SUPABASE_URL = 'https://xfllewbfqxsnkltybqiw.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmbGxld2JmcXhzbmtsdHlicWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MzgyMTYsImV4cCI6MjA4OTUxNDIxNn0.8DgRYmM7_pBQ3shLk0hRiAUf4FE8DSYCXgPbVJkThG4';
 
-      // ═══════════════════════════════════════════════════════════════════════════
-      // SUPABASE CONFIG
-      // ═══════════════════════════════════════════════════════════════════════════
-      const SUPABASE_URL = 'https://ifewzsfbyobprzpbukmj.supabase.co';
-      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmZXd6c2ZieW9icHJ6cGJ1a21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMzMwMDAsImV4cCI6MjA5MTYwOTAwMH0.d0A-clF08uC2UJ1nD-xZ5Sqvim7F4LYZIl0Y5KoRHYY';
-
-      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-      // ═══════════════════════════════════════════════════════════════════════════
-      // STATE
-      // ═══════════════════════════════════════════════════════════════════════════
-      let userPhone = null;
-      let previousUserData = null;
-
-      // ═══════════════════════════════════════════════════════════════════════════
-      // EVENT DATES MAPPING (Mexico City timezone)
-      // ═══════════════════════════════════════════════════════════════════════════
-      const eventDates = {
-        '2026-04-30': 'Jueves 30 abril, 18:00 — Ensamble de Percusiones FEMCA — Patio del Palacio Municipal',
-        '2026-05-01-12': 'Viernes 1 mayo, 12:00 — Toccato Ensamble — Centro Cultural LA SOL',
-        '2026-05-01-18': 'Viernes 1 mayo, 18:00 — Xica Ensamble — Casa de Cultura Acapetlahuacan',
-        '2026-05-02': 'Sábado 2 mayo, 17:00 — Orquesta Femenil de Guitarras Sencuicati — Estaca SUD Atlixco',
-        '2026-05-03': 'Domingo 3 mayo, 13:00 — Orquesta de Guitarras de Xalapa — Patio Museo MAVA'
+    async function supabaseFetch(endpoint, options = {}) {
+      const url = `${SUPABASE_URL}/rest/v1/${endpoint}`;
+      const headers = {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        ...options.headers
       };
+      const response = await fetch(url, { ...options, headers });
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || `Error ${response.status}`);
+      }
+      const text = await response.text();
+      return text ? JSON.parse(text) : null;
+    }
 
-      // ═══════════════════════════════════════════════════════════════════════════
-      // INIT
-      // ═══════════════════════════════════════════════════════════════════════════
-      document.addEventListener('DOMContentLoaded', () => {
-        setupEventListeners();
+    async function supabaseRpc(fnName, params) {
+      const url = `${SUPABASE_URL}/rest/v1/rpc/${fnName}`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify(params)
       });
+      const text = await response.text();
+      return text ? JSON.parse(text) : null;
+    }
 
-      function setupEventListeners() {
-        // Phone form submission
-        document.getElementById('phoneForm').addEventListener('submit', handlePhoneSubmit);
+    // ═══════════════════════════════════════════════════════════════════════════
+    // STATE
+    // ═══════════════════════════════════════════════════════════════════════════
+    let reserva = null;
+    let evento = null;
+    let historial = null;
+    let token = null;
 
-        // Returning user form submission
-        document.getElementById('returningForm').addEventListener('submit', handleReturningSubmit);
+    // ═══════════════════════════════════════════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════════════════════════════════════════
+    document.addEventListener('DOMContentLoaded', init);
 
-        // New user form submission
-        document.getElementById('checkinForm').addEventListener('submit', handleNewUserSubmit);
+    async function init() {
+      const params = new URLSearchParams(window.location.search);
+      token = params.get('token');
 
-        // Show/hide contact fields based on communication preference
-        const comunicacionRadios = document.querySelectorAll('input[name="comunicacion"]');
-        const contactFields = document.getElementById('contactFields');
-        const whatsappInput = document.getElementById('whatsapp');
-
-        comunicacionRadios.forEach(radio => {
-          radio.addEventListener('change', (e) => {
-            if (e.target.value === 'true') {
-              contactFields.classList.add('show');
-              whatsappInput.setAttribute('required', 'required');
-            } else {
-              contactFields.classList.remove('show');
-              whatsappInput.removeAttribute('required');
-              whatsappInput.value = '';
-            }
-          });
-        });
+      if (!token) {
+        showState('invalidState');
+        return;
       }
 
-      // ═══════════════════════════════════════════════════════════════════════════
-      // PHONE SUBMISSION
-      // ═══════════════════════════════════════════════════════════════════════════
-      async function handlePhoneSubmit(e) {
-        e.preventDefault();
+      await loadData();
+    }
 
-        const btnPhoneSubmit = document.getElementById('btnPhoneSubmit');
-        const errorMessage = document.getElementById('errorMessage');
-        const phoneInput = document.getElementById('phoneNumber');
+    async function loadData() {
+      showState('loadingState');
 
-        // Hide error message
-        errorMessage.classList.remove('show');
+      try {
+        // Buscar reserva por stripe_session_id o por id
+        const results = await supabaseFetch(
+          `reservas?select=*,eventos(*)&or=(stripe_session_id.eq.${token},id.eq.${token})`
+        );
 
-        // Validate phone number
-        const phone = phoneInput.value.trim();
-        if (!/^[0-9]{10}$/.test(phone)) {
-          showError('Por favor ingresa un número de WhatsApp válido de 10 dígitos');
+        if (!results || results.length === 0) {
+          showState('invalidState');
           return;
         }
 
-        // Show loading state
-        btnPhoneSubmit.disabled = true;
-        btnPhoneSubmit.innerHTML = '<div class="spinner"></div>';
+        reserva = results[0];
+        evento = reserva.eventos;
 
-        try {
-          userPhone = phone;
+        // Cargar historial
+        const historialResults = await supabaseFetch(
+          `vista_historial_persona?phone=eq.${reserva.phone}`
+        );
+        historial = historialResults && historialResults.length > 0 ? historialResults[0] : null;
 
-          // Check if phone exists in database
-          const { data, error } = await supabase
-            .from('checkins')
-            .select('*')
-            .eq('phone', phone)
-            .order('created_at', { ascending: false })
-            .limit(1);
+        renderCard();
 
-          if (error) {
-            throw error;
-          }
+      } catch (error) {
+        console.error('Error loading data:', error);
+        showState('invalidState');
+      }
+    }
 
-          // Hide phone screen
-          document.getElementById('phoneScreen').classList.remove('active');
+    // ═══════════════════════════════════════════════════════════════════════════
+    // RENDER
+    // ═══════════════════════════════════════════════════════════════════════════
+    function renderCard() {
+      // Check if es hoy
+      const hoy = new Date().toISOString().split('T')[0];
+      const esHoy = evento.fecha === hoy;
 
-          if (data && data.length > 0) {
-            // Returning user
-            previousUserData = data[0];
-            showReturningUserScreen();
-          } else {
-            // New user
-            showNewUserScreen();
-          }
+      // Badge HOY
+      const badgeHoy = document.getElementById('badgeHoy');
+      badgeHoy.style.display = esHoy ? 'inline-block' : 'none';
 
-        } catch (error) {
-          console.error('Error checking phone:', error);
-          showError('Error al verificar el número. Por favor intenta de nuevo.');
+      // Nombre
+      document.getElementById('nombreAsistente').textContent = reserva.nombre;
 
-          // Reset button
-          btnPhoneSubmit.disabled = false;
-          btnPhoneSubmit.innerHTML = 'Continuar';
+      // Badge opcion
+      const badgeOpcion = document.getElementById('badgeOpcion');
+      const { badgeClass, badgeText } = getBadgeInfo();
+      badgeOpcion.className = `badge ${badgeClass}`;
+      badgeOpcion.textContent = badgeText;
+
+      // Acompanantes
+      const acompanantes = document.getElementById('acompanantes');
+      if (reserva.numero_lugares > 1) {
+        acompanantes.style.display = 'block';
+        acompanantes.textContent = `Viene con ${reserva.numero_lugares} personas`;
+      }
+
+      // Evento info
+      document.getElementById('eventoNombre').textContent = evento.nombre;
+
+      const eventoArtista = document.getElementById('eventoArtista');
+      if (evento.artista) {
+        eventoArtista.style.display = 'block';
+        eventoArtista.textContent = evento.artista;
+      }
+
+      document.getElementById('eventoFecha').textContent = formatFechaHora(evento.fecha, evento.hora);
+
+      // Historial
+      const historialStats = document.getElementById('historialStats');
+      const badgeHistorial = document.getElementById('badgeHistorial');
+
+      if (historial) {
+        historialStats.textContent = `${historial.total_reservas} reservas · ${historial.total_asistencias} asistencias`;
+
+        if (historial.porcentaje_asistencia < 50 && historial.total_reservas > 2) {
+          badgeHistorial.className = 'badge-historial badge-baja';
+          badgeHistorial.textContent = '↓ Asistencia baja';
+        } else if (historial.porcentaje_asistencia >= 80) {
+          badgeHistorial.className = 'badge-historial badge-frecuente';
+          badgeHistorial.textContent = '★ Frecuente';
+        } else {
+          badgeHistorial.className = 'badge-historial badge-primera';
+          badgeHistorial.textContent = 'Primera vez';
+        }
+      } else {
+        historialStats.textContent = '0 reservas · 0 asistencias';
+        badgeHistorial.className = 'badge-historial badge-primera';
+        badgeHistorial.textContent = 'Primera vez';
+      }
+
+      // Check if ya registro
+      if (reserva.checkin) {
+        document.getElementById('bannerYaRegistrado').style.display = 'flex';
+        document.getElementById('yaRegistradoText').textContent =
+          `Entrada ya registrada · ${formatHora(reserva.checkin_at)}`;
+        document.getElementById('btnConfirmar').style.display = 'none';
+      } else {
+        document.getElementById('btnConfirmar').style.display = 'flex';
+        document.getElementById('btnConfirmar').onclick = handleConfirmar;
+      }
+
+      document.getElementById('btnReintentar').onclick = loadData;
+
+      showState('readyState');
+    }
+
+    function getBadgeInfo() {
+      // Tipo comunidad
+      if (evento.tipo_comunidad) {
+        return { badgeClass: 'badge-comunidad', badgeText: 'Entrada libre' };
+      }
+
+      // Tipo cover
+      if (evento.tipo_evento === 'cover') {
+        return {
+          badgeClass: 'badge-cover',
+          badgeText: `Cover · $${reserva.monto_pagado} MXN`
+        };
+      }
+
+      // Tipo cooperacion
+      if (evento.tipo_evento === 'cooperacion') {
+        switch (reserva.opcion_elegida) {
+          case 'garantia_premium':
+            return {
+              badgeClass: 'badge-premium',
+              badgeText: `Garantia Premium · $${reserva.monto_pagado} MXN`
+            };
+          case 'garantia_basica':
+            return {
+              badgeClass: 'badge-basica',
+              badgeText: `Garantia Basica · $${reserva.monto_pagado} MXN`
+            };
+          case 'gratis':
+            return {
+              badgeClass: 'badge-gratis',
+              badgeText: `Entrada libre · antes de ${formatHoraSimple(evento.hora_limite_gratis)}`
+            };
         }
       }
 
-      // ═══════════════════════════════════════════════════════════════════════════
-      // RETURNING USER FLOW
-      // ═══════════════════════════════════════════════════════════════════════════
-      function showReturningUserScreen() {
-        const returningScreen = document.getElementById('returningScreen');
-        const eventoSelect = document.getElementById('eventoReturning');
+      // Default
+      return { badgeClass: 'badge-gratis', badgeText: 'Entrada libre' };
+    }
 
-        // Auto-select event based on today's date
-        autoSelectEvent(eventoSelect);
+    // ═══════════════════════════════════════════════════════════════════════════
+    // CONFIRMAR
+    // ═══════════════════════════════════════════════════════════════════════════
+    async function handleConfirmar() {
+      const btn = document.getElementById('btnConfirmar');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner-btn"></div>';
 
-        returningScreen.classList.add('active');
-      }
+      try {
+        const result = await supabaseRpc('hacer_checkin', { p_token: token });
 
-      async function handleReturningSubmit(e) {
-        e.preventDefault();
-
-        const btnReturningSubmit = document.getElementById('btnReturningSubmit');
-        const errorMessage = document.getElementById('errorMessage');
-
-        // Hide error message
-        errorMessage.classList.remove('show');
-
-        // Show loading state
-        btnReturningSubmit.disabled = true;
-        btnReturningSubmit.innerHTML = '<div class="spinner"></div>';
-
-        try {
-          const evento = document.getElementById('eventoReturning').value;
-
-          if (!evento) {
-            throw new Error('Por favor selecciona un concierto');
-          }
-
-          // Insert new record with phone + evento, copy other fields from previous record
-          const { data, error } = await supabase
-            .from('checkins')
-            .insert([{
-              phone: userPhone,
-              evento,
-              ciudad_origen: previousUserData.ciudad_origen,
-              como_se_entero: previousUserData.como_se_entero,
-              rango_edad: previousUserData.rango_edad,
-              acepta_comunicacion: previousUserData.acepta_comunicacion,
-              whatsapp: previousUserData.whatsapp,
-              primera_vez: false // Returning user, so not first time
-            }]);
-
-          if (error) {
-            throw error;
-          }
-
-          // Show success screen
-          showSuccess();
-
-        } catch (error) {
-          console.error('Error submitting returning user form:', error);
-          showError(error.message || 'Error al enviar el formulario. Por favor intenta de nuevo.');
-
-          // Reset button
-          btnReturningSubmit.disabled = false;
-          btnReturningSubmit.innerHTML = 'Enviar check-in';
+        if (result && result.ok) {
+          // Exito
+          document.getElementById('confirmadoNombre').textContent = result.nombre;
+          document.getElementById('confirmadoHora').textContent = formatHora(result.checkin_at);
+          showState('confirmadoState');
+        } else if (result && result.error === 'Ya hizo checkin') {
+          // Ya registrado
+          document.getElementById('bannerYaRegistrado').style.display = 'flex';
+          document.getElementById('yaRegistradoText').textContent =
+            `Entrada ya registrada · ${formatHora(result.checkin_at)}`;
+          btn.style.display = 'none';
+        } else {
+          throw new Error(result?.error || 'Error desconocido');
         }
+      } catch (error) {
+        console.error('Error confirming:', error);
+        document.getElementById('bannerError').style.display = 'flex';
+        document.getElementById('errorText').textContent = 'Error al confirmar';
+        btn.style.display = 'none';
+        document.getElementById('btnReintentar').style.display = 'block';
       }
+    }
 
-      // ═══════════════════════════════════════════════════════════════════════════
-      // NEW USER FLOW
-      // ═══════════════════════════════════════════════════════════════════════════
-      function showNewUserScreen() {
-        const newUserScreen = document.getElementById('newUserScreen');
-        const eventoSelect = document.getElementById('evento');
+    // ═══════════════════════════════════════════════════════════════════════════
+    // HELPERS
+    // ═══════════════════════════════════════════════════════════════════════════
+    function showState(stateId) {
+      document.querySelectorAll('.state').forEach(el => el.classList.remove('active'));
+      document.getElementById(stateId).classList.add('active');
+    }
 
-        // Auto-select event based on today's date
-        autoSelectEvent(eventoSelect);
+    function formatFechaHora(fecha, hora) {
+      const date = new Date(fecha + 'T12:00:00');
+      const dias = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
+      const meses = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+      const diaSemana = dias[date.getDay()];
+      const dia = date.getDate();
+      const mes = meses[date.getMonth()];
+      const horaFormatted = formatHoraSimple(hora);
+      return `${diaSemana} ${dia} ${mes} · ${horaFormatted}`;
+    }
 
-        newUserScreen.classList.add('active');
-      }
+    function formatHoraSimple(hora) {
+      if (!hora) return '';
+      const [h, m] = hora.split(':');
+      const hour = parseInt(h);
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      const hour12 = hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour);
+      return `${hour12}:${m} ${ampm}`;
+    }
 
-      async function handleNewUserSubmit(e) {
-        e.preventDefault();
-
-        const btnSubmit = document.getElementById('btnSubmit');
-        const errorMessage = document.getElementById('errorMessage');
-
-        // Hide error message
-        errorMessage.classList.remove('show');
-
-        // Show loading state
-        btnSubmit.disabled = true;
-        btnSubmit.innerHTML = '<div class="spinner"></div>';
-
-        try {
-          // Get form values
-          const evento = document.getElementById('evento').value;
-          const ciudadOrigen = document.getElementById('ciudad').value.trim();
-          const comoSeEntero = document.getElementById('comoSeEntero').value;
-          const primeraVez = document.querySelector('input[name="primeraVez"]:checked')?.value === 'true';
-          const rangoEdad = document.getElementById('edad').value;
-          const aceptaComunicacion = document.querySelector('input[name="comunicacion"]:checked')?.value === 'true';
-
-          // Get contact info if they want to receive communications
-          let whatsapp = null;
-          if (aceptaComunicacion) {
-            whatsapp = document.getElementById('whatsapp').value.trim();
-          }
-
-          // Validate required fields
-          if (!evento || !ciudadOrigen || !comoSeEntero || !rangoEdad) {
-            throw new Error('Por favor completa todos los campos requeridos');
-          }
-
-          // Check if primera_vez radio is selected
-          const primeraVezSelected = document.querySelector('input[name="primeraVez"]:checked');
-          if (!primeraVezSelected) {
-            throw new Error('Por favor indica si es tu primera vez en el festival');
-          }
-
-          // Check if comunicacion radio is selected
-          const comunicacionSelected = document.querySelector('input[name="comunicacion"]:checked');
-          if (!comunicacionSelected) {
-            throw new Error('Por favor indica si quieres recibir información de próximas ediciones');
-          }
-
-          // Validate contact info if they want communications
-          if (aceptaComunicacion) {
-            if (!whatsapp) {
-              throw new Error('Por favor completa tu WhatsApp para recibir información');
-            }
-          }
-
-          // Insert into Supabase with phone
-          const { data, error } = await supabase
-            .from('checkins')
-            .insert([{
-              phone: userPhone,
-              evento,
-              ciudad_origen: ciudadOrigen,
-              como_se_entero: comoSeEntero,
-              primera_vez: primeraVez,
-              rango_edad: rangoEdad,
-              acepta_comunicacion: aceptaComunicacion,
-              whatsapp
-            }]);
-
-          if (error) {
-            throw error;
-          }
-
-          // Show success screen
-          showSuccess();
-
-        } catch (error) {
-          console.error('Error submitting form:', error);
-          showError(error.message || 'Error al enviar el formulario. Por favor intenta de nuevo.');
-
-          // Reset button
-          btnSubmit.disabled = false;
-          btnSubmit.innerHTML = 'Enviar check-in';
-        }
-      }
-
-      // ═══════════════════════════════════════════════════════════════════════════
-      // UTILITIES
-      // ═══════════════════════════════════════════════════════════════════════════
-      function autoSelectEvent(selectElement) {
-        // Get current date in Mexico City timezone
-        const now = new Date();
-        const mexicoCityTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Mexico_City' }));
-
-        const year = mexicoCityTime.getFullYear();
-        const month = String(mexicoCityTime.getMonth() + 1).padStart(2, '0');
-        const day = String(mexicoCityTime.getDate()).padStart(2, '0');
-        const hour = mexicoCityTime.getHours();
-
-        const dateKey = `${year}-${month}-${day}`;
-
-        // Check if there's an event today
-        let eventToSelect = null;
-
-        // For May 1st, select based on time of day
-        if (dateKey === '2026-05-01') {
-          if (hour < 15) {
-            // Before 3pm, select the 12:00 event
-            eventToSelect = eventDates['2026-05-01-12'];
-          } else {
-            // After 3pm, select the 18:00 event
-            eventToSelect = eventDates['2026-05-01-18'];
-          }
-        } else if (eventDates[dateKey]) {
-          eventToSelect = eventDates[dateKey];
-        }
-
-        // Auto-select if event found
-        if (eventToSelect && selectElement) {
-          selectElement.value = eventToSelect;
-        }
-      }
-
-      function showError(message) {
-        const errorMessage = document.getElementById('errorMessage');
-        errorMessage.textContent = message;
-        errorMessage.classList.add('show');
-        errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-
-      function showSuccess() {
-        document.getElementById('formContainer').classList.add('hide');
-        document.getElementById('successScreen').classList.add('show');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-
-    })();
+    function formatHora(timestamp) {
+      if (!timestamp) return '';
+      const date = new Date(timestamp);
+      const hours = date.getHours();
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      const hour12 = hours > 12 ? hours - 12 : (hours === 0 ? 12 : hours);
+      return `${hour12}:${minutes} ${ampm}`;
+    }
   </script>
 </body>
 </html>
