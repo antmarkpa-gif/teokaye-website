@@ -707,8 +707,8 @@
     // ═══════════════════════════════════════════════════════════════════════════
     // CONFIGURACION
     // ═══════════════════════════════════════════════════════════════════════════
-    const SUPABASE_URL = 'https://xfllewbfqxsnkltybqiw.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmbGxld2JmcXhzbmtsdHlicWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MzgyMTYsImV4cCI6MjA4OTUxNDIxNn0.8DgRYmM7_pBQ3shLk0hRiAUf4FE8DSYCXgPbVJkThG4';
+    const SUPABASE_URL = 'https://ifewzsfbyobprzpbukmj.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmZXd6c2ZieW9icHJ6cGJ1a21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMzMwMDAsImV4cCI6MjA5MTYwOTAwMH0.d0A-clF08uC2UJ1nD-xZ5Sqvim7F4LYZIl0Y5KoRHYY';
     const PIN_CORRECTO = '2810';
     const STORAGE_KEY = 'teokaye_staff';
 
@@ -853,7 +853,7 @@
       try {
         // Load pendientes
         const pendientesData = await supabaseFetch(
-          `reservas_eventos?evento_id=eq.${eventoActual.id}&checkin=eq.false&estado=not.in.(cancelado,en_lista)&select=*&order=nombre.asc`
+          `reservas?evento_id=eq.${eventoActual.id}&checkin=eq.false&estado=not.in.(cancelado,en_lista)&select=*&order=nombre.asc`
         );
 
         // Sort by opcion priority
@@ -870,7 +870,7 @@
 
         // Load llegados
         const llegadosData = await supabaseFetch(
-          `reservas_eventos?evento_id=eq.${eventoActual.id}&checkin=eq.true&select=*&order=checkin_at.desc`
+          `reservas?evento_id=eq.${eventoActual.id}&checkin=eq.true&select=*&order=checkin_at.desc`
         );
         llegados = llegadosData || [];
 
@@ -1103,7 +1103,7 @@
       renderList();
 
       try {
-        await supabaseFetch(`reservas_eventos?id=eq.${reservaId}`, {
+        await supabaseFetch(`reservas?id=eq.${reservaId}`, {
           method: 'PATCH',
           body: JSON.stringify({ checkin: true, checkin_at: checkinAt })
         });
@@ -1181,7 +1181,7 @@
       // Find reservation
       try {
         const results = await supabaseFetch(
-          `reservas_eventos?select=*,eventos(*)&or=(stripe_session_id.eq.${token},id.eq.${token})`
+          `reservas?select=*,eventos(*)&or=(stripe_session_id.eq.${token},id.eq.${token})`
         );
 
         if (!results || results.length === 0) {
@@ -1298,7 +1298,7 @@
       try {
         const checkinAt = new Date().toISOString();
 
-        await supabaseFetch(`reservas_eventos?id=eq.${modalReserva.id}`, {
+        await supabaseFetch(`reservas?id=eq.${modalReserva.id}`, {
           method: 'PATCH',
           body: JSON.stringify({ checkin: true, checkin_at: checkinAt })
         });
@@ -1341,7 +1341,7 @@
       ws.onopen = () => {
         // Join channel for reservas
         const joinMsg = {
-          topic: `realtime:public:reservas_eventos:evento_id=eq.${eventoActual.id}`,
+          topic: `realtime:public:reservas:evento_id=eq.${eventoActual.id}`,
           event: 'phx_join',
           payload: {},
           ref: '1'
